@@ -1,0 +1,247 @@
+# =============================================================================
+# Workflow: Correccion Automatica de Issues con Claude Code
+# =============================================================================
+#
+# Este workflow permite que Claude Code corrija automaticamente problemas
+# cuando se le menciona en un issue o comentario de PR con una instruccion.
+#
+# Funcionamiento:
+# 1. Un usuario comenta "@claude fix: <descripcion del problema>"
+# 2. Claude analiza el codigo, identifica el problema y crea un fix
+# 3. Claude crea una rama nueva con los cambios
+# 4. Claude abre un PR con la correccion
+#
+# Prerequisitos:
+# - Secreto ANTHROPIC_API_KEY configurado
+# - El token GITHUB_TOKEN necesita permisos de escritura en contenido
+#
+# Uso:
+# - Copiar a .github/workflows/auto-fix.yml
+# - Comentar en un issue: "@claude fix: corrige el bug de autenticacion"
+# - Comentar en un PR: "@claude fix: aplica las sugerencias de la revision"
+# =============================================================================
+
+name: Claude - Correccion Automatica
+
+on:
+  # Trigger cuando alguien comenta en un issue o PR
+  issue_comment:
+    types: [created]
+
+  # Trigger en issues con etiqueta especifica
+  issues:
+    types: [labeled]
+
+jobs:
+  # =========================================================================
+  # Job: Correccion automatica via comentario "@claude fix:"
+  # =========================================================================
+  auto-fix-comment:
+    name: Correccion por Comentario
+    # Solo ejecutar si el comentario contiene "@claude fix:"
+    if: |
+      github.event_name == 'issue_comment' &&
+      contains(github.event.comment.body, '@claude fix:')
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write         # Crear ramas y hacer push
+      pull-requests: write    # Crear PRs
+      issues: write           # Comentar en issues
+
+    steps:
+      # Paso 1: Checkout del repositorio
+      - name: Checkout del codigo
+        uses: actions/checkout@v4
+        with:
+          # Necesitamos historial completo para crear ramas
+          fetch-depth: 0
+
+      # Paso 2: Ejecutar Claude Code para la correccion
+      - name: Correccion con Claude
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          model: "claude-sonnet-4-5-20250929"
+          max_turns: 15
+          claude_md: |
+            Eres un desarrollador senior encargado de corregir problemas de codigo.
+
+            ## Instrucciones
+
+            1. Lee cuidadosamente la descripcion del problema en el comentario
+            2. Analiza el codigo relevante del repositorio
+            3. Implementa la correccion de forma limpia y segura
+            4. Asegurate de que los cambios son minimos y focalizados
+            5. No introduzcas cambios no relacionados con el problema
+
+            ## Reglas de Calidad
+
+            - Manten el estilo de codigo existente del proyecto
+            - Anade o actualiza tests si es necesario
+            - No rompas funcionalidad existente
+            - Documenta los cambios complejos con comentarios
+            - Responde en espanol
+
+            ## Flujo de Trabajo
+
+            Al recibir una instruccion de correccion:
+            1. Identifica los archivos afectados
+            2. Comprende la causa raiz del problema
+            3. Implementa la correccion
+            4. Verifica que los tests existentes siguen pasando
+            5. Resume los cambios realizados
+
+  # =========================================================================
+  # Job: Correccion automatica via etiqueta en issue
+  # =========================================================================
+  auto-fix-label:
+    name: Correccion por Etiqueta
+    # Solo ejecutar si se agrega la etiqueta "claude-fix"
+    if: |
+      github.event_name == 'issues' &&
+      github.event.label.name == 'claude-fix'
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+
+    steps:
+      # Paso 1: Checkout del repositorio
+      - name: Checkout del codigo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Paso 2: Ejecutar Claude Code
+      - name: Correccion con Claude
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          model: "claude-sonnet-4-5-20250929"
+          max_turns: 15
+          claude_md: |
+            Eres un desarrollador senior. Se te ha asignado resolver un issue.
+
+            ## Instrucciones
+
+            1. Lee el titulo y descripcion del issue cuidadosamente
+            2. Analiza el codigo del repositorio para entender el contexto
+            3. Implementa la solucion
+            4. Crea o actualiza tests
+            5. Resume los cambios realizados
+
+            ## Reglas
+
+            - Cambios minimos y focalizados
+            - Manten el estilo existente
+            - No rompas funcionalidad existente
+            - Responde en espanol
+
+  # =========================================================================
+  # Job: Auto-fix con lint y formato
+  # =========================================================================
+  auto-lint-fix:
+    name: Correccion de Linting
+    # Solo ejecutar si el comentario contiene "@claude lint"
+    if: |
+      github.event_name == 'issue_comment' &&
+      contains(github.event.comment.body, '@claude lint') &&
+      github.event.issue.pull_request
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+
+    steps:
+      - name: Checkout del codigo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          # Checkout de la rama del PR
+          ref: ${{ github.event.issue.pull_request.head.ref || github.head_ref }}
+
+      - name: Correccion de linting con Claude
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          model: "claude-sonnet-4-5-20250929"
+          max_turns: 10
+          claude_md: |
+            Tu tarea es corregir problemas de linting y formato en el codigo.
+
+            ## Instrucciones
+
+            1. Identifica el lenguaje y las herramientas de linting del proyecto
+            2. Ejecuta las herramientas de linting si estan disponibles
+            3. Corrige todos los problemas de formato y estilo
+            4. No cambies la logica del codigo, solo formato y estilo
+
+            ## Herramientas por Lenguaje
+
+            - **Python**: black, isort, flake8, mypy
+            - **TypeScript/JavaScript**: eslint, prettier
+            - **Go**: gofmt, golint
+            - **Rust**: rustfmt, clippy
+            - **Java**: checkstyle, spotless
+
+            Responde en espanol con un resumen de los cambios de formato aplicados.
+
+  # =========================================================================
+  # Job: Generar descripcion de PR automaticamente
+  # =========================================================================
+  generate-pr-description:
+    name: Generar Descripcion de PR
+    # Solo ejecutar si el comentario contiene "@claude describe"
+    if: |
+      github.event_name == 'issue_comment' &&
+      contains(github.event.comment.body, '@claude describe') &&
+      github.event.issue.pull_request
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+
+    steps:
+      - name: Generar descripcion con Claude
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          model: "claude-sonnet-4-5-20250929"
+          max_turns: 3
+          claude_md: |
+            Tu tarea es generar una descripcion completa para este Pull Request.
+
+            ## Formato de la Descripcion
+
+            ```markdown
+            ## Resumen
+            [Descripcion breve de los cambios en 1-2 oraciones]
+
+            ## Cambios Realizados
+            - [Lista detallada de cada cambio significativo]
+
+            ## Tipo de Cambio
+            - [ ] Bug fix (correccion que no rompe funcionalidad)
+            - [ ] Nueva funcionalidad (cambio que anade funcionalidad)
+            - [ ] Breaking change (cambio que rompe compatibilidad)
+            - [ ] Refactorizacion (mejora sin cambio funcional)
+            - [ ] Documentacion
+            - [ ] Tests
+
+            ## Como Probar
+            [Instrucciones para probar los cambios]
+
+            ## Checklist
+            - [ ] El codigo sigue las guias de estilo del proyecto
+            - [ ] Se han anadido tests
+            - [ ] La documentacion esta actualizada
+            ```
+
+            Analiza los cambios del PR y genera esta descripcion en espanol.

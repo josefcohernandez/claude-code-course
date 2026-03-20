@@ -1,0 +1,152 @@
+# =============================================================================
+# Workflow: Revision Automatica de Pull Requests con Claude Code
+# =============================================================================
+#
+# Este workflow se ejecuta automaticamente cuando:
+# 1. Se abre un Pull Request nuevo
+# 2. Se actualizan los commits de un PR existente
+# 3. Alguien comenta "@claude" en un PR
+#
+# Prerequisitos:
+# - Secreto ANTHROPIC_API_KEY configurado en el repositorio
+#
+# Uso:
+# - Copiar este archivo a .github/workflows/review-pr.yml en tu repositorio
+# - Configurar el secreto ANTHROPIC_API_KEY en Settings > Secrets
+# =============================================================================
+
+name: Claude - Revision de PRs
+
+on:
+  # Trigger automatico cuando se abre o actualiza un PR
+  pull_request:
+    types: [opened, synchronize]
+    # Opcional: filtrar por tipos de archivos
+    paths:
+      - '**/*.py'
+      - '**/*.ts'
+      - '**/*.tsx'
+      - '**/*.js'
+      - '**/*.jsx'
+      - '**/*.go'
+      - '**/*.java'
+      - '**/*.rs'
+      - '**/*.rb'
+      - '**/*.php'
+      - '**/*.cs'
+      - '**/*.sql'
+
+  # Trigger cuando alguien comenta en un PR
+  issue_comment:
+    types: [created]
+
+# Cancelar ejecuciones anteriores del mismo PR para ahorrar costos
+concurrency:
+  group: claude-review-${{ github.event.pull_request.number || github.event.issue.number }}
+  cancel-in-progress: true
+
+jobs:
+  # =========================================================================
+  # Job: Revision automatica de codigo
+  # =========================================================================
+  review:
+    name: Revision con Claude
+    # Condiciones de ejecucion:
+    # - Si es un PR nuevo/actualizado: ejecutar siempre
+    # - Si es un comentario: solo si menciona @claude y es en un PR (no en un issue)
+    if: |
+      github.event_name == 'pull_request' ||
+      (github.event_name == 'issue_comment' &&
+       contains(github.event.comment.body, '@claude') &&
+       github.event.issue.pull_request)
+    runs-on: ubuntu-latest
+
+    # Permisos minimos necesarios
+    permissions:
+      contents: read          # Leer el codigo del repositorio
+      pull-requests: write    # Escribir comentarios en el PR
+      issues: write           # Responder a comentarios
+
+    steps:
+      # Paso 1: Ejecutar Claude Code Action
+      - name: Revision de codigo con Claude
+        uses: anthropics/claude-code-action@v1
+        with:
+          # Autenticacion
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+
+          # Modelo a utilizar
+          # claude-sonnet-4-5-20250929: rapido y economico (recomendado para revisiones)
+          # claude-opus-4-5-20250514: mas potente (para revisiones complejas)
+          model: "claude-sonnet-4-5-20250929"
+
+          # Limitar iteraciones para controlar costos
+          max_turns: 5
+
+          # Instrucciones personalizadas para la revision
+          claude_md: |
+            Eres un revisor de codigo senior con experiencia en multiples lenguajes
+            de programacion. Tu equipo es poliglota y trabaja con Python, TypeScript,
+            Go, Java y otros lenguajes.
+
+            ## Principios de Revision
+
+            1. **Se constructivo**: Sugiere soluciones concretas, no solo senales problemas
+            2. **Prioriza**: Enfocate en lo mas importante primero
+            3. **Se especifico**: Incluye numeros de linea y ejemplos de codigo
+            4. **Reconoce lo bueno**: Menciona lo que se hizo bien
+            5. **Responde en espanol**: Toda la comunicacion debe ser en espanol
+
+            ## Estructura de la Revision
+
+            Organiza tu revision en estas secciones:
+
+            ### Problemas Criticos
+            Problemas que DEBEN corregirse antes del merge:
+            - Vulnerabilidades de seguridad (OWASP Top 10)
+            - Bugs que causan crashes o comportamiento incorrecto
+            - Perdida de datos o corrupcion
+
+            ### Mejoras Importantes
+            Problemas que DEBERIAN corregirse:
+            - Manejo inadecuado de errores
+            - Problemas de rendimiento significativos
+            - Violaciones de los patrones del proyecto
+
+            ### Sugerencias
+            Mejoras opcionales:
+            - Mejoras de legibilidad
+            - Refactorizaciones menores
+            - Documentacion faltante
+
+            ### Aspectos Positivos
+            Que se hizo bien en este PR.
+
+            ## Checklist de Seguridad
+            Verificar siempre:
+            - [ ] No hay secrets/passwords hardcodeados
+            - [ ] Los inputs del usuario estan validados/sanitizados
+            - [ ] No hay vulnerabilidades de inyeccion (SQL, XSS, etc.)
+            - [ ] Los archivos se manejan con context managers
+            - [ ] Los errores se manejan adecuadamente (no se silencian)
+
+            ## Reglas por Lenguaje
+            - **Python**: PEP 8, type hints, docstrings
+            - **TypeScript/JavaScript**: strict mode, no `any`, manejo de null
+            - **Go**: error handling idiomatico, golint
+            - **Java**: checked exceptions, patrones SOLID
+            - **SQL**: parametrized queries, indices
+
+  # =========================================================================
+  # Job: Verificacion de que el workflow funciona (opcional, para debug)
+  # =========================================================================
+  status:
+    name: Estado del Workflow
+    runs-on: ubuntu-latest
+    needs: review
+    if: always()
+    steps:
+      - name: Resultado de la revision
+        run: |
+          echo "Revision completada."
+          echo "Resultado del job review: ${{ needs.review.result }}"

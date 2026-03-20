@@ -1,0 +1,36 @@
+{
+  "_comment": "Configuracion RESTRICTIVA - Para entornos de produccion o alta seguridad",
+  "_usage": "Copiar como .claude/settings.json en proyectos sensibles",
+
+  "permissions": {
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep"
+    ],
+    "deny": [
+      "Bash(rm *)",
+      "Bash(rm -rf *)",
+      "Bash(sudo *)",
+      "Bash(chmod *)",
+      "Bash(chown *)",
+      "Bash(curl * | bash)",
+      "Bash(curl * | sh)",
+      "Bash(wget *)",
+      "Bash(npm publish*)",
+      "Bash(npm install*)",
+      "Bash(pip install*)",
+      "Bash(apt *)",
+      "Bash(yum *)",
+      "Bash(brew *)",
+      "Write(.env*)",
+      "Write(*secret*)",
+      "Write(*credential*)",
+      "Write(*password*)",
+      "Write(config/production*)",
+      "Edit(.env*)",
+      "Edit(*secret*)",
+      "Edit(config/production*)"
+    ]
+  }
+}

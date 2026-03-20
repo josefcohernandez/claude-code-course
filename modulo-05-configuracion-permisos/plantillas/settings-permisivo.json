@@ -1,0 +1,41 @@
+{
+  "_comment": "Configuracion PERMISIVA - Para desarrollo local con confianza",
+  "_usage": "Copiar como .claude/settings.local.json (NO commitear)",
+
+  "permissions": {
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "Edit",
+      "Write",
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(node *)",
+      "Bash(python *)",
+      "Bash(pytest *)",
+      "Bash(make *)",
+      "Bash(git *)",
+      "Bash(docker *)",
+      "Bash(docker-compose *)",
+      "Bash(cat *)",
+      "Bash(ls *)",
+      "Bash(mkdir *)",
+      "Bash(cp *)",
+      "Bash(mv *)",
+      "WebFetch",
+      "WebSearch",
+      "Task",
+      "TodoWrite"
+    ],
+    "deny": [
+      "Bash(rm -rf /)",
+      "Bash(rm -rf /*)",
+      "Bash(sudo rm *)",
+      "Bash(:(){ :|:& };:)",
+      "Bash(npm publish*)",
+      "Bash(> /dev/sda*)",
+      "Write(.env.production)"
+    ]
+  }
+}

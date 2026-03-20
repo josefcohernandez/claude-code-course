@@ -1,0 +1,59 @@
+# =============================================================================
+# Workflow: Triaje Automatico de Issues con Claude
+# =============================================================================
+#
+# Se activa cuando se crea un issue nuevo. Claude analiza el contenido,
+# clasifica el tipo, estima prioridad y sugiere etiquetas.
+#
+# Prerequisitos:
+# - Secreto ANTHROPIC_API_KEY configurado en el repositorio
+#
+# Uso:
+# - Copiar a .github/workflows/issue-triage.yml
+# =============================================================================
+
+name: Claude - Triaje de Issues
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+
+jobs:
+  triage:
+    name: Triaje con Claude
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    # No ejecutar en issues creados por bots
+    if: |
+      github.actor != 'dependabot[bot]' &&
+      github.actor != 'renovate[bot]'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Triaje del issue
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            Analiza este issue recien creado y proporciona un triaje:
+
+            ## Clasificacion
+            1. **Tipo**: bug | feature | enhancement | question | documentation
+            2. **Prioridad**: critical | high | medium | low
+            3. **Area**: Que modulo o area del codigo probablemente esta afectada
+
+            ## Analisis
+            - Si es un bug: sugiere posibles causas basandote en el codigo
+            - Si es una feature: evalua complejidad estimada (S/M/L/XL)
+            - Si es una pregunta: intenta responderla directamente
+
+            ## Etiquetas sugeridas
+            Lista las etiquetas que deberian aplicarse.
+
+            Responde en espanol con un comentario bien estructurado.
+          claude_args: "--max-turns 5 --model claude-sonnet-4-5-20250929"

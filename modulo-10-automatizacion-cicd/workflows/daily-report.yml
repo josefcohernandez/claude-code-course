@@ -1,0 +1,71 @@
+# =============================================================================
+# Workflow: Reporte Diario de Actividad del Repositorio
+# =============================================================================
+#
+# Se ejecuta automaticamente de lunes a viernes a las 9:00 UTC.
+# Genera un resumen de actividad reciente y lo publica como issue.
+#
+# Prerequisitos:
+# - Secreto ANTHROPIC_API_KEY configurado en el repositorio
+#
+# Uso:
+# - Copiar a .github/workflows/daily-report.yml
+# - Ajustar el cron segun la zona horaria de tu equipo
+# =============================================================================
+
+name: Claude - Reporte Diario
+
+on:
+  schedule:
+    # Lunes a viernes a las 9:00 UTC
+    # Ajusta segun tu zona horaria:
+    #   CET (Madrid): cron: "0 8 * * 1-5" (8 UTC = 9 CET)
+    #   EST (New York): cron: "0 14 * * 1-5" (14 UTC = 9 EST)
+    - cron: "0 9 * * 1-5"
+
+  # Permitir ejecucion manual para testing
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  daily-report:
+    name: Generar Reporte Diario
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 50
+
+      - name: Generar reporte con Claude
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            Genera un reporte diario del repositorio. Incluye:
+
+            ## 1. Actividad de las ultimas 24 horas
+            - Commits realizados (resumen, no lista completa)
+            - Archivos mas modificados
+
+            ## 2. Pull Requests
+            - PRs abiertos pendientes de revision
+            - PRs mergeados en las ultimas 24h
+
+            ## 3. Issues
+            - Issues nuevos abiertos
+            - Issues cerrados recientemente
+
+            ## 4. Salud del proyecto
+            - Observaciones sobre la actividad general
+            - Sugerencias de mejora si las hay
+
+            Publica el reporte como un issue nuevo con:
+            - Titulo: "Reporte Diario - [fecha de hoy]"
+            - Etiqueta: "daily-report"
+            Responde en espanol.
+          claude_args: "--max-turns 10 --model claude-sonnet-4-5-20250929"

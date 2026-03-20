@@ -1,6 +1,285 @@
-# claude-code-course
-ES
-Curso completo de Claude Code en español: 16 módulos de principiante a experto. Contexto, MCP, hooks, agentes, skills, CI/CD, Agent SDK, plugins y proyecto final. Guía de referencia definitiva. 
+# Curso de Desarrollo Asistido con Claude Code
 
-EN
-Complete Claude Code course: 16 modules from basics to expert. Prompting, MCP, hooks, agents, CI/CD, Agent SDK & more. The most comprehensive guide available.                        
+> **De principiante a experto en desarrollo con IA agéntica**
+
+## Acerca de este curso
+
+Este curso enseña a equipos de desarrollo a usar **Claude Code** de forma profesional y eficiente. Cubre desde los conceptos básicos hasta técnicas avanzadas como Agent Teams, MCP, Hooks y automatización CI/CD.
+
+El contenido está basado en la **documentación oficial de Anthropic** (code.claude.com/docs) y en buenas prácticas de equipos que ya utilizan Claude Code en producción.
+
+### Público objetivo
+
+- Desarrolladores backend, frontend y fullstack
+- Ingenieros DevOps y SRE
+- QA Engineers y testers
+- Tech Leads y arquitectos de software
+- Cualquier perfil técnico que quiera integrar IA en su flujo de trabajo
+
+### Requisitos previos
+
+- Experiencia básica en programación (cualquier lenguaje)
+- Familiaridad con la terminal/línea de comandos
+- Cuenta en Anthropic (claude.ai) o acceso via API/Bedrock/Vertex
+- Node.js 18+ instalado (para Claude Code CLI)
+
+---
+
+## Estructura del curso
+
+El curso está organizado en **4 bloques progresivos** con **16 módulos**:
+
+### Bloque 1: Fundamentos (Módulos 01-04)
+
+| Módulo | Título | Tiempo | Descripción |
+|--------|--------|--------|-------------|
+| [01](modulo-01-introduccion/README.md) | Introducción y Metodología | 1.5h | Qué es Claude Code, paradigma agéntico, plataformas y modelos |
+| [02](modulo-02-cli-primeros-pasos/README.md) | CLI y Primeros Pasos | 2h | Comandos, modo interactivo, sesiones, primer bugfix y feature |
+| [03](modulo-03-contexto-y-tokens/README.md) | Contexto y Tokens | 2h | **El módulo más importante**: ventana de contexto, ahorro de tokens, estrategias de sesión |
+| [04](modulo-04-memoria-claude-md/README.md) | Memoria y CLAUDE.md | 2h | Sistema de memoria, memoria estructurada con tipos, CLAUDE.md efectivo, reglas modulares |
+
+### Bloque 2: Intermedio (Módulos 05-06)
+
+| Módulo | Título | Tiempo | Descripción |
+|--------|--------|--------|-------------|
+| [05](modulo-05-configuracion-permisos/README.md) | Configuración y Permisos | 1h 45min | Jerarquía de settings, permisos, sandbox, keybindings personalizados |
+| [06](modulo-06-planificacion-opus/README.md) | Plan Mode, Opus 4.6 y Workflows | 2h 15min | Plan Mode, Fast Mode, razonamiento adaptativo, workflows eficientes |
+
+### Bloque 3: Avanzado (Módulos 07-10)
+
+| Módulo | Título | Tiempo | Descripción |
+|--------|--------|--------|-------------|
+| [07](modulo-07-mcp/README.md) | MCP (Model Context Protocol) | 2h 20min | Servidores MCP, configuración, Deferred Tools, Tool Search, optimización |
+| [08](modulo-08-hooks/README.md) | Hooks | 1h 50min | Eventos del ciclo de vida, hooks agent, hooks de seguridad, autoformateo |
+| [09](modulo-09-agentes-skills-teams/README.md) | Subagentes, Skills y Agent Teams | 3h | Subagentes, worktree isolation, SendMessage, skills, Agent Teams |
+| [10](modulo-10-automatizacion-cicd/README.md) | Automatización y CI/CD | 2h 20min | Modo headless, GitHub Actions, cron nativo, tareas programadas |
+
+### Bloque 4: Experto y Enterprise (Módulos 11-15)
+
+| Módulo | Título | Tiempo | Descripción |
+|--------|--------|--------|-------------|
+| [11](modulo-11-enterprise-seguridad/README.md) | Enterprise y Seguridad | 1h | Seguridad, políticas enterprise, mejores prácticas de equipo |
+| [12](modulo-12-metodologias-desarrollo-ia/README.md) | Metodologías de Desarrollo con IA | 2h | Spec-Driven Development, historias Gherkin, TDD con Claude, patrones avanzados |
+| [13](modulo-13-multimodalidad-notebooks/README.md) | Multimodalidad y Notebooks | 1.5h | Imágenes, PDFs, Jupyter notebooks, Visual-Driven Development |
+| [14](modulo-14-agent-sdk/README.md) | Claude Agent SDK | 2h | Construir agentes autónomos programáticamente con Python/TypeScript |
+| [15](modulo-15-plugins-marketplaces/README.md) | Plugins y Marketplaces | 1.5h | Empaquetar skills y hooks como plugins, marketplace público y privado, gestión enterprise |
+
+### Proyecto Final (Módulo 16)
+
+| Módulo | Título | Tiempo | Descripción |
+|--------|--------|--------|-------------|
+| [16](modulo-16-proyecto-final/enunciado/README.md) | Proyecto Final Integrador | 4-6h | Construir una herramienta CLI completa aplicando todo lo aprendido (M01-M15) |
+
+**Tiempo total estimado: 31-33 horas**
+
+---
+
+## Ruta de aprendizaje
+
+```
+BLOQUE 1: FUNDAMENTOS
+┌─────────┐   ┌─────────┐   ┌─────────┐   ┌─────────┐
+│  M01    │──▶│  M02    │──▶│  M03    │──▶│  M04    │
+│ Intro   │   │ CLI     │   │ Contexto│   │ Memoria │
+└─────────┘   └─────────┘   └─────────┘   └─────────┘
+                                                │
+BLOQUE 2: INTERMEDIO                            ▼
+                              ┌─────────┐   ┌─────────┐
+                              │  M06    │◀──│  M05    │
+                              │ Plan +  │   │ Config  │
+                              │ Opus    │   │ Permisos│
+                              └─────────┘   └─────────┘
+                                  │
+BLOQUE 3: AVANZADO               ▼
+┌─────────┐   ┌─────────┐   ┌─────────┐   ┌─────────┐
+│  M07    │──▶│  M08    │──▶│  M09    │──▶│  M10    │
+│ MCP     │   │ Hooks   │   │ Agentes │   │ CI/CD   │
+└─────────┘   └─────────┘   └─────────┘   └─────────┘
+                                                │
+BLOQUE 4: EXPERTO                               ▼
+┌─────────┐   ┌─────────┐   ┌─────────┐   ┌─────────┐
+│  M11    │──▶│  M12    │──▶│  M13    │──▶│  M14    │
+│Enterprise│  │Metodolo-│   │Multimo- │   │ Agent   │
+│Seguridad│   │  gias   │   │ dalidad │   │  SDK    │
+└─────────┘   └─────────┘   └─────────┘   └─────────┘
+                                               │
+                                               ▼
+                                          ┌─────────┐
+                                          │  M15    │
+                                          │ Plugins │
+                                          │Market-  │
+                                          │ places  │
+                                          └─────────┘
+                                               │
+                                               ▼
+                            ┌─────────────────────┐
+                            │        M16          │
+                            │   Proyecto Final    │
+                            │    Integrador       │
+                            └─────────────────────┘
+```
+
+---
+
+## Cómo usar este curso
+
+### Para formación guiada (recomendado)
+
+1. Sigue los módulos en orden (1 → 15)
+2. Lee la teoría de cada módulo con Claude Code abierto
+3. Realiza los ejercicios prácticos al terminar cada módulo
+4. No avances al siguiente módulo sin completar los ejercicios
+5. El proyecto final (M16) integra todo lo aprendido
+
+### Para consulta rápida
+
+Cada módulo funciona como referencia independiente:
+
+- **"¿Cómo gestiono el contexto?"** → [Módulo 03](modulo-03-contexto-y-tokens/README.md)
+- **"¿Cómo configuro CLAUDE.md?"** → [Módulo 04](modulo-04-memoria-claude-md/README.md)
+- **"¿Cómo uso Plan Mode?"** → [Módulo 06](modulo-06-planificacion-opus/README.md)
+- **"¿Cómo conecto una base de datos?"** → [Módulo 07](modulo-07-mcp/README.md)
+- **"¿Cómo automatizo con CI/CD?"** → [Módulo 10](modulo-10-automatizacion-cicd/README.md)
+- **"¿Cómo aplico TDD/Gherkin con IA?"** → [Módulo 12](modulo-12-metodologias-desarrollo-ia/README.md)
+- **"¿Cómo trabajo con imágenes y PDFs?"** → [Módulo 13](modulo-13-multimodalidad-notebooks/README.md)
+- **"¿Cómo construyo agentes custom?"** → [Módulo 14](modulo-14-agent-sdk/README.md)
+- **"¿Cómo empaqueto y distribuyo capacidades?"** → [Módulo 15](modulo-15-plugins-marketplaces/README.md)
+
+### Para equipos
+
+1. Comparte este repositorio con el equipo
+2. Cada miembro sigue los módulos a su ritmo
+3. Usa los módulos 01-06 como onboarding obligatorio
+4. Los módulos 07-11 son opcionales según el rol
+5. Los módulos 12-15 son muy recomendables antes del proyecto final
+6. El proyecto final (M16) se puede hacer en parejas
+
+---
+
+## Estructura de carpetas
+
+```
+claude_tutorial/
+├── README.md                          # Este archivo (índice del curso)
+├── CURSO_CLAUDE_CODE.md               # Temario completo (resumen)
+│
+├── modulo-01-introduccion/            # Qué es Claude Code, metodología
+│   ├── teoria/
+│   ├── ejercicios/
+│   └── ejemplos/
+│
+├── modulo-02-cli-primeros-pasos/      # Comandos, modo interactivo, sesiones
+│   ├── teoria/
+│   ├── ejercicios/
+│   ├── ejemplos/
+│   └── cheatsheets/
+│
+├── modulo-03-contexto-y-tokens/       # Ventana de contexto, ahorro de tokens
+│   ├── teoria/
+│   ├── ejercicios/
+│   └── ejemplos/
+│
+├── modulo-04-memoria-claude-md/       # CLAUDE.md, reglas modulares
+│   ├── teoria/
+│   ├── ejercicios/
+│   └── plantillas/
+│
+├── modulo-05-configuracion-permisos/  # Settings, permisos, sandbox
+│   ├── teoria/
+│   ├── ejercicios/
+│   └── plantillas/
+│
+├── modulo-06-planificacion-opus/      # Plan Mode, Opus 4.6, workflows
+│   ├── teoria/
+│   ├── ejercicios/
+│   └── proyecto-practico/
+│
+├── modulo-07-mcp/                     # Model Context Protocol
+│   ├── teoria/
+│   ├── ejercicios/
+│   └── servidores-ejemplo/
+│
+├── modulo-08-hooks/                   # Hooks del ciclo de vida
+│   ├── teoria/
+│   ├── ejercicios/
+│   └── scripts/
+│
+├── modulo-09-agentes-skills-teams/    # Subagentes, skills, Agent Teams
+│   ├── teoria/
+│   ├── ejercicios/
+│   ├── agentes/
+│   └── skills/
+│
+├── modulo-10-automatizacion-cicd/     # Automatización, GitHub Actions
+│   ├── teoria/
+│   ├── ejercicios/
+│   └── workflows/
+│
+├── modulo-11-enterprise-seguridad/    # Seguridad, enterprise, equipo
+│   ├── teoria/
+│   ├── ejercicios/
+│   └── plantillas/
+│
+├── modulo-12-metodologias-desarrollo-ia/  # SDD, Gherkin, TDD con IA
+│   ├── teoria/
+│   ├── ejercicios/
+│   └── plantillas/
+│
+├── modulo-13-multimodalidad-notebooks/ # Imágenes, PDFs, Jupyter, VDD
+│   ├── teoria/
+│   ├── ejercicios/
+│   └── ejemplos/
+│
+├── modulo-14-agent-sdk/               # Claude Agent SDK (Python/TypeScript)
+│   ├── teoria/
+│   ├── ejercicios/
+│   └── ejemplos/
+│
+├── modulo-15-plugins-marketplaces/    # Plugins, marketplaces y gestión enterprise
+│   ├── teoria/
+│   └── ejercicios/
+│
+├── modulo-16-proyecto-final/          # Proyecto integrador (M01-M15)
+│   ├── enunciado/
+│   ├── solucion-referencia/
+│   └── criterios-evaluacion/
+│
+└── recursos/                          # Material complementario
+    ├── imagenes/
+    ├── cheatsheets/                   # Referencia rápida + referencia CLI exhaustiva
+    │   ├── cheatsheet-general.md      # Resumen rápido para el día a día
+    │   ├── referencia-cli-indice.md   # Índice del anexo de referencia CLI
+    │   ├── referencia-cli-*.md        # 6 ficheros: modos, flags, commands, atajos, env vars, output
+    │   └── ...
+    └── plantillas-proyecto/           # Plantillas listas para copiar (CLAUDE.md, settings, rules, etc.)
+```
+
+---
+
+## Recursos oficiales
+
+- [Documentación oficial de Claude Code](https://code.claude.com/docs)
+- [Repositorio GitHub de Claude Code](https://github.com/anthropics/claude-code)
+- [Model Context Protocol (MCP)](https://modelcontextprotocol.io)
+- [Claude Code GitHub Action](https://github.com/anthropics/claude-code-action)
+- [Anthropic API Documentation](https://docs.anthropic.com)
+
+---
+
+## Versiones
+
+| Versión | Fecha | Notas |
+|---------|-------|-------|
+| 1.0 | Febrero 2026 | Versión inicial basada en Claude Code 2.x, Opus 4.6 |
+| 2.0 | Marzo 2026 | Añadidos M13 (Multimodalidad), M14 (Agent SDK). Actualizados M04-M10 con novedades. Proyecto final movido a M15 |
+| 2.1 | Marzo 2026 | Añadido M15 (Plugins y Marketplaces). Proyecto final movido a M16 |
+
+---
+
+## Licencia
+
+Material de formación interna. Basado en la documentación pública de Anthropic.
+
+---
+
+> **Consejo**: Empieza por el [Módulo 01](modulo-01-introduccion/README.md) y avanza paso a paso. La gestión de contexto (Módulo 03) es lo que más impactará tu productividad diaria. El proyecto final (Módulo 16) integra todo lo aprendido.

@@ -1,0 +1,79 @@
+# =============================================================================
+# Workflow: Revision de Seguridad por Rutas Criticas
+# =============================================================================
+#
+# Se activa automaticamente cuando un PR modifica archivos sensibles:
+# autenticacion, API, middleware, configuracion, Docker, etc.
+#
+# Prerequisitos:
+# - Secreto ANTHROPIC_API_KEY configurado en el repositorio
+#
+# Uso:
+# - Copiar a .github/workflows/security-review.yml
+# =============================================================================
+
+name: Claude - Revision de Seguridad
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - 'src/auth/**'
+      - 'src/api/**'
+      - 'src/middleware/**'
+      - '**/security/**'
+      - '*.config.*'
+      - '.env*'
+      - 'docker-compose*'
+      - 'Dockerfile*'
+      - '**/permissions/**'
+      - '**/rbac/**'
+
+# Cancelar ejecuciones anteriores del mismo PR
+concurrency:
+  group: security-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  security-review:
+    name: Revision de Seguridad con Claude
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Revision de seguridad
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            Este PR modifica archivos relacionados con seguridad.
+            Realiza una revision EXCLUSIVAMENTE enfocada en seguridad:
+
+            ## Checklist OWASP Top 10
+            - A01: Broken Access Control
+            - A02: Cryptographic Failures
+            - A03: Injection (SQL, XSS, CSRF, Command)
+            - A04: Insecure Design
+            - A05: Security Misconfiguration
+            - A06: Vulnerable Components
+            - A07: Authentication Failures
+            - A08: Data Integrity Failures
+            - A09: Logging Failures
+            - A10: Server-Side Request Forgery
+
+            ## Verificaciones adicionales
+            - Secretos o credenciales hardcodeadas
+            - Validacion y sanitizacion de inputs del usuario
+            - Headers de seguridad (CORS, CSP, etc.)
+            - Configuracion segura de Docker/contenedores
+            - Permisos minimos (principle of least privilege)
+
+            Si encuentras un problema critico, marca como "Changes requested".
+            Responde en espanol.
+          claude_args: "--max-turns 10 --model claude-sonnet-4-5-20250929"
