@@ -35,22 +35,22 @@ El curso está organizado en **4 bloques progresivos** con **16 módulos**:
 |--------|--------|--------|-------------|
 | [01](modulo-01-introduccion/README.md) | Introducción y Metodología | 1.5h | Qué es Claude Code, paradigma agéntico, plataformas y modelos |
 | [02](modulo-02-cli-primeros-pasos/README.md) | CLI y Primeros Pasos | 2h | Comandos, modo interactivo, sesiones, primer bugfix y feature |
-| [03](modulo-03-contexto-y-tokens/README.md) | Contexto y Tokens | 2h | **El módulo más importante**: ventana de contexto, ahorro de tokens, estrategias de sesión |
+| [03](modulo-03-contexto-y-tokens/README.md) | Contexto y Tokens | 2h 15min | **El módulo más importante**: ventana de contexto, ahorro de tokens, estrategias de sesión, Compaction API |
 | [04](modulo-04-memoria-claude-md/README.md) | Memoria y CLAUDE.md | 2h | Sistema de memoria, memoria estructurada con tipos, CLAUDE.md efectivo, reglas modulares |
 
 ### Bloque 2: Intermedio (Módulos 05-06)
 
 | Módulo | Título | Tiempo | Descripción |
 |--------|--------|--------|-------------|
-| [05](modulo-05-configuracion-permisos/README.md) | Configuración y Permisos | 1h 45min | Jerarquía de settings, permisos, sandbox, keybindings personalizados |
+| [05](modulo-05-configuracion-permisos/README.md) | Configuración y Permisos | 2h 05min | Jerarquía de settings, permisos, sandbox, keybindings, Auto Mode |
 | [06](modulo-06-planificacion-opus/README.md) | Plan Mode, Opus 4.6 y Workflows | 2h 15min | Plan Mode, Fast Mode, razonamiento adaptativo, workflows eficientes |
 
 ### Bloque 3: Avanzado (Módulos 07-10)
 
 | Módulo | Título | Tiempo | Descripción |
 |--------|--------|--------|-------------|
-| [07](modulo-07-mcp/README.md) | MCP (Model Context Protocol) | 2h 20min | Servidores MCP, configuración, Deferred Tools, Tool Search, optimización |
-| [08](modulo-08-hooks/README.md) | Hooks | 1h 50min | Eventos del ciclo de vida, hooks agent, hooks de seguridad, autoformateo |
+| [07](modulo-07-mcp/README.md) | MCP (Model Context Protocol) | 2h 35min | Servidores MCP, configuración, Deferred Tools, Tool Search, MCP Elicitation |
+| [08](modulo-08-hooks/README.md) | Hooks | 2h 05min | 16 eventos del ciclo de vida, hooks agent, hooks de seguridad, autoformateo |
 | [09](modulo-09-agentes-skills-teams/README.md) | Subagentes, Skills y Agent Teams | 3h | Subagentes, worktree isolation, SendMessage, skills, Agent Teams |
 | [10](modulo-10-automatizacion-cicd/README.md) | Automatización y CI/CD | 2h 20min | Modo headless, GitHub Actions, cron nativo, tareas programadas |
 
@@ -58,9 +58,9 @@ El curso está organizado en **4 bloques progresivos** con **16 módulos**:
 
 | Módulo | Título | Tiempo | Descripción |
 |--------|--------|--------|-------------|
-| [11](modulo-11-enterprise-seguridad/README.md) | Enterprise y Seguridad | 1h | Seguridad, políticas enterprise, mejores prácticas de equipo |
+| [11](modulo-11-enterprise-seguridad/README.md) | Enterprise y Seguridad | 1h 15min | Seguridad, políticas enterprise, managed-settings.d/, mejores prácticas |
 | [12](modulo-12-metodologias-desarrollo-ia/README.md) | Metodologías de Desarrollo con IA | 2h | Spec-Driven Development, historias Gherkin, TDD con Claude, patrones avanzados |
-| [13](modulo-13-multimodalidad-notebooks/README.md) | Multimodalidad y Notebooks | 1.5h | Imágenes, PDFs, Jupyter notebooks, Visual-Driven Development |
+| [13](modulo-13-multimodalidad-notebooks/README.md) | Multimodalidad y Notebooks | 1h 50min | Imágenes, PDFs, Jupyter notebooks, VDD, Voice y Computer Use |
 | [14](modulo-14-agent-sdk/README.md) | Claude Agent SDK | 2h | Construir agentes autónomos programáticamente con Python/TypeScript |
 | [15](modulo-15-plugins-marketplaces/README.md) | Plugins y Marketplaces | 1.5h | Empaquetar skills y hooks como plugins, marketplace público y privado, gestión enterprise |
 
@@ -70,7 +70,7 @@ El curso está organizado en **4 bloques progresivos** con **16 módulos**:
 |--------|--------|--------|-------------|
 | [16](modulo-16-proyecto-final/enunciado/README.md) | Proyecto Final Integrador | 4-6h | Construir una herramienta CLI completa aplicando todo lo aprendido (M01-M15) |
 
-**Tiempo total estimado: 31-33 horas**
+**Tiempo total estimado: 33-35 horas**
 
 ---
 
@@ -268,12 +268,21 @@ claude_tutorial/
 
 ## Versiones
 
-| Versión | Fecha | Notas |
-|---------|-------|-------|
-| 0.1 | Febrero 2026 | Versión inicial basada en Claude Code 2.x, Opus 4.6 |
-| 0.2 | Marzo 2026 | Añadidos M13 (Multimodalidad), M14 (Agent SDK). Actualizados M04-M10 con novedades. Proyecto final movido a M15 |
-| 0.3 | Marzo 2026 | Añadido M15 (Plugins y Marketplaces). Proyecto final movido a M16 |
-| 1.0 | Marzo 2026 | Revisión, corrección de errores y añadida licencia. |
+| Versión | Fecha | Base Claude Code | Cambios principales |
+|---------|-------|------------------|---------------------|
+| 0.1 | Febrero 2026 | Claude Code 2.x | Versión inicial (M01-M12, Proyecto Final como M13) |
+| 0.2 | Marzo 2026 | Claude Code 2.1.x | +M13 Multimodalidad, +M14 Agent SDK. Actualizados M04-M10 |
+| 0.3 | Marzo 2026 | Claude Code 2.1.x | +M15 Plugins/Marketplaces. Proyecto final movido a M16 |
+| 1.0 | Marzo 2026 | Claude Code 2.1.70+ | Revisión, corrección de errores, licencia, referencia CLI exhaustiva |
+| 2.0 | 25 marzo 2026 | Claude Code 2.1.83 | Auto Mode, MCP Elicitation, Computer Use, Compaction API, 9 nuevos hooks, managed-settings.d/, 128K output tokens |
+
+### Novedades v2.0 (25 marzo 2026)
+
+**Nuevos ficheros de teoría:** Auto Mode (M05), Compaction API (M03), MCP Elicitation (M07), managed-settings.d/ (M11), Voice y Computer Use (M13)
+
+**Features cubiertas:** Remote Control, adaptive thinking, Fast Mode 2.5x, `--bare` flag, data residency, `initialPrompt` en agentes, `[Image #N]` chips, títulos de sesión IA, `sandbox.failIfUnavailable`, dynamic filtering, code execution gratuita
+
+**Deprecaciones:** `thinking: {type: "enabled"}` y `budget_tokens`, `--output-format`, prefill en Opus 4.6, `TaskOutput`, `task.resume`
 
 ---
 
