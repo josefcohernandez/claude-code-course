@@ -138,7 +138,7 @@ Es el fichero principal de configuracion del proyecto. Se comparte con el equipo
 }
 ```
 
-**Eventos de hooks disponibles (26 eventos):**
+**Eventos de hooks disponibles (25 eventos):**
 
 | Evento | Cuando se ejecuta |
 |--------|-------------------|

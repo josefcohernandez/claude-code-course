@@ -48,14 +48,14 @@
 
 | Atajo | Accion |
 |-------|--------|
-| `Esc` | Parar a Claude a mitad de accion |
+| `Ctrl+C` | Parar a Claude a mitad de accion |
 | `Esc` + `Esc` | Menu de rewind (deshacer) |
-| `Shift+Tab` | Ciclar modos de permiso: Normal → Auto-Accept → Plan → Delegate |
+| `Shift+Tab` | Ciclar modos de permiso: Normal → Auto-Accept → Plan |
 | `Ctrl+O` | Ver pensamiento de Claude (verbose mode) |
 | `Ctrl+G` | Abrir plan en editor de texto |
 | `Ctrl+B` | Enviar tarea al background |
 | `Alt+T` / `Option+T` | Activar/desactivar extended thinking |
-| `Shift+Up/Down` | Seleccionar teammate (Agent Teams) |
+| `Alt+O` / `Option+O` | Activar/desactivar fast mode |
 | `Ctrl+T` | Mostrar/ocultar lista de tareas |
 
 ---
@@ -64,10 +64,11 @@
 
 | Modo | Comportamiento | Atajo |
 |------|---------------|-------|
-| **Normal** | Pregunta antes de ejecutar la mayoria de acciones | Por defecto |
-| **Auto-accept** | Aprueba ediciones automaticamente, pregunta para Bash | `Shift+Tab` x1 |
-| **Plan** | Solo propone planes, no ejecuta nada | `Shift+Tab` x2 |
-| **Delegate** | Totalmente autonomo (cuidado!) | `Shift+Tab` x3 |
+| **Normal** (`default`) | Pregunta antes de ejecutar la mayoria de acciones | Por defecto |
+| **Auto-accept** (`acceptEdits`) | Aprueba ediciones automaticamente, pregunta para Bash | `Shift+Tab` x1 |
+| **Plan** (`plan`) | Solo propone planes, no ejecuta nada | `Shift+Tab` x2 |
+
+> Modos adicionales (`auto`, `bypassPermissions`) se pueden habilitar con `--enable-auto-mode` o `--permission-mode`.
 
 ---
 
@@ -111,8 +112,7 @@
 
 | Variable | Valor | Efecto |
 |----------|-------|--------|
-| `CLAUDE_CODE_ENABLE_SANDBOX` | `1` | Activar sandbox |
-| `DISABLE_NONESSENTIAL_TRAFFIC` | `1` | Sin telemetria |
+| `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` | `1` | Sin telemetria |
 | `MAX_THINKING_TOKENS` | `8000` | Limitar tokens de pensamiento |
 | `CLAUDE_CODE_MAX_OUTPUT_TOKENS` | `16000` | Limitar output |
 | `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` | `1` | Habilitar Agent Teams |

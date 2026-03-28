@@ -225,7 +225,6 @@ Claude Code incluye algunas skills de serie que aparecen en el menu `/`:
 | `/debug` | Inicia un flujo de depuracion guiado |
 | `/claude-api` | Carga material de referencia del Claude API/SDK para construir aplicaciones con la API de Anthropic |
 | `/loop` | Ejecuta un prompt repetidamente en un intervalo (ej: `/loop 5m comprueba el deploy`) |
-| `/schedule` | Crea, actualiza, lista o ejecuta tareas programadas en la nube (agentes remotos con cron) |
 
 ### Crear skills personalizadas
 

@@ -165,7 +165,7 @@ claude
 | `CLAUDE_CODE_TMPDIR` | path | directorio temporal del sistema | Directorio temporal para ficheros de trabajo de Claude Code |
 | `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS` | `1` | — | Desactiva toda la funcionalidad de tareas en segundo plano |
 | `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB` | `1` | — | Elimina las credenciales del entorno antes de lanzar subprocesos desde Claude Code. Impide que comandos bash ejecutados por Claude hereden `ANTHROPIC_API_KEY` y otras variables sensibles. Recomendado en entornos de produccion (v2.1.81+) |
-| `CLAUDE_STREAM_IDLE_TIMEOUT_MS` | numero (ms) | — | Timeout del watchdog de streaming idle. Controla cuanto tiempo espera Claude Code antes de considerar una conexion de streaming como inactiva y cancelarla. Util para ajustar la tolerancia a pausas largas en respuestas de streaming (v2.1.84+) |
+| `CLAUDE_STREAM_IDLE_TIMEOUT_MS` | numero (ms) | `90000` (90s) | Timeout del watchdog de streaming idle. Controla cuanto tiempo espera Claude Code antes de considerar una conexion de streaming como inactiva y cancelarla |
 
 ### Ejemplo: ajuste de timeouts para CI
 
@@ -205,7 +205,6 @@ export BASH_MAX_OUTPUT_LENGTH=500000     # Mas output para logs detallados
 | `CLAUDE_CODE_ENABLE_TELEMETRY` | `1` | — | Activa la telemetria de OpenTelemetry. Requiere configurar las variables `OTEL_*` correspondientes |
 | `DISABLE_TELEMETRY` | `1` | — | Desactiva el envio de telemetria a Anthropic |
 | `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` | `1` | — | Desactiva todo el trafico no esencial: telemetria, sugerencias de prompts, actualizaciones de estado en segundo plano |
-| `CLAUDE_CODE_DEBUG` | `1` | — | Activa logs de depuracion detallados. Equivalente a `--debug` |
 
 ### Variables de OpenTelemetry
 
@@ -228,7 +227,6 @@ export OTEL_SERVICE_NAME="claude-code-mi-equipo"
 
 | Variable | Valores | Defecto | Descripcion |
 |----------|---------|---------|-------------|
-| `CLAUDE_CODE_STATUS_LINE` | template string | — | Personaliza la linea de estado del terminal. Ver [/statusline](https://code.claude.com/docs/en/statusline) para la sintaxis del template |
 | `CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION` | `true` / `false` | `true` | Activa o desactiva las sugerencias de prompts que aparecen en gris. Desactivar ahorra tokens cuando la cache esta fria |
 
 ---

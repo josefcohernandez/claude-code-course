@@ -309,7 +309,7 @@ Controlan qué acciones puede realizar Claude de forma autónoma.
 
 | Flag | Descripción | Ejemplo |
 |------|-------------|---------|
-| `--permission-mode` | Modo de permisos: `default`, `auto-accept`, `plan`, `delegate` | `claude --permission-mode plan` |
+| `--permission-mode` | Modo de permisos: `default`, `acceptEdits`, `plan`, `bypassPermissions` | `claude --permission-mode plan` |
 | `--allowedTools` | Lista de herramientas permitidas sin pedir confirmación | `claude --allowedTools "Read,Grep,Glob"` |
 | `--disallowedTools` | Lista de herramientas bloqueadas | `claude --disallowedTools "Bash"` |
 | `--dangerously-skip-permissions` | Omite TODAS las confirmaciones de permisos (PELIGROSO) | Solo para CI/CD controlado |
@@ -319,9 +319,9 @@ Controlan qué acciones puede realizar Claude de forma autónoma.
 | Modo | Comportamiento | Uso recomendado |
 |------|---------------|-----------------|
 | `default` | Pide confirmación para acciones destructivas | Uso diario normal |
-| `auto-accept` | Acepta todo automáticamente | Tareas de confianza, scripts supervisados |
+| `acceptEdits` | Acepta ediciones automáticamente, pregunta para Bash | Tareas de confianza, scripts supervisados |
 | `plan` | Solo planifica, no ejecuta cambios | Revisión de código, planificación |
-| `delegate` | Delega decisiones al modelo orquestador | Agentes multi-modelo |
+| `bypassPermissions` | Omite todos los permisos (solo en entornos aislados) | CI/CD, entornos sandboxed |
 
 **Ejemplo con herramientas permitidas:**
 ```bash
