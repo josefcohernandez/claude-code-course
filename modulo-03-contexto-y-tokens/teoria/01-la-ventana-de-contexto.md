@@ -197,27 +197,11 @@ La auto-compactación es una **red de seguridad**, no una estrategia. Cuando se 
 Es mucho mejor **gestionar tu contexto proactivamente** con `/clear` y `/compact`
 que esperar a que la auto-compactación te rescate.
 
-## El comando /context
+## Monitorizar el uso de contexto
 
-Para saber qué está consumiendo tu ventana de contexto, usa:
+Para saber cuánto contexto estás consumiendo, usa el comando `/cost` o la barra de estado que muestra el porcentaje de uso de la ventana de contexto.
 
-```
-/context
-```
-
-Este comando te muestra un desglose de qué está ocupando espacio:
-
-```
-Context usage: 45,231 / 200,000 tokens (22.6%)
-
-Breakdown:
-  System prompt:           3,200 tokens  (1.6%)
-  CLAUDE.md files:         4,800 tokens  (2.4%)
-  MCP tool definitions:    8,500 tokens  (4.3%)  <-- atención a esto
-  Conversation history:   28,731 tokens  (14.4%)
-```
-
-### Qué buscar en /context
+### Qué vigilar
 
 1. **MCP tool definitions alto:** Si tienes 8-10 servidores MCP configurados,
    pueden consumir el 10-15% de tu contexto solo con sus definiciones de
@@ -237,9 +221,9 @@ Los tokens no son solo un tema de rendimiento; también son dinero.
 
 | Modelo | Precio Input (1M tokens) | Precio Output (1M tokens) |
 |--------|-------------------------|--------------------------|
-| Claude Sonnet 4 | $3.00 | $15.00 |
+| Claude Sonnet 4.6 | $3.00 | $15.00 |
 | Claude Opus 4 | $15.00 | $75.00 |
-| Claude Haiku 3.5 | $0.80 | $4.00 |
+| Claude Haiku 4.5 | $0.80 | $4.00 |
 
 ### Costes típicos por día
 
@@ -309,7 +293,7 @@ son caras y cuáles son baratas.
 2. **Limpia proactivamente.** No esperes a la auto-compactación. Usa `/clear`
    entre tareas no relacionadas.
 
-3. **Monitoriza constantemente.** Usa `/context` y `/cost` para saber dónde
+3. **Monitoriza constantemente.** Usa `/cost` y la barra de estado para saber dónde
    estás.
 
 4. **Cada línea de CLAUDE.md tiene un coste.** Se carga en cada sesión,

@@ -30,9 +30,9 @@ mi-proyecto/
 
 ### Protección de credenciales en subprocesos
 
-> **Novedad v3.0**
+> **Nota:** Verifica la disponibilidad de esta variable en la documentación oficial de tu versión.
 
-La variable de entorno `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB=1` elimina automáticamente las credenciales y tokens del entorno de los subprocesos que Claude Code lanza. Esto previene la filtración accidental de secrets a través de comandos ejecutados por Claude.
+La variable de entorno `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB=1` está diseñada para eliminar automáticamente las credenciales y tokens del entorno de los subprocesos que Claude Code lanza. Esto previene la filtración accidental de secrets a través de comandos ejecutados por Claude.
 
 ```bash
 export CLAUDE_CODE_SUBPROCESS_ENV_SCRUB=1
@@ -40,6 +40,8 @@ claude
 ```
 
 Cuando está activada, variables como `AWS_SECRET_ACCESS_KEY`, `GITHUB_TOKEN`, `DATABASE_URL` y similares se eliminan del entorno antes de pasar al subproceso. Esto es especialmente importante cuando Claude ejecuta scripts de terceros o comandos que podrían enviar datos a servicios externos.
+
+> **Alternativa verificada:** Si esta variable no está disponible, puedes lograr un efecto similar usando hooks `PreToolUse` que validen y filtren los comandos que Claude puede ejecutar, o mediante las listas `deny` en permisos.
 
 ### 2. Salida de comandos
 

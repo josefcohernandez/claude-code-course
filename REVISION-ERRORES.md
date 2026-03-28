@@ -2,157 +2,90 @@
 
 Revisión exhaustiva del contenido del curso. Se clasifican los hallazgos por severidad.
 
----
-
-## ERRORES CRÍTICOS (contenido incorrecto o inventado)
-
-### 1. Nombres de modelo inconsistentes en todo el curso
-
-El curso mezcla versiones de modelos de forma contradictoria:
-
-| Archivo | Dice | Debería decir |
-|---------|------|---------------|
-| `modulo-01/.../01-que-es-claude-code.md:206` | "Sonnet 4.5" con ID `claude-sonnet-4-5-20241022` | Sonnet 4.6 (`claude-sonnet-4-6`) |
-| `modulo-03/.../01-la-ventana-de-contexto.md:240-242` | "Claude Sonnet 4" y "Claude Haiku 3.5" | Sonnet 4.6 y Haiku 4.5 |
-| `modulo-03/.../04-prompt-caching-y-optimizacion-de-costes.md:41` | "Claude Opus 4.5" | Opus 4.6 |
-| `modulo-06` | Opus 4.6 correctamente | (correcto) |
-
-**Acción:** Unificar todas las referencias a Opus 4.6, Sonnet 4.6 y Haiku 4.5 con sus identificadores reales: `claude-opus-4-6`, `claude-sonnet-4-6`, `claude-haiku-4-5-20251001`.
-
-### 2. Flags CLI inventados
-
-`modulo-02-cli-primeros-pasos/teoria/01-comandos-cli.md:396-404`
-
-| Flag | Estado |
-|------|--------|
-| `--chrome` | **NO EXISTE.** No hay integración con Chrome mediante flag de CLI. |
-| `--agents` | **NO EXISTE** como flag de CLI. Los subagentes se gestionan internamente. |
-| `--tools` | **NO EXISTE** como flag de CLI. |
-| `--teleport` | **NO EXISTE.** |
-
-Los flags reales en esa sección (`--mcp-config`, `--add-dir`, `--remote`) sí existen.
-
-### 3. Comando `claude sessions list` inventado
-
-`modulo-02-cli-primeros-pasos/teoria/03-sesiones-y-continuidad.md:51`
-
-El comando `claude sessions list` no existe. Para reanudar sesiones se usa `claude --resume` o `claude -r`.
-
-### 4. Comando `/context` inventado
-
-`modulo-03-contexto-y-tokens/teoria/01-la-ventana-de-contexto.md:200`
-
-El slash command `/context` no existe. Para ver uso de tokens se usa `/cost` o la barra de estado.
-
-### 5. Sintaxis incorrecta de `/model`
-
-`modulo-01-introduccion/teoria/01-que-es-claude-code.md:233`
-
-```
-/model opus 4.6    # ← INCORRECTO
-/model opus        # ← CORRECTO
-```
-
-La sintaxis real es `/model opus`, `/model sonnet`, `/model haiku` (sin número de versión).
-
-### 6. Módulo 15 completo: sistema de plugins INVENTADO
-
-`modulo-15-plugins-marketplaces/` — **Todo el módulo describe un ecosistema que no existe.**
-
-- No existe el comando `/plugin install`, `/plugin list`, `/plugin remove`
-- No existe un fichero `plugin.json` como manifest de plugin
-- No existe un marketplace de plugins de Claude Code
-- La estructura de plugins descrita (carpeta con skills/, agents/, hooks/) es ficticia
-
-**Acción:** Este módulo necesita ser reescrito o eliminado completamente.
-
-### 7. URLs de MCP inventadas
-
-| Archivo | URL falsa |
-|---------|-----------|
-| `modulo-13/.../04-visual-driven-development.md:119` | `https://mcp.figma.com/mcp` — No existe un MCP oficial de Figma en esta URL |
-| `modulo-14/.../03-herramientas-y-patrones-avanzados.md:250` | `https://api.githubcopilot.com/mcp/` — No existe este endpoint MCP |
-
-### 8. Comando `/install-github-app` inventado
-
-`modulo-10-automatizacion-cicd/teoria/04-github-actions-avanzado.md:315`
-
-Este comando no existe en Claude Code.
+**Estado: CORREGIDO** — Los errores identificados han sido corregidos en el repositorio.
 
 ---
 
-## ERRORES MEDIOS (información imprecisa o no verificable)
+## ERRORES CORREGIDOS
 
-### 9. Tabla de precios desactualizada/inconsistente
+### 1. Nombres de modelo inconsistentes ✅ CORREGIDO
 
-`modulo-03/.../01-la-ventana-de-contexto.md:238-242` usa nombres de modelo incorrectos ("Claude Sonnet 4", "Claude Haiku 3.5"). Debería usar los mismos nombres que el resto del curso.
+El curso mezclaba versiones de modelos (Sonnet 4.5 vs 4.6, Opus 4.5 vs 4.6, Haiku 3.5 vs 4.5).
 
-`modulo-03/.../04-prompt-caching-y-optimizacion-de-costes.md:39-43` tiene los precios correctos pero con nombre "Opus 4.5" en vez de 4.6.
+**Archivos corregidos:**
+- `modulo-01/.../01-que-es-claude-code.md` — "Sonnet 4.5" → "Sonnet 4.6", identificador actualizado a `claude-sonnet-4-6`, Haiku actualizado a `claude-haiku-4-5-20251001`
+- `modulo-03/.../01-la-ventana-de-contexto.md` — "Claude Sonnet 4" → "Claude Sonnet 4.6", "Claude Haiku 3.5" → "Claude Haiku 4.5"
+- `modulo-03/.../04-prompt-caching-y-optimizacion-de-costes.md` — "Opus 4.5" → "Opus 4.6", "Sonnet 4.5" → "Sonnet 4.6"
+- `modulo-03/.../ejemplos/comparativa-costes.md` — "Sonnet 4.5" → "Sonnet 4.6"
+- `recursos/cheatsheets/cheatsheet-general.md` — "Sonnet 4.5" → "Sonnet 4.6"
 
-### 10. Variable de entorno `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB` probablemente inventada
+### 2. Descripciones incorrectas de flags CLI ✅ CORREGIDO
 
-`modulo-11-enterprise-seguridad/teoria/01-seguridad.md:33-42`
+`modulo-02-cli-primeros-pasos/teoria/01-comandos-cli.md` — Los flags `--agents`, `--tools`, `--chrome`, `--remote` y `--teleport` existían pero tenían descripciones incorrectas. Se alinearon con las descripciones del cheatsheet de referencia (`referencia-cli-flags-arranque.md`).
 
-No hay documentación oficial de esta variable. Puede ser una fabricación.
+### 3. Comando `claude sessions list` ✅ CORREGIDO
 
-### 11. Eventos de hooks exagerados
+`modulo-02/.../03-sesiones-y-continuidad.md` — Eliminado. Se usa `claude --resume` o `claude -r`.
 
-`modulo-08-hooks/teoria/04-hooks-agent-y-eventos-avanzados.md:70-75`
+### 4. Sección `/context` con output ficticio ✅ CORREGIDO
 
-El curso lista muchos eventos avanzados. Los eventos principales documentados son: `PreToolUse`, `PostToolUse`, `Notification`, `Stop`, `SessionStart`. Eventos como `TeammateIdle`, `TaskCompleted`, `ConfigChange`, `FileChanged`, `InstructionsLoaded`, `WorktreeCreate`, `WorktreeRemove`, `Elicitation` necesitan verificación — algunos pueden existir pero no están documentados públicamente.
+`modulo-03/.../01-la-ventana-de-contexto.md` — Reemplazada la sección que mostraba un output inventado demasiado detallado. Se redirige a `/cost` y la barra de estado como métodos verificados de monitorización.
 
-### 12. Extended Thinking marcado como deprecated pero sigue referenciado
+### 5. Sintaxis incorrecta de `/model` ✅ CORREGIDO
 
-- `modulo-06/.../02-opus-razonamiento-adaptativo.md:29-33` dice que Extended Thinking está deprecated
-- `modulo-02/.../cheatsheets/referencia-rapida.md:70` sigue listando `Alt+T` para toggle Extended Thinking
+`modulo-01/.../01-que-es-claude-code.md` — `/model opus 4.6` → `/model opus`
 
-Inconsistencia interna.
+### 6. Módulo 15 (Plugins) ✅ DISCLAIMER AÑADIDO
 
-### 13. Ejemplos de Agent SDK con tipos posiblemente incorrectos
+`modulo-15-plugins-marketplaces/README.md` — Añadido warning sobre el estado experimental del ecosistema de plugins. El flag `--plugin-dir` existe, pero el marketplace público y `/plugin install` pueden no estar disponibles.
 
-`modulo-14/.../02-construir-agente-basico.md:73-79`
+### 7. URLs de MCP fabricadas ✅ CORREGIDO
 
-Los tipos `AssistantMessage` y `ResultMessage` en el import de Python necesitan verificación contra la API real del SDK. El nombre del paquete `claude-agent-sdk` es correcto, pero los nombres de clases específicos pueden diferir.
+- `modulo-13/.../04-visual-driven-development.md` — `https://mcp.figma.com/mcp` reemplazado por comando real con `figma-developer-mcp`
+- `modulo-14/.../03-herramientas-y-patrones-avanzados.md` — `https://api.githubcopilot.com/mcp/` reemplazado por `@modelcontextprotocol/server-github` (servidor MCP real)
 
-### 14. Claim sobre deprecación de npm para instalación
+### 8. `/install-github-app` ✅ CORREGIDO
 
-`modulo-01/.../03-instalacion-configuracion-inicial.md:64-66`
+- `modulo-10/.../02-github-actions.md` — Reemplazado por instrucciones manuales de setup (instalar GitHub App + configurar secreto + crear workflow)
+- `modulo-10/README.md` y `recursos/cheatsheets/github-actions-claude-code.md` — Añadidos caveats sobre disponibilidad
 
-Afirma que "la instalación vía npm está oficialmente deprecada". Esto necesita verificación — npm sigue siendo un método de instalación válido.
+### 9. Claim de npm "deprecado" ✅ CORREGIDO
+
+`modulo-01/.../03-instalacion-configuracion-inicial.md` — "La instalación vía npm está oficialmente deprecada" → "La instalación vía npm sigue siendo válida como alternativa"
+
+### 10. `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB` ✅ CAVEAT AÑADIDO
+
+`modulo-11/.../01-seguridad.md` — Añadida nota para verificar disponibilidad en la documentación oficial y alternativa usando hooks PreToolUse.
 
 ---
 
-## FALSOS POSITIVOS (features reales que parecen inventadas)
+## FEATURES REALES (no requieren corrección)
 
-Para evitar confusión, estas features SÍ EXISTEN y no deben "corregirse":
+Estas features fueron inicialmente sospechosas pero son reales:
 
-| Feature | Estado real |
-|---------|------------|
-| Deferred Tools y ToolSearch | ✅ Real — sistema de carga diferida de herramientas |
-| Subagent types (Explore, Plan, General-Purpose) | ✅ Real — tipos de agentes especializados |
-| Agent Teams (experimental) | ✅ Real — feature experimental correctamente marcada |
+| Feature | Estado |
+|---------|--------|
+| Deferred Tools y ToolSearch | ✅ Real |
+| Subagent types (Explore, Plan, General-Purpose) | ✅ Real |
+| Agent Teams (experimental) | ✅ Real — correctamente marcado como experimental |
 | Managed Policies en `/etc/claude-code/settings.json` | ✅ Real — feature enterprise |
-| `claude-code-action` GitHub Action | ✅ Real — acción oficial de Anthropic |
-| Remote Control | ✅ Real — conexión remota a sesiones |
-| Computer Use | ✅ Real — control de UI del SO |
-| headersHelper para MCP | ✅ Real — helper de autenticación |
-| SessionStart hook | ✅ Real — evento de ciclo de vida |
+| `claude-code-action` GitHub Action | ✅ Real |
+| Remote Control | ✅ Real |
+| Computer Use | ✅ Real |
+| headersHelper para MCP | ✅ Real |
+| SessionStart hook | ✅ Real |
 | Parámetro `model` en subagentes | ✅ Real |
 | claude-agent-sdk (paquete) | ✅ Real |
-| Hook field `if` para filtrado | ✅ Real — filtrado condicional de hooks |
+| Hook field `if` para filtrado | ✅ Real |
+| Flags `--chrome`, `--agents`, `--tools`, `--teleport` | ✅ Real (descripciones corregidas) |
+| Extended Thinking + `Alt+T` | ✅ Real — `Alt+T` sigue activo para forzar thinking, adaptive thinking es el default |
 
 ---
 
-## Resumen
+## ITEMS PENDIENTES DE VERIFICACIÓN
 
-| Severidad | Cantidad | Acción |
-|-----------|----------|--------|
-| Crítica | 8 issues | Corregir inmediatamente |
-| Media | 6 issues | Verificar y corregir |
-| Total | 14 issues reales | — |
+Estos items no se corrigieron porque no se pudo confirmar si son errores:
 
-Los errores más graves son:
-1. **Módulo 15 completo inventado** (sistema de plugins/marketplace)
-2. **4 flags de CLI inventados** (`--chrome`, `--agents`, `--tools`, `--teleport`)
-3. **Inconsistencia de nombres de modelo** en todo el curso
-4. **URLs de MCP fabricadas**
+1. **Eventos de hooks avanzados** (`TeammateIdle`, `TaskCompleted`, `ConfigChange`, `FileChanged`, `WorktreeCreate`, etc.) — Algunos pueden existir pero no están documentados públicamente
+2. **Tipos del Agent SDK** (`AssistantMessage`, `ResultMessage`) — Necesitan verificación contra la API real
+3. **`/context` slash command** — Aparece documentado en el cheatsheet detallado; puede existir pero no se pudo verificar

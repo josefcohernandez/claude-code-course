@@ -8,23 +8,15 @@ GitHub Actions es la plataforma de CI/CD nativa de GitHub. Anthropic ofrece una 
 
 ---
 
-## Setup Rápido con `/install-github-app`
+## Setup Rápido
 
-La forma más rápida de configurar GitHub Actions con Claude Code es desde la terminal:
+La forma más rápida de configurar GitHub Actions con Claude Code es:
 
-```bash
-# Dentro de una sesión de Claude Code
-/install-github-app
-```
-
-Este comando guía interactivamente a través de:
-1. Instalar la GitHub App de Claude en tu repositorio
-2. Configurar el secreto `ANTHROPIC_API_KEY`
-3. Crear el workflow YAML necesario
+1. Instala la [GitHub App de Claude](https://github.com/apps/claude) en tu repositorio
+2. Configura el secreto `ANTHROPIC_API_KEY` en los settings del repositorio (Settings > Secrets and variables > Actions)
+3. Crea el workflow YAML necesario (ver sección siguiente)
 
 **Requisitos:** Debes ser administrador del repositorio.
-
-Si prefieres configuración manual o usas Bedrock/Vertex AI, sigue los pasos de la sección siguiente.
 
 ---
 
@@ -529,7 +521,7 @@ Si tienes workflows con `@beta`, estos son los cambios necesarios para migrar a 
 | Concepto | Detalle |
 |----------|---------|
 | Acción oficial | `anthropics/claude-code-action@v1` |
-| Setup rápido | `/install-github-app` desde Claude Code |
+| Setup rápido | Instalar GitHub App de Claude + configurar secreto + crear workflow |
 | Secreto necesario | `ANTHROPIC_API_KEY` (API directa) |
 | Triggers principales | `pull_request`, `issue_comment`, `issues`, `schedule` |
 | Menciones | `@claude` en comentarios de PRs e issues |

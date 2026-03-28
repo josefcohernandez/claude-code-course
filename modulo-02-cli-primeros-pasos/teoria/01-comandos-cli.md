@@ -395,13 +395,13 @@ Para casos de uso especializados y configuraciones avanzadas.
 
 | Flag | Descripción | Ejemplo |
 |------|-------------|---------|
-| `--agents` | Habilita modo multi-agente con equipos | `claude --agents "architect,developer,reviewer"` |
+| `--agents` | Define subagentes personalizados dinámicamente vía JSON. Usa los mismos campos que el frontmatter de subagentes, más un campo `prompt` | `claude --agents '{"reviewer":{"description":"Revisa código","prompt":"Eres un revisor"}}'` |
 | `--mcp-config` | Carga configuración MCP desde archivo JSON | `claude --mcp-config ./mcp-servers.json` |
-| `--tools` | Especifica herramientas adicionales a cargar | `claude --tools "custom-tool"` |
+| `--tools` | Restringe qué herramientas integradas puede usar Claude. `""` para desactivar todas, `"default"` para todas, o nombres separados por coma | `claude --tools "Bash,Edit,Read"` |
 | `--add-dir` | Añade directorios adicionales al contexto | `claude --add-dir ../shared-lib --add-dir ../common` |
-| `--chrome` | Habilita la integración con el navegador Chrome. Permite a Claude Code interactuar con páginas web abiertas en Chrome para testing de UI, screenshots automáticos, inspección del DOM, etc. | `claude --chrome` |
-| `--remote` | Conecta con una instancia remota de Claude Code | `claude --remote` |
-| `--teleport` | Habilita teleport para desarrollo remoto | `claude --teleport` |
+| `--chrome` | Habilita la integración con el navegador Chrome para automatización web | `claude --chrome` |
+| `--remote` | Crea una nueva sesión web en claude.ai con la descripción de tarea indicada | `claude --remote "Arregla el bug de login"` |
+| `--teleport` | Reanuda una sesión web en el terminal local | `claude --teleport` |
 
 **Ejemplo: Múltiples directorios**
 ```bash

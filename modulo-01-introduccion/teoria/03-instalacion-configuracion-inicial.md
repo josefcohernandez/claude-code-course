@@ -16,7 +16,7 @@ Este apartado cubre la instalación de Claude Code, la configuración de la aute
 | **Cuenta** | Pro, Max, Teams, Enterprise o Console | El plan gratuito de Claude.ai no incluye Claude Code |
 
 > [!IMPORTANT]
-> **Node.js ya no es necesario**. Desde 2026, la instalación nativa es el método recomendado. No requiere Node.js, npm ni ninguna dependencia externa. La instalación vía npm está oficialmente deprecada.
+> **Node.js ya no es necesario**. La instalación nativa es el método recomendado. No requiere Node.js, npm ni ninguna dependencia externa. La instalación vía npm sigue siendo válida como alternativa.
 
 ---
 

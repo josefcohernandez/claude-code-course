@@ -86,7 +86,7 @@
 | Modelo | Coste relativo | Usar para |
 |--------|---------------|-----------|
 | **Haiku 4.5** | $ | Preguntas rapidas, subagentes simples, batch |
-| **Sonnet 4.5** | $$ | Desarrollo diario (80% del tiempo) |
+| **Sonnet 4.6** | $$ | Desarrollo diario (80% del tiempo) |
 | **Opus 4.6** | $$$$$ | Arquitectura, debugging complejo, security review |
 | **opusplan** | $$$ | Opus para planificar + Sonnet para implementar |
 
