@@ -82,10 +82,34 @@ Estas features fueron inicialmente sospechosas pero son reales:
 
 ---
 
+## VERIFICACIÓN CONTRA DOCUMENTACIÓN OFICIAL (code.claude.com/docs)
+
+### Cheatsheet de flags (`referencia-cli-flags-arranque.md`) — 51/55 correctos
+
+| Hallazgo | Corrección aplicada |
+|----------|-------------------|
+| `--output-config` — flag fabricado | ✅ Eliminado |
+| `--output-format` falsamente marcado como deprecated | ✅ Restaurado como activo |
+| `--effort` incluía valor `auto` que no existe | ✅ Eliminado `auto` |
+| `--bare` descripción incorrecta (mencionaba LSP) | ✅ Corregido |
+| Faltaban `--enable-auto-mode`, `--tmux`, `--dangerously-load-development-channels` | ✅ Añadidos |
+
+### Cheatsheet de slash commands (`referencia-cli-slash-commands.md`) — 61/62 correctos
+
+| Hallazgo | Corrección aplicada |
+|----------|-------------------|
+| `/loop` descrito como toggle de agentic loop; es una skill para prompts recurrentes | ✅ Corregido |
+| Faltaban `/schedule` y `/claude-api` | ✅ Añadidos |
+| `/context` — ✅ Confirmado real en docs oficiales | No requería corrección |
+| `/install-github-app` — ✅ Confirmado real en docs oficiales | No requería corrección |
+
+### Variable `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB` — ✅ Confirmada real
+
+Aparece en la documentación oficial de env vars. Restaurada la descripción original.
+
+---
+
 ## ITEMS PENDIENTES DE VERIFICACIÓN
 
-Estos items no se corrigieron porque no se pudo confirmar si son errores:
-
-1. **Eventos de hooks avanzados** (`TeammateIdle`, `TaskCompleted`, `ConfigChange`, `FileChanged`, `WorktreeCreate`, etc.) — Algunos pueden existir pero no están documentados públicamente
-2. **Tipos del Agent SDK** (`AssistantMessage`, `ResultMessage`) — Necesitan verificación contra la API real
-3. **`/context` slash command** — Aparece documentado en el cheatsheet detallado; puede existir pero no se pudo verificar
+1. **Tipos del Agent SDK** (`AssistantMessage`, `ResultMessage`) — Necesitan verificación contra la API real del SDK
+2. **Eventos de hooks avanzados** (`TeammateIdle`, `TaskCompleted`, `ConfigChange`, `FileChanged`, etc.) — Algunos pueden existir pero requieren verificación
