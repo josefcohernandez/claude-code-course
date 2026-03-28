@@ -302,7 +302,7 @@ son caras y cuáles son baratas.
 5. **Los MCP servers tienen un coste oculto.** Sus definiciones de tools
    consumen contexto aunque no los uses.
 
-6. **El modelo importa.** Sonnet es 5x más barato que Opus. Usa cada uno
+6. **El modelo importa.** Sonnet es más barato que Opus (~1.7x diferencia). Usa cada uno
    donde corresponde.
 
 7. **La degradación es gradual e invisible.** No recibes un aviso cuando

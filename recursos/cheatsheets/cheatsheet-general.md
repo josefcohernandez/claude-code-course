@@ -87,8 +87,8 @@
 |--------|---------------|-----------|
 | **Haiku 4.5** | $ | Preguntas rapidas, subagentes simples, batch |
 | **Sonnet 4.6** | $$ | Desarrollo diario (80% del tiempo) |
-| **Opus 4.6** | $$$$$ | Arquitectura, debugging complejo, security review |
-| **opusplan** | $$$ | Opus para planificar + Sonnet para implementar |
+| **Opus 4.6** | $$ | Arquitectura, debugging complejo, security review (~1.7x Sonnet) |
+| **opusplan** | $$ | Opus para planificar + Sonnet para implementar |
 
 ---
 
