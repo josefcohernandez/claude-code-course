@@ -222,7 +222,7 @@ claude update
 | Variable | Propósito | Ejemplo |
 |----------|----------|---------|
 | `ANTHROPIC_API_KEY` | API key | `sk-ant-xxx` |
-| `CLAUDE_MODEL` | Modelo por defecto | `claude-sonnet-4-6-20250514` |
+| `ANTHROPIC_MODEL` | Modelo por defecto | `claude-sonnet-4-6` |
 | `HTTP_PROXY` | Proxy corporativo | `http://proxy:8080` |
 | `CLAUDE_CODE_USE_BEDROCK` | Usar Bedrock | `1` |
 | `DISABLE_AUTOUPDATER` | Desactivar auto-actualización | `1` |

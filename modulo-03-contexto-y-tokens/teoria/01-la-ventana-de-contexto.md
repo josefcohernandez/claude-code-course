@@ -56,7 +56,7 @@ Todo. Literalmente todo lo que Claude necesita para funcionar:
 |--------|--------------------|-----------------------|
 | Claude Opus 4.6 | 1M tokens (Max/Team/Enterprise) | 128,000 tokens |
 | Claude Sonnet 4.6 | 1M tokens (beta) | 64,000 tokens |
-| Claude Haiku 4.5 | 200K tokens | 8,192 tokens |
+| Claude Haiku 4.5 | 200K tokens | 64,000 tokens |
 
 > **Nota v3.0:** Opus 4.6 duplicó su límite de salida de 64K a **128K tokens** en marzo 2026.
 > Sonnet 4.6 alcanza 1M de contexto en beta. Estos incrementos permiten sesiones más largas
@@ -222,8 +222,8 @@ Los tokens no son solo un tema de rendimiento; también son dinero.
 | Modelo | Precio Input (1M tokens) | Precio Output (1M tokens) |
 |--------|-------------------------|--------------------------|
 | Claude Sonnet 4.6 | $3.00 | $15.00 |
-| Claude Opus 4 | $15.00 | $75.00 |
-| Claude Haiku 4.5 | $0.80 | $4.00 |
+| Claude Opus 4.6 | $5.00 | $25.00 |
+| Claude Haiku 4.5 | $1.00 | $5.00 |
 
 ### Costes típicos por día
 
@@ -235,8 +235,8 @@ Según datos de Anthropic:
 | 90% de usuarios | < $12/dev/día |
 | Usuarios intensivos | $15-25/dev/día |
 
-> **Nota:** Los costes de Opus son aproximadamente 5x los de Sonnet. Un día
-> intensivo con Opus puede costar $30-50. Por eso es importante elegir el
+> **Nota:** Los costes de Opus son aproximadamente 1.7x los de Sonnet. Un día
+> intensivo con Opus puede costar $15-30. Por eso es importante elegir el
 > modelo correcto para cada tarea.
 
 ### Prompt caching: ahorro automático
