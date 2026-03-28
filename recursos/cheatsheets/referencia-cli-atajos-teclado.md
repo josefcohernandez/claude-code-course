@@ -55,10 +55,12 @@ Ejecuta `/terminal-setup` en Claude Code para configurar automaticamente los key
 
 | Ciclo | Modo | Comportamiento |
 |-------|------|----------------|
-| Estado inicial | **Normal** | Pregunta antes de ejecutar acciones que modifican el sistema |
-| Shift+Tab x1 | **Auto-Accept** | Acepta ediciones de ficheros automaticamente, pregunta para Bash |
-| Shift+Tab x2 | **Plan** | Solo propone planes, no ejecuta nada |
+| Estado inicial | **Normal** (`default`) | Pregunta antes de ejecutar acciones que modifican el sistema |
+| Shift+Tab x1 | **Auto-Accept** (`acceptEdits`) | Acepta ediciones de ficheros automaticamente, pregunta para Bash |
+| Shift+Tab x2 | **Plan** (`plan`) | Solo propone planes, no ejecuta nada |
 | Shift+Tab x3 | **Normal** (vuelta al inicio) | — |
+
+> **Nota:** Si tienes modos adicionales habilitados (como `auto` con `--enable-auto-mode` o `bypassPermissions`), estos se añaden al ciclo.
 
 ---
 

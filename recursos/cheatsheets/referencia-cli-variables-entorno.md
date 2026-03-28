@@ -132,6 +132,17 @@ claude
 
 ---
 
+## Proveedor: Microsoft Azure AI Foundry
+
+| Variable | Valores | Defecto | Descripcion |
+|----------|---------|---------|-------------|
+| `CLAUDE_CODE_USE_FOUNDRY` | `1` | — | Activa la integracion con Microsoft Azure AI Foundry |
+| `ANTHROPIC_FOUNDRY_API_KEY` | string | — | API key de Azure AI Foundry |
+| `ANTHROPIC_FOUNDRY_BASE_URL` | URL | — | URL base del recurso de Azure AI Foundry |
+| `ANTHROPIC_FOUNDRY_RESOURCE` | string | — | Nombre del recurso de Azure AI Foundry |
+
+---
+
 ## Modelo y razonamiento
 
 | Variable | Valores | Defecto | Descripcion |
