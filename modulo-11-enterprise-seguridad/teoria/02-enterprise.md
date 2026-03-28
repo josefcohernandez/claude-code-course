@@ -313,6 +313,22 @@ Aspectos que se pueden auditar:
 
 > **Novedad v3.2 (v2.1.85):** Para incluir los parámetros de las herramientas en los eventos `tool_result` de OpenTelemetry, activa la variable `CLAUDE_CODE_OTEL_LOG_TOOL_DETAILS=1`. Por defecto estos datos no se incluyen para evitar exponer información sensible en los logs de observabilidad.
 
+### Header de sesión en peticiones API
+
+Claude Code incluye el header `X-Claude-Code-Session-Id` en todas las peticiones que realiza a la API. Este identificador de sesión es constante durante toda la sesión interactiva o de automatización, y cambia en cada nueva invocación de Claude Code.
+
+**Utilidad para proxies enterprise (Bedrock, Vertex AI, Azure Foundry):**
+- Agregar métricas de uso y coste por sesión sin necesidad de parsear el body de cada petición
+- Implementar rate limiting a nivel de sesión en el proxy o API gateway
+- Correlacionar trazas de observabilidad con sesiones concretas de un desarrollador o pipeline CI/CD
+- Identificar sesiones de larga duración que consumen una cantidad desproporcionada de tokens
+
+```
+X-Claude-Code-Session-Id: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+```
+
+> Este header es especialmente valioso en entornos donde varias peticiones independientes forman parte de un único flujo de trabajo agentivo: el header permite al proxy tratarlas como una unidad de observabilidad. *(Novedad v2.1.86)*
+
 ---
 
 ## Dimensionamiento y rate limiting por tamaño de equipo
@@ -508,3 +524,4 @@ Auto Mode permite que Claude Code tome decisiones de permisos automáticamente u
 | Data residency (`inference_geo`) | Control de región de procesamiento | API / Enterprise |
 | Auto Mode | Permisos automáticos con IA de seguridad | Team (research preview) |
 | `managed-settings.d/` | Fragmentos de políticas drop-in | Enterprise |
+| `X-Claude-Code-Session-Id` | Header de sesión para observabilidad en proxies | Todos (v2.1.86) |

@@ -84,7 +84,7 @@ Al completar este modulo, seras capaz de:
    |
 4. Ejercicio 03: Ciclo TDD completo (20 min)
    |
-5. Aplicar en el Modulo 13 (Proyecto Final)
+5. Aplicar en el Modulo 16 (Proyecto Final)
 ```
 
 ---

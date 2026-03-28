@@ -1,4 +1,4 @@
-# Modulo 01: Introduccion a Claude Code
+# Modulo 01: Introduccion y Metodologia
 
 ## Descripcion General
 
@@ -50,11 +50,10 @@ Al completar este modulo seras capaz de:
 
 ## Tiempo Total Estimado
 
-**2 horas** distribuidas de la siguiente manera:
+**1 hora 30 minutos** distribuidas de la siguiente manera:
 
 - Teoria: ~1 hora 15 minutos
-- Ejercicios practicos: ~40 minutos
-- Consulta de ejemplos y referencia: ~5 minutos (consulta continua durante el modulo)
+- Ejercicios practicos: ~15 minutos
 
 ---
 

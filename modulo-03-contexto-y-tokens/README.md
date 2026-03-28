@@ -1,4 +1,4 @@
-# Modulo 03: Contexto y Tokens - La Clave de la Eficiencia
+# Modulo 03: Contexto y Tokens
 
 > **Este es el modulo mas importante del curso.** Todo lo que aprendas aqui determinara
 > cuanto valor extraes de Claude Code cada dia. Un desarrollador que gestiona bien su

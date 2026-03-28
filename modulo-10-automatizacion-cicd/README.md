@@ -1,4 +1,4 @@
-# Modulo 10: Automatizacion y CI/CD con Claude Code
+# Modulo 10: Automatizacion y CI/CD
 
 ## Descripcion General
 

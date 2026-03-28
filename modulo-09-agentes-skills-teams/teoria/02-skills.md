@@ -145,6 +145,8 @@ Descripción breve de lo que hace el skill. Ayuda a Claude a decidir cuándo sug
 description: "Ejecuta el pipeline completo de despliegue a producción"
 ```
 
+> **Nota:** El menú `/skills` trunca las descripciones a **250 caracteres** y ordena los skills alfabéticamente. Escribe descripciones concisas y con la información más relevante al principio (*frontloaded*): si la descripción es larga, los últimos caracteres pueden no mostrarse. *(Novedad v2.1.86)*
+
 ### context (opcional)
 
 Controla dónde se ejecuta el skill:
@@ -446,7 +448,7 @@ Este skill se ejecuta en un subagente (`context: fork`) porque:
    - Bien: `deploy-staging`, `generar-migracion`, `crear-componente`
    - Mal: `d1`, `proceso`, `hacer-cosa`
 
-2. **Descripciones útiles**: La descripción ayuda a Claude a sugerir el skill correcto
+2. **Descripciones útiles y concisas**: La descripción ayuda a Claude a sugerir el skill correcto. El menú `/skills` muestra un máximo de 250 caracteres, así que coloca la información clave al principio.
    ```yaml
    description: "Genera una migración de base de datos con métodos up/down"
    ```

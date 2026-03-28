@@ -1,4 +1,4 @@
-# Modulo 02: CLI y Primeros Pasos con Claude Code
+# Modulo 02: CLI y Primeros Pasos
 
 ## Descripcion General
 

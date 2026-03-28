@@ -1,4 +1,4 @@
-# Modulo 07: MCP - Model Context Protocol
+# Modulo 07: MCP (Model Context Protocol)
 
 ## Descripcion
 

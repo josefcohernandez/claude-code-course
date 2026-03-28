@@ -1,4 +1,4 @@
-# Modulo 06: Plan Mode, Opus 4.6 y Workflows Eficientes
+# Modulo 06: Plan Mode, Opus 4.6 y Workflows
 
 ## Descripcion
 
@@ -13,7 +13,7 @@ adaptativo, y workflows probados para maximizar productividad.
 3. Saber cuando usar Opus vs Sonnet vs Haiku
 4. Aplicar workflows probados al dia a dia
 
-## Duracion: 2h 30min (90 min teoria + 60 min ejercicios)
+## Duracion: 2h 15min (90 min teoria + 45 min ejercicios)
 
 ## Prerequisitos: Modulos 01-05 completados
 
