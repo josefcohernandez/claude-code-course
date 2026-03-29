@@ -186,6 +186,24 @@ paths:
 
 Esto permite que un skill de "deploy" solo aparezca cuando trabajas en ficheros de infraestructura, o que un skill de "test" solo se active en directorios de tests. Acepta listas YAML de globs estandar.
 
+### effort (opcional)
+
+> **Novedad v2.1.80**
+
+Controla el nivel de esfuerzo de razonamiento que Claude aplica al ejecutar el skill:
+
+| Valor | Comportamiento |
+|-------|---------------|
+| `"low"` | Respuestas rápidas con razonamiento mínimo |
+| `"medium"` | Balance entre velocidad y profundidad |
+| `"high"` (default) | Razonamiento profundo y detallado |
+
+```yaml
+effort: "low"  # Para skills de consulta rápida
+```
+
+Este campo también se aplica a los **commands** personalizados definidos con frontmatter. Es útil para skills de consulta o referencia donde no se necesita razonamiento extenso.
+
 ### disable-model-invocation (opcional)
 
 Controla si Claude procesa las instrucciones o simplemente las devuelve como texto:
@@ -482,6 +500,7 @@ Este skill se ejecuta en un subagente (`context: fork`) porque:
 | Carga | Bajo demanda (no al inicio de cada sesión) |
 | `$ARGUMENTS` | Variable sustituida con los argumentos del usuario |
 | `context: fork` | Ejecuta en subagente (contexto aislado) |
+| `effort` | Nivel de esfuerzo de razonamiento: `"low"`, `"medium"`, `"high"` |
 | `disable-model-invocation` | Si es `true`, devuelve el texto sin ejecutar |
 | Invocación | `/nombre-del-skill` o Skill tool |
 | vs CLAUDE.md | CLAUDE.md = siempre; Skills = bajo demanda |

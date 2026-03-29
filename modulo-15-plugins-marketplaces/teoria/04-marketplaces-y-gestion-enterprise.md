@@ -71,6 +71,8 @@ En `.claude/settings.json` (a nivel de usuario o proyecto):
 }
 ```
 
+Desde v2.1.80, los plugins también pueden provenir de la fuente `source: 'settings'`, que indica que el plugin fue configurado directamente en el fichero de settings del usuario o del proyecto (en lugar de instalarse desde un marketplace). Esto aparece en la pestaña **Installed** de `/plugin` para distinguir plugins instalados manualmente vía configuración de los instalados desde un marketplace.
+
 Con esta configuración, los desarrolladores de la organización pueden explorar e instalar plugins internos con el mismo flujo que el marketplace público:
 
 ```bash

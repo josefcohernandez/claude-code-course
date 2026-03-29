@@ -87,12 +87,19 @@ sudo apt install bubblewrap
 | Clave | Proposito |
 |-------|----------|
 | `sandbox.enabled: true` | Activar sandbox |
+| `sandbox.filesystem.allowRead` | Lista de rutas adicionales de solo lectura accesibles dentro del sandbox (v2.1.77+) |
 | `sandbox.network.allowedDomains` | Lista de dominios permitidos para acceso a red dentro del sandbox |
 
 ```json
 {
   "sandbox": {
     "enabled": true,
+    "filesystem": {
+      "allowRead": [
+        "/usr/share/fonts",
+        "/opt/shared-configs"
+      ]
+    },
     "network": {
       "allowedDomains": [
         "registry.npmjs.org",
@@ -102,6 +109,8 @@ sudo apt install bubblewrap
   }
 }
 ```
+
+La clave `sandbox.filesystem.allowRead` permite que procesos dentro del sandbox lean rutas adicionales fuera del directorio del proyecto (por ejemplo, fuentes del sistema o configuraciones compartidas). Las rutas listadas se montan como de solo lectura.
 
 ### Variables de entorno adicionales
 

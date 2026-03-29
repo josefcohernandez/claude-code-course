@@ -148,6 +148,7 @@ claude
 | Variable | Valores | Defecto | Descripcion |
 |----------|---------|---------|-------------|
 | `ANTHROPIC_MODEL` | nombre de modelo | — | Modelo por defecto para la sesion. Acepta alias (`sonnet`, `opus`) o nombre completo (`claude-sonnet-4-6`). Equivalente a `--model` |
+| `ANTHROPIC_CUSTOM_MODEL_OPTION` | JSON string | — | Permite definir opciones de modelo personalizadas que aparecen en el selector de modelos. Útil para proxies o modelos fine-tuned que no están en la lista estándar (v2.1.77+) |
 | `ANTHROPIC_SMALL_FAST_MODEL` | nombre de modelo | Haiku | **[DEPRECATED]** Modelo usado para tareas rapidas y subagentes ligeros |
 | `MAX_THINKING_TOKENS` | numero | — | Limita el numero de tokens de razonamiento interno (extended thinking). Util para controlar costes cuando el extended thinking esta activo |
 | `DISABLE_PROMPT_CACHING` | `1` | — | Desactiva el prompt caching. Util en regiones de Bedrock donde el caching no esta disponible |
@@ -228,6 +229,14 @@ export OTEL_SERVICE_NAME="claude-code-mi-equipo"
 | Variable | Valores | Defecto | Descripcion |
 |----------|---------|---------|-------------|
 | `CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION` | `true` / `false` | `true` | Activa o desactiva las sugerencias de prompts que aparecen en gris. Desactivar ahorra tokens cuando la cache esta fria |
+
+---
+
+## Plugins
+
+| Variable | Valores | Defecto | Descripcion |
+|----------|---------|---------|-------------|
+| `CLAUDE_CODE_PLUGIN_SEED_DIR` | path(s) | — | Directorio(s) adicionales donde buscar plugins locales. Soporta múltiples directorios separados por `:` en Linux/macOS o `;` en Windows. Útil para equipos que mantienen plugins en un directorio compartido fuera del proyecto (v2.1.79+) |
 
 ---
 

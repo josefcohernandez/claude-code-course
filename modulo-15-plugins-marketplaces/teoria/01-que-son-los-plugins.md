@@ -115,6 +115,22 @@ Una vez instalado, los componentes del plugin están disponibles de forma inmedi
 - Los **hooks** se activan automáticamente según el evento configurado
 - Los **subagentes** aparecen disponibles en el contexto de la sesión
 
+### Variables de Entorno para Plugins
+
+Los plugins tienen acceso a variables de entorno especiales que Claude Code inyecta automáticamente:
+
+| Variable | Descripción |
+|----------|-------------|
+| `${CLAUDE_PLUGIN_DATA}` | Directorio persistente para almacenar estado del plugin entre sesiones. Cada plugin recibe su propio directorio aislado (v2.1.78+) |
+| `CLAUDE_CODE_PLUGIN_SEED_DIR` | Directorio(s) adicionales donde buscar plugins locales. Soporta múltiples directorios separados por `:` en Linux/macOS o `;` en Windows (v2.1.79+) |
+
+La variable `${CLAUDE_PLUGIN_DATA}` es útil para plugins que necesitan mantener configuración, caché o estado entre ejecuciones. Se puede usar dentro de scripts de hooks o skills del plugin:
+
+```bash
+# Ejemplo en un hook del plugin: guardar timestamp del último deploy
+echo "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > "${CLAUDE_PLUGIN_DATA}/last-deploy.txt"
+```
+
 ### Gestionar plugins
 
 ```bash

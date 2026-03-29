@@ -47,7 +47,7 @@ Los slash commands se invocan escribiendo `/` seguido del nombre del comando en 
 
 | Comando | Sintaxis | Descripcion | Notas |
 |---------|----------|-------------|-------|
-| `/config` | `/config` | Abre la interfaz de Settings para ajustar tema, modelo, estilo de output, y otras preferencias | Alias: `/settings` |
+| `/config` | `/config` | Abre la interfaz de Settings para ajustar tema, modelo, estilo de output, duracion de turno y otras preferencias. Incluye toggle "Show turn duration" para mostrar cuánto tarda cada respuesta (v2.1.79+) | Alias: `/settings` |
 | `/status` | `/status` | Abre la interfaz de Settings (pestana Status) mostrando version, modelo, cuenta y conectividad | — |
 | `/context` | `/context` | Visualiza el uso actual del contexto como una cuadricula de colores. Muestra sugerencias de optimizacion | — |
 | `/cost` | `/cost` | Muestra estadisticas de uso de tokens. Ver [guia de seguimiento de costes](https://code.claude.com/docs/en/costs) | — |
@@ -150,7 +150,7 @@ Los slash commands se invocan escribiendo `/` seguido del nombre del comando en 
 | `/help` | `/help` | Muestra ayuda y comandos disponibles | — |
 | `/keybindings` | `/keybindings` | Abre o crea el fichero de configuracion de keybindings | — |
 | `/terminal-setup` | `/terminal-setup` | Configura keybindings del terminal para Shift+Enter y otros atajos | Solo visible en terminales que lo necesitan |
-| `/statusline` | `/statusline` | Configura la linea de estado de Claude Code. Sin argumentos, auto-configura desde el prompt del shell | — |
+| `/statusline` | `/statusline` | Configura la linea de estado de Claude Code. Sin argumentos, auto-configura desde el prompt del shell. Los scripts de statusline reciben el campo `rate_limits` con información sobre límites de uso actuales (v2.1.80+) | — |
 | `/release-notes` | `/release-notes` | Ver el changelog completo, con la version mas reciente mas proxima al prompt | — |
 
 ### Autenticacion
