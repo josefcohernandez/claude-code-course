@@ -282,6 +282,15 @@ claude_tutorial/
 | 3.3 | 28 marzo 2026 | Claude Code 2.1.86 | Header X-Claude-Code-Session-Id, skill descriptions 250 chars, 18 correcciones verificadas |
 | 3.4 | 29 marzo 2026 | Claude Code 2.1.87 | Consolidación deuda técnica: `allowRead` sandbox, `${CLAUDE_PLUGIN_DATA}`, `effort` frontmatter |
 | 3.5 | 7 abril 2026 | Claude Code 2.1.92 | Hook PermissionDenied, defer en PreToolUse, MCP maxResultSizeChars, /powerup, forceRemoteSettingsRefresh, plugin bin/, 2 deprecaciones |
+| 3.6 | 14 abril 2026 | Claude Code 2.1.107 | Effort default high, wizard Vertex AI, Monitor tool, /team-onboarding, OS CA trust, monitors en plugins, PreCompact blocking, 8 env vars nuevas |
+
+### Novedades v3.6 (14 abril 2026)
+
+**Features cubiertas (v2.1.94-v2.1.107):** Effort default cambiado a `high` (M06), wizard interactivo Vertex AI (M11), Monitor tool para streaming de eventos (M10), `/team-onboarding` (M11), OS CA certificate trust (M11), `monitors` en plugins (M15), PreCompact blocking (M08), `hookSpecificOutput.sessionTitle` (M08), skill descriptions 1.536 chars (M09), `EnterWorktree` con `path` (M09), `/proactive` alias de `/loop` (M10), `/ultraplan` auto-cloud (M06)
+
+**Nuevas env vars/flags:** `CLAUDE_CODE_USE_MANTLE`, `CLAUDE_CODE_PERFORCE_MODE`, `CLAUDE_CODE_SCRIPT_CAPS`, `CLAUDE_CODE_CERT_STORE`, `TRACEPARENT`, `OTEL_LOG_USER_PROMPTS`, `OTEL_LOG_TOOL_DETAILS`, `OTEL_LOG_TOOL_CONTENT`, `--exclude-dynamic-system-prompt-sections`
+
+**Nuevos slash commands:** `/team-onboarding`, `/proactive`, `/ultraplan`
 
 ### Novedades v3.5 (7 abril 2026)
 

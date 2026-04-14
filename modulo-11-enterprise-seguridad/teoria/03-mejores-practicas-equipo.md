@@ -4,6 +4,28 @@
 
 La incorporación de nuevos miembros a un equipo que usa Claude Code debe ser gradual y estructurada. Un onboarding mal hecho genera dependencia, errores de seguridad y frustración.
 
+### Comando `/team-onboarding` (v2.1.101)
+
+Desde v2.1.101, Claude Code incluye el comando `/team-onboarding` que genera automáticamente una guía de rampa personalizada para nuevos miembros del equipo. El comando analiza la configuración local del repositorio y produce un documento adaptado al proyecto concreto:
+
+```bash
+# Dentro de una sesión de Claude Code, en el directorio del proyecto:
+/team-onboarding
+```
+
+Claude Code examina los siguientes elementos para construir la guía:
+
+- **CLAUDE.md**: Instrucciones del proyecto, convenciones y reglas de negocio
+- **`.claude/settings.json`**: Permisos configurados (comandos permitidos y bloqueados)
+- **`.claude/commands/`**: Skills disponibles para el equipo (comandos personalizados)
+- **Hooks configurados**: Automatizaciones activas (linting, tests, formateo)
+
+La guía generada incluye los pasos de instalación específicos para el stack del proyecto, los comandos más usados según los skills disponibles, y las restricciones de seguridad aplicadas. Esto elimina la necesidad de mantener documentación de onboarding separada: el propio repositorio es la fuente de verdad.
+
+> **Recomendación**: Ejecutar `/team-onboarding` cada vez que el CLAUDE.md, los settings o los hooks cambien significativamente, para verificar que la guía generada sigue siendo coherente con el estado actual del proyecto.
+
+El comando es complementario al proceso de onboarding manual por fases descrito a continuación: la guía generada sirve como punto de partida, mientras que las fases estructuran la progresión de confianza y autonomía del nuevo miembro.
+
 ### Proceso de onboarding recomendado
 
 #### Fase 1: Instalación y configuración (Día 1)

@@ -283,6 +283,26 @@ En Linux, el sandbox se activa a través de la configuración de settings o el c
 
 Claude Code ejecutará comandos dentro de un entorno aislado con acceso limitado al directorio del proyecto.
 
+#### Aislamiento PID namespace (v2.1.98)
+
+Desde v2.1.98, en Linux los subprocesos lanzados por Claude Code se ejecutan en un **namespace PID aislado**. Esto significa que cada subproceso tiene su propia vista del árbol de procesos del sistema, sin acceso a los PIDs del host. El aislamiento impide que los scripts ejecutados por Claude puedan señalizar, inspeccionar o interferir con procesos ajenos al sandbox.
+
+Dos variables complementan este aislamiento:
+
+| Variable | Efecto |
+|----------|--------|
+| `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB=1` | Elimina variables de entorno sensibles (tokens, API keys, credenciales) del entorno antes de pasarlo al subproceso. Ver también la sección "Protección de credenciales en subprocesos" al inicio de este fichero. |
+| `CLAUDE_CODE_SCRIPT_CAPS=<N>` | Limita el número máximo de invocaciones de script por sesión. Útil para prevenir bucles accidentales o el abuso de herramientas de script en flujos agentivos. |
+
+```bash
+# Ejemplo: sandbox con scrubbing de credenciales y límite de 50 scripts por sesión
+export CLAUDE_CODE_SUBPROCESS_ENV_SCRUB=1
+export CLAUDE_CODE_SCRIPT_CAPS=50
+claude
+```
+
+> **Nota**: El aislamiento PID namespace solo está disponible en Linux (no en macOS, que usa Apple Seatbelt). En macOS el sandbox nativo ya proporciona un nivel equivalente de aislamiento de procesos.
+
 ### Qué restringe el sandbox
 
 | Recurso | Sin sandbox | Con sandbox |

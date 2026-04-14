@@ -15,11 +15,11 @@ de su razonamiento según la complejidad de la tarea.
 | Nivel | Cuándo | Ejemplo |
 |-------|--------|---------|
 | **Bajo (low)** | Tareas simples, respuestas directas | "¿Qué hace git status?" |
-| **Medio (medium)** | Tareas con algo de complejidad **(default)** | "Refactoriza esta función a async" |
-| **Alto (high)** | Problemas complejos, multi-archivo | "Diseña sistema de permisos RBAC" |
+| **Medio (medium)** | Tareas con algo de complejidad | "Refactoriza esta función a async" |
+| **Alto (high)** | Problemas complejos, multi-archivo **(default)** | "Diseña sistema de permisos RBAC" |
 | **Máximo (max)** | Razonamiento sin límites (**solo Opus 4.6**) | "Analiza y resuelve esta condición de carrera en el sistema distribuido" |
 
-Opus decide automáticamente cuánto "pensar" basándose en la complejidad. El nivel por defecto es **medium**, recomendado para la mayoría de tareas de programación.
+Opus decide automáticamente cuánto "pensar" basándose en la complejidad. Desde v2.1.94, el nivel por defecto es **high** para usuarios de API key, Bedrock, Vertex, Team y Enterprise.
 
 > **Tip:** Para activar razonamiento profundo en un solo turno sin cambiar la configuración de la sesión, incluye la keyword **"ultrathink"** en tu prompt.
 

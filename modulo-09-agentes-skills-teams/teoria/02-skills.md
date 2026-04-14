@@ -145,7 +145,9 @@ Descripción breve de lo que hace el skill. Ayuda a Claude a decidir cuándo sug
 description: "Ejecuta el pipeline completo de despliegue a producción"
 ```
 
-> **Nota:** El menú `/skills` trunca las descripciones a **250 caracteres** y ordena los skills alfabéticamente. Escribe descripciones concisas y con la información más relevante al principio (*frontloaded*): si la descripción es larga, los últimos caracteres pueden no mostrarse. *(Novedad v2.1.86)*
+> **Nota:** El menú `/skills` trunca las descripciones a **1.536 caracteres** y ordena los skills alfabéticamente. Escribe descripciones concisas y con la información más relevante al principio (*frontloaded*): si la descripción es larga, los últimos caracteres pueden no mostrarse. *(Novedad v2.1.86)*
+>
+> Desde v2.1.105, el límite de la descripción en el menú `/skills` se amplió de 250 a 1.536 caracteres. Descripciones que excedan este límite generan un warning al iniciar la sesión.
 
 ### context (opcional)
 
@@ -175,7 +177,7 @@ context: fork  # Ejecutar en subagente
 
 > **Novedad v3.1 (v2.1.84)**
 
-Limita la activacion del skill a ficheros que coincidan con una lista de patrones glob. El skill solo se sugerira o activara cuando el usuario trabaje con ficheros que coincidan:
+Limita la activación del skill a ficheros que coincidan con una lista de patrones glob. El skill solo se sugerirá o activará cuando el usuario trabaje con ficheros que coincidan:
 
 ```yaml
 paths:
@@ -184,7 +186,7 @@ paths:
   - "tests/api/**/*.test.ts"
 ```
 
-Esto permite que un skill de "deploy" solo aparezca cuando trabajas en ficheros de infraestructura, o que un skill de "test" solo se active en directorios de tests. Acepta listas YAML de globs estandar.
+Esto permite que un skill de "deploy" solo aparezca cuando trabajas en ficheros de infraestructura, o que un skill de "test" solo se active en directorios de tests. Acepta listas YAML de globs estándar.
 
 ### effort (opcional)
 
@@ -470,7 +472,7 @@ Este skill se ejecuta en un subagente (`context: fork`) porque:
    - Bien: `deploy-staging`, `generar-migracion`, `crear-componente`
    - Mal: `d1`, `proceso`, `hacer-cosa`
 
-2. **Descripciones útiles y concisas**: La descripción ayuda a Claude a sugerir el skill correcto. El menú `/skills` muestra un máximo de 250 caracteres, así que coloca la información clave al principio.
+2. **Descripciones útiles y concisas**: La descripción ayuda a Claude a sugerir el skill correcto. El menú `/skills` muestra un máximo de 1.536 caracteres (ampliado de 250 en v2.1.105), así que coloca la información clave al principio.
    ```yaml
    description: "Genera una migración de base de datos con métodos up/down"
    ```

@@ -181,6 +181,19 @@ Claude Code muestra una línea de estado en la parte inferior del CLI con inform
 
 Útil para mantener visibilidad del coste y el modelo sin necesidad de ejecutar `/cost` o `/status` manualmente.
 
+**Campos adicionales para status line con scripts personalizados:**
+
+Cuando se usan scripts personalizados para generar la status line, el JSON de entrada incluye campos como `workspace.git_worktree` (v2.1.97), que indica si la sesión se ejecuta dentro de un git worktree aislado. Además, el campo `refreshInterval` (v2.1.97) permite configurar la frecuencia en segundos con la que el script se re-ejecuta automáticamente:
+
+```json
+{
+  "statusLine": {
+    "command": "python mi-statusline.py",
+    "refreshInterval": 30
+  }
+}
+```
+
 ### Directorios Adicionales con `--add-dir` y `additionalDirectories`
 
 El flag `--add-dir` permite añadir directorios de trabajo adicionales al contexto de la sesión. Es especialmente útil en monorepos o cuando Claude Code necesita acceder a ficheros fuera del directorio actual:

@@ -22,7 +22,7 @@ Indice: [referencia-cli-indice.md](./referencia-cli-indice.md)
 | Flag | Alias | Tipo | Descripcion | Ejemplo |
 |------|-------|------|-------------|---------|
 | `--continue` | `-c` | boolean | Carga la conversacion mas reciente en el directorio actual | `claude -c` |
-| `--resume` | `-r` | string | Reanuda una sesion especifica por ID o nombre, o abre el selector interactivo | `claude -r "refactor-auth"` |
+| `--resume` | `-r` | string | Reanuda una sesion especifica por ID o nombre, o abre el selector interactivo. En modo `-p`, acepta titulos asignados con `/rename` o `--name` (v2.1.101) | `claude -r "refactor-auth"` |
 | `--fork-session` | — | boolean | Al reanudar, crea un nuevo ID de sesion en lugar de reutilizar el original (usar con `--resume` o `--continue`) | `claude --resume abc123 --fork-session` |
 | `--from-pr` | — | string/number | Reanuda sesiones vinculadas a un PR de GitHub especifico. Acepta numero o URL de PR | `claude --from-pr 123` |
 | `--name` | `-n` | string | Asigna un nombre visible a la sesion, mostrado en `/resume` y en el titulo del terminal | `claude -n "mi-feature"` |
@@ -99,6 +99,7 @@ Indice: [referencia-cli-indice.md](./referencia-cli-indice.md)
 | Flag | Alias | Tipo | Descripcion | Ejemplo |
 |------|-------|------|-------------|---------|
 | `--print` | `-p` | boolean | Modo no interactivo: emite la respuesta y sale | `claude -p "query"` |
+| `--exclude-dynamic-system-prompt-sections` | — | boolean | **Solo print.** Excluye las secciones dinamicas del system prompt (CLAUDE.md, reglas contextuales). Mejora la tasa de prompt cache hits cuando multiples usuarios comparten la misma configuracion base (v2.1.98) | `claude -p --exclude-dynamic-system-prompt-sections "query"` |
 | `--output-format` | — | string | **Solo print.** Formato de salida: `text` (defecto), `json`, `stream-json` | `claude -p "query" --output-format json` |
 | `--input-format` | — | string | **Solo print.** Formato de entrada: `text` (defecto), `stream-json` | `claude -p --input-format stream-json` |
 | `--json-schema` | — | JSON string | **Solo print.** Valida el output contra un JSON Schema una vez que el agente completa su workflow | `claude -p --json-schema '{"type":"object",...}' "query"` |

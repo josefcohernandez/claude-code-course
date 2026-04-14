@@ -63,7 +63,7 @@ Los slash commands son acciones integradas que no consumen tokens de la API.
 | `/help` | Mostrar ayuda |
 | `/cost` | Ver el coste acumulado de la sesión: tokens consumidos y coste estimado en USD |
 | `/model` | Ver o cambiar modelo actual |
-| `/doctor` | Diagnosticar problemas de configuración, conexión y permisos. Útil cuando algo no funciona como se espera |
+| `/doctor` | Diagnosticar problemas de configuración, conexión y permisos. Desde v2.1.105, muestra iconos de estado y ofrece la opción `f` para que Claude repare automáticamente los problemas detectados |
 | `/status` | Estado de la sesión |
 
 ### Comandos de Configuración

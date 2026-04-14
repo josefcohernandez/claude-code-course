@@ -199,6 +199,46 @@ Cuando el contexto se compacta, asegurar que informacion critica no se pierde:
 }
 ```
 
+### Bloquear la compactación (desde v2.1.105)
+
+Además de inyectar contexto con `prompt`, desde la versión 2.1.105 un hook `PreCompact` puede **bloquear completamente la compactación**. Esto es útil cuando la sesión contiene contexto crítico que no puede perderse bajo ningún concepto (por ejemplo, un estado de depuración complejo o un conjunto de decisiones de diseño aún no documentadas).
+
+Dos mecanismos equivalentes para bloquear:
+
+- **Exit code 2** en el script shell
+- Devolver `{"decision": "block"}` en stdout como JSON
+
+```json
+{
+  "hooks": {
+    "PreCompact": [
+      {
+        "type": "command",
+        "command": "echo '{\"decision\": \"block\"}'",
+        "description": "Bloquea compactación cuando hay contexto crítico activo"
+      }
+    ]
+  }
+}
+```
+
+Ejemplo con lógica condicional: bloquear solo si existe un fichero centinela que indica que la sesión tiene estado crítico activo.
+
+```bash
+#!/bin/bash
+# precompact-guard.sh
+# Bloquea la compactación si el proyecto está en modo depuración activa
+
+if [ -f ".claude/no-compact" ]; then
+  echo "Compactación bloqueada: fichero .claude/no-compact presente." >&2
+  exit 2
+fi
+
+exit 0
+```
+
+> **Nota:** Al bloquear la compactación, el contexto continúa creciendo hasta alcanzar el límite de la context window. Usar este mecanismo de forma puntual y eliminar el bloqueo (o el fichero centinela) en cuanto el contexto crítico ya no sea necesario.
+
 ---
 
 ## Hook 7: Notificacion al Terminar

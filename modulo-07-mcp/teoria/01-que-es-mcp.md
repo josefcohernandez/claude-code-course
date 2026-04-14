@@ -92,6 +92,8 @@ MCP añade herramientas **externas**:
 | Grep/Glob (búsqueda) | Servicios cloud |
 | WebFetch/WebSearch | Herramientas personalizadas |
 
+> **Nota sobre WebFetch (v2.1.105):** `WebFetch` elimina automáticamente las etiquetas `<style>` y `<script>` del HTML descargado para preservar el budget de tokens. El contenido devuelto contiene solo el texto y la estructura semántica de la página.
+
 **Regla**: Si puedes hacerlo con Bash o built-in, no necesitas MCP.
 MCP es para integraciones que no se pueden hacer con shell commands.
 

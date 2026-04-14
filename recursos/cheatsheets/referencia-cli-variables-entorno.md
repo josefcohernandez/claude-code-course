@@ -166,6 +166,8 @@ claude
 | `CLAUDE_CODE_TMPDIR` | path | directorio temporal del sistema | Directorio temporal para ficheros de trabajo de Claude Code |
 | `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS` | `1` | — | Desactiva toda la funcionalidad de tareas en segundo plano |
 | `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB` | `1` | — | Elimina las credenciales del entorno antes de lanzar subprocesos desde Claude Code. Impide que comandos bash ejecutados por Claude hereden `ANTHROPIC_API_KEY` y otras variables sensibles. Recomendado en entornos de produccion (v2.1.81+) |
+| `CLAUDE_CODE_SCRIPT_CAPS` | numero | — | Limita el numero maximo de invocaciones de script (Bash tool) por sesion. Util como medida de seguridad para evitar bucles infinitos o uso excesivo de shell (v2.1.98) |
+| `TRACEPARENT` | string (auto) | — | Variable W3C inyectada automaticamente en subprocesos Bash cuando OTEL tracing esta activo. Permite propagar el contexto de trazas distribuidas a herramientas externas invocadas por Claude (v2.1.98) |
 | `CLAUDE_STREAM_IDLE_TIMEOUT_MS` | numero (ms) | `90000` (90s) | Timeout del watchdog de streaming idle. Controla cuanto tiempo espera Claude Code antes de considerar una conexion de streaming como inactiva y cancelarla |
 
 ### Ejemplo: ajuste de timeouts para CI
@@ -221,7 +223,10 @@ export OTEL_SERVICE_NAME="claude-code-mi-equipo"
 
 | Variable | Valores | Defecto | Descripcion |
 |----------|---------|---------|-------------|
-| `CLAUDE_CODE_OTEL_LOG_TOOL_DETAILS` | `1` | — | Incluye `tool_parameters` en los eventos `tool_result` de OpenTelemetry. Por defecto no se incluyen para evitar exponer datos sensibles en los logs de observabilidad (v2.1.85+) |
+| `CLAUDE_CODE_OTEL_LOG_TOOL_DETAILS` | `1` | — | Incluye `tool_parameters` en los eventos `tool_result` de OpenTelemetry. Por defecto no se incluyen para evitar exponer datos sensibles en los logs de observabilidad (v2.1.85+). Desde v2.1.101, alias simplificado: `OTEL_LOG_TOOL_DETAILS` |
+| `OTEL_LOG_USER_PROMPTS` | `1` | — | Incluye los prompts del usuario en las trazas de OpenTelemetry. Por defecto desactivado por privacidad (v2.1.101) |
+| `OTEL_LOG_TOOL_DETAILS` | `1` | — | Alias simplificado de `CLAUDE_CODE_OTEL_LOG_TOOL_DETAILS`. Incluye parametros de herramientas en trazas OTEL (v2.1.101) |
+| `OTEL_LOG_TOOL_CONTENT` | `1` | — | Incluye el contenido completo de resultados de herramientas en trazas OTEL. Puede generar un volumen alto de datos (v2.1.101) |
 
 ---
 
@@ -229,7 +234,7 @@ export OTEL_SERVICE_NAME="claude-code-mi-equipo"
 
 | Variable | Valores | Defecto | Descripcion |
 |----------|---------|---------|-------------|
-| `CLAUDE_CODE_NO_FLICKER` | `1` | — | Activa el modo de rendering sin parpadeo (alt-screen). Útil en terminales donde el redibujado rápido causa parpadeo visual (v2.1.89) |
+| `CLAUDE_CODE_NO_FLICKER` | `1` | — | Activa el modo de rendering sin parpadeo (alt-screen). Útil en terminales donde el redibujado rápido causa parpadeo visual. En este modo, `Ctrl+O` alterna una focus view que muestra solo el prompt, resumen de herramientas y respuesta final (v2.1.89, focus view v2.1.97) |
 
 ---
 
@@ -247,6 +252,16 @@ export OTEL_SERVICE_NAME="claude-code-mi-equipo"
 |----------|---------|---------|-------------|
 | `CLAUDE_CODE_PLUGIN_SEED_DIR` | path(s) | — | Directorio(s) adicionales donde buscar plugins locales. Soporta múltiples directorios separados por `:` en Linux/macOS o `;` en Windows. Útil para equipos que mantienen plugins en un directorio compartido fuera del proyecto (v2.1.79+) |
 | `CLAUDE_CODE_PLUGIN_KEEP_MARKETPLACE_ON_FAILURE` | `1` | — | Mantiene la cache local del marketplace cuando `git pull` falla. Útil en entornos con conectividad intermitente o que operan offline frecuentemente (v2.1.90) |
+
+---
+
+## Backends cloud
+
+| Variable | Valores | Defecto | Descripcion |
+|----------|---------|---------|-------------|
+| `CLAUDE_CODE_USE_MANTLE` | `1` | — | Habilita Amazon Bedrock powered by Mantle como backend de inferencia. Requiere configuracion Bedrock activa (v2.1.94) |
+| `CLAUDE_CODE_PERFORCE_MODE` | `1` | — | Modo de integracion con Perforce: las herramientas Edit, Write y NotebookEdit fallan en ficheros read-only con un hint sugiriendo ejecutar `p4 edit` primero. Util para equipos que usan Perforce como VCS (v2.1.98) |
+| `CLAUDE_CODE_CERT_STORE` | `bundled` | sistema operativo | Fuente de certificados TLS. Por defecto (desde v2.1.101) usa el certificate store del sistema operativo, lo que permite funcionar con proxies TLS empresariales sin configuracion adicional. Establecer a `bundled` para revertir al comportamiento anterior (solo certificados incluidos en Node.js) |
 
 ---
 

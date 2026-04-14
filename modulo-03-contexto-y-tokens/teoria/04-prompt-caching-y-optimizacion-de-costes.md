@@ -33,6 +33,8 @@ un 60-80% inferior al coste nominal calculado sin caché.
 
 > **Thinking summaries desactivados por defecto (v2.1.89):** Las thinking summaries (resúmenes del razonamiento interno) ya no se generan automáticamente en sesiones interactivas. Esto reduce el overhead de tokens en cada turno. En sesiones headless (`-p`) el comportamiento no cambia.
 
+> **Flag `--exclude-dynamic-system-prompt-sections` (v2.1.98):** En modo print (`claude --print`), este flag excluye las secciones dinámicas del system prompt (como el contenido de CLAUDE.md o reglas contextuales). Esto mejora la tasa de cache hits en escenarios donde múltiples usuarios comparten la misma configuración base, ya que la porción estática del prompt se mantiene idéntica entre invocaciones.
+
 ---
 
 ## Coste por modelo

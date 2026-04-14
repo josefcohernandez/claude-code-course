@@ -34,7 +34,7 @@ Ejecuta `/terminal-setup` en Claude Code para configurar automaticamente los key
 | `Ctrl+G` | Todas | Abre el prompt o una respuesta personalizada en el editor de texto por defecto | Modo interactivo |
 | `Ctrl+X Ctrl+E` | Todas | Abre el editor externo configurado en `$EDITOR` para redactar el prompt actual. Al guardar y cerrar, el contenido se inserta en el prompt | Prompt |
 | `Ctrl+L` | Todas | Limpia la pantalla del terminal (conserva el historial de conversacion) | Modo interactivo |
-| `Ctrl+O` | Todas | Alterna el output verbose (muestra el uso detallado de herramientas y ejecucion) | Modo interactivo |
+| `Ctrl+O` | Todas | Alterna el output verbose (muestra el uso detallado de herramientas y ejecucion). En modo `NO_FLICKER` (v2.1.97), activa una focus view que muestra solo el prompt, resumen de herramientas y respuesta final | Modo interactivo |
 | `Ctrl+R` | Todas | Busqueda inversa en el historial de comandos (busqueda interactiva) | Prompt |
 | `Ctrl+B` | Todas | Mueve comandos o agentes en ejecucion al segundo plano. **Usuarios de tmux: pulsar dos veces** | Modo interactivo |
 | `Ctrl+T` | Todas | Muestra u oculta la lista de tareas en el area de estado del terminal | Modo interactivo |

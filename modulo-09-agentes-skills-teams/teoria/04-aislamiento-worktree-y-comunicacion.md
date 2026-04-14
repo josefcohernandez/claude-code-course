@@ -42,6 +42,32 @@ haremos merge; si no, se descarta automáticamente.
 | Pruebas de concepto que pueden "romper cosas" | Se descarta automáticamente si no hay resultados útiles |
 | Comparar dos implementaciones alternativas | Dos worktrees en paralelo, luego se elige la mejor |
 
+### EnterWorktree: entrar en un worktree existente
+
+Claude Code expone la herramienta `EnterWorktree` para que un agente cambie su directorio de trabajo activo al de un worktree concreto.
+
+| Parámetro | Tipo | Descripción |
+|-----------|------|-------------|
+| `name` | string | Nombre del worktree al que se quiere entrar |
+| `path` | string | *(v2.1.105)* Ruta a un worktree ya existente. Permite entrar sin crear uno nuevo |
+
+> **Novedad v2.1.105:** El parámetro `path` permite entrar en un worktree que ya existe en disco — por ejemplo, uno que un agente anterior creó en la misma sesión — sin que `EnterWorktree` intente crear un worktree nuevo. Esto es útil para retomar trabajo en un worktree previamente inicializado.
+
+**Ejemplo de uso con `path`:**
+
+```
+El agente "feature-auth" creó un worktree en /tmp/worktrees/feature-auth
+durante su ejecución anterior. Para continuar allí sin duplicar el worktree:
+
+Usa EnterWorktree con path: "/tmp/worktrees/feature-auth" para retomar
+el trabajo de implementación de JWT donde lo dejó el agente anterior.
+```
+
+**Cuándo usar `path` en lugar del flujo estándar:**
+- Retomar trabajo en un worktree que un agente creó previamente en la sesión
+- Coordinar varios agentes que deben operar sobre el mismo worktree de forma secuencial
+- Inspeccionar o completar cambios parciales de un agente interrumpido
+
 ### Ejemplo práctico completo
 
 ```

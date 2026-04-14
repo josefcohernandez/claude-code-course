@@ -66,9 +66,68 @@ Los componentes del plugin (skills, hooks, agentes, servidores MCP) **no se decl
 
 ---
 
+## Monitors en Plugins (v2.1.105)
+
+Los plugins pueden incluir **monitors**: procesos background que arrancan automáticamente al iniciar sesión o al invocar un skill del plugin. Se declaran con la clave `monitors` en el directorio del plugin.
+
+Los monitors permiten que un plugin observe eventos continuamente (logs, cambios en ficheros, métricas) sin que el usuario tenga que activarlos manualmente. Combinan bien con hooks para reaccionar a eventos del entorno.
+
+```
+mi-plugin/
+├── .claude-plugin/
+│   └── plugin.json
+├── monitors/
+│   └── log-watcher.sh    # Monitor que arranca al cargar el plugin
+├── hooks/
+│   └── hooks.json
+└── skills/
+    └── deploy/
+        └── SKILL.md
+```
+
+Ejemplo de monitor que observa el log de errores de la aplicación (`monitors/log-watcher.sh`):
+
+```bash
+#!/bin/bash
+# Monitor: observa el log de errores y emite alertas estructuradas
+
+LOG_FILE="${PLUGIN_LOG_PATH:-/var/log/app/error.log}"
+
+if [ ! -f "$LOG_FILE" ]; then
+    echo "Monitor: fichero de log no encontrado en $LOG_FILE. Saliendo." >&2
+    exit 0
+fi
+
+# tail --follow arranca en background y sigue el fichero indefinidamente
+tail --follow=name --retry "$LOG_FILE" | while read -r LINE; do
+    if echo "$LINE" | grep -qiE "(error|exception|fatal)"; then
+        # Emite un evento estructurado que los hooks del plugin pueden procesar
+        echo "{\"event\": \"log_error\", \"line\": $(echo "$LINE" | python3 -c "import sys, json; print(json.dumps(sys.stdin.read().strip()))")}"
+    fi
+done
+```
+
+Puntos clave sobre los monitors:
+
+- Arrancan automáticamente al iniciar sesión con el plugin cargado o al invocar un skill del plugin.
+- Se declaran en el subdirectorio `monitors/` del plugin; Claude Code los descubre por estructura de directorios.
+- Deben ser procesos robustos: manejar correctamente la ausencia de recursos (ficheros, servicios) sin bloquearse.
+- Combinan bien con hooks `PostToolUse` o `Notification` para reaccionar a los eventos que detectan.
+- Los ejecutables en `monitors/` deben tener permisos de ejecución (`chmod +x`) igual que los hooks.
+
+> **Nota:** Esta funcionalidad requiere Claude Code v2.1.105 o superior. En versiones anteriores, el directorio `monitors/` se ignora silenciosamente.
+
+---
+
 ## Empaquetar Skills Existentes
 
 Si ya tienes skills en `.claude/skills/` de tu proyecto, puedes empaquetarlos en un plugin. Crea una subcarpeta dentro de `skills/` con el nombre del skill y coloca el archivo `SKILL.md` dentro. El plugin descubrirá automáticamente todos los skills por la estructura de directorios; no es necesario declararlos en el manifest.
+
+Los campos disponibles en el frontmatter YAML de un `SKILL.md` son:
+
+- `name` — Nombre del skill. Desde v2.1.94, cuando el plugin declara skills con `"skills": ["./"]`, este campo se usa como **nombre de invocación estable**: los usuarios pueden llamar al skill con este nombre independientemente de la ruta del fichero.
+- `description` — Descripción del propósito del skill, visible al listar skills disponibles.
+- `keep-coding-instructions` — Instrucciones de estilo de output que se mantienen activas mientras el plugin está cargado. Útil para plugins que necesitan que Claude siga un formato específico de respuesta (por ejemplo, reportes estructurados, salida JSON, etc.). Disponible desde v2.1.94.
 
 Ejemplo de skill de deploy (`skills/deploy/SKILL.md`):
 
@@ -76,6 +135,9 @@ Ejemplo de skill de deploy (`skills/deploy/SKILL.md`):
 ---
 name: deploy
 description: Despliega la versión actual a un entorno específico tras validar tests y configuración
+keep-coding-instructions: |
+  Reporta cada paso con formato "[ ok ]" o "[error]" seguido del nombre del paso.
+  Usa bloques de código para mostrar comandos ejecutados y su salida.
 ---
 
 # Skill: Deploy Seguro

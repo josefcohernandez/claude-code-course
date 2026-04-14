@@ -229,6 +229,12 @@ export AWS_PROFILE=mi-perfil-enterprise
 export ANTHROPIC_MODEL=us.anthropic.claude-sonnet-4-20250514-v1:0
 ```
 
+Para organizaciones que usan Amazon Bedrock powered by Mantle, activar también:
+
+```bash
+export CLAUDE_CODE_USE_MANTLE=1
+```
+
 **Ventajas de Bedrock**:
 - Los datos no salen de tu cuenta de AWS
 - Cumplimiento con políticas de residencia de datos (EU, APAC, etc.)
@@ -257,6 +263,17 @@ export ANTHROPIC_MODEL=claude-sonnet-4@20250514
 - Integración con IAM de GCP, Cloud Audit Logs
 - Soporte para VPC Service Controls
 - Facturación unificada con GCP
+
+### Asistente interactivo de configuración de Vertex AI (v2.1.98)
+
+Desde v2.1.98, al seleccionar **"3rd-party platform"** en la pantalla de login de Claude Code, el asistente interactivo incluye soporte para Google Vertex AI con un flujo guiado que cubre:
+
+1. **Autenticación GCP**: Verifica si existe una sesión activa de `gcloud` o guía la ejecución de `gcloud auth application-default login` para obtener credenciales de aplicación
+2. **Selección de proyecto GCP**: Lista los proyectos GCP accesibles con la cuenta autenticada y permite seleccionar el destino de la inferencia
+3. **Selección de región**: Muestra únicamente las regiones con modelos Claude disponibles (por ejemplo, `europe-west1`, `us-east4`) y permite elegir la más adecuada para requisitos de residencia de datos
+4. **Verificación de credenciales y permisos**: Prueba la conexión con Vertex AI y confirma que la cuenta tiene los permisos IAM necesarios (`aiplatform.endpoints.predict`)
+
+El asistente genera y exporta automáticamente las variables `CLOUD_ML_REGION` y `ANTHROPIC_VERTEX_PROJECT_ID` una vez completada la verificación, eliminando la configuración manual de entorno.
 
 ### Asistente interactivo de configuración de Bedrock (v2.1.92)
 
@@ -324,6 +341,41 @@ Aspectos que se pueden auditar:
 
 > **Novedad v3.2 (v2.1.85):** Para incluir los parámetros de las herramientas en los eventos `tool_result` de OpenTelemetry, activa la variable `CLAUDE_CODE_OTEL_LOG_TOOL_DETAILS=1`. Por defecto estos datos no se incluyen para evitar exponer información sensible en los logs de observabilidad.
 
+### Variables OTEL ampliadas (v2.1.101)
+
+Desde v2.1.101 están disponibles tres nuevas variables de tracing que ofrecen control granular sobre el nivel de detalle en las trazas OpenTelemetry:
+
+| Variable | Efecto |
+|----------|--------|
+| `OTEL_LOG_USER_PROMPTS=1` | Incluye los prompts del usuario en las trazas OTEL. Útil para depuración, pero puede exponer información sensible; desactivar en producción salvo que sea necesario. |
+| `OTEL_LOG_TOOL_DETAILS=1` | Incluye los parámetros de las herramientas invocadas. Reemplaza a `CLAUDE_CODE_OTEL_LOG_TOOL_DETAILS`, que queda deprecada. |
+| `OTEL_LOG_TOOL_CONTENT=1` | Incluye el contenido completo de los resultados devueltos por las herramientas (salida de comandos, contenido de ficheros leídos, respuestas MCP). |
+
+```bash
+# Ejemplo: tracing completo para depuración en staging
+export OTEL_LOG_USER_PROMPTS=1
+export OTEL_LOG_TOOL_DETAILS=1
+export OTEL_LOG_TOOL_CONTENT=1
+
+# Ejemplo: solo detalles de herramientas en producción
+export OTEL_LOG_TOOL_DETAILS=1
+```
+
+> **Nota de migración**: Si usabas `CLAUDE_CODE_OTEL_LOG_TOOL_DETAILS=1`, migra a `OTEL_LOG_TOOL_DETAILS=1`. Ambas variables funcionan en v2.1.101, pero la variante `CLAUDE_CODE_` quedará eliminada en versiones futuras.
+
+### Propagación de contexto W3C TraceContext (v2.1.98)
+
+Cuando OTEL está activo, Claude Code inyecta automáticamente la variable de entorno `TRACEPARENT` (estándar W3C TraceContext) en todos los subprocesos Bash que lanza. Esto permite que los comandos ejecutados por Claude propaguen el contexto de traza al sistema de observabilidad sin configuración adicional:
+
+```bash
+# TRACEPARENT se inyecta automáticamente en subprocesos cuando OTEL está activo.
+# Formato W3C: 00-<trace-id>-<parent-id>-<flags>
+# Ejemplo:
+# TRACEPARENT=00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01
+```
+
+Esta propagación garantiza que los comandos de shell, scripts de build y herramientas externas invocadas por Claude formen parte de la misma traza distribuida, facilitando la correlación end-to-end en plataformas como Jaeger, Zipkin o Datadog.
+
 ### Header de sesión en peticiones API
 
 Claude Code incluye el header `X-Claude-Code-Session-Id` en todas las peticiones que realiza a la API. Este identificador de sesión es constante durante toda la sesión interactiva o de automatización, y cambia en cada nueva invocación de Claude Code.
@@ -339,6 +391,30 @@ X-Claude-Code-Session-Id: a1b2c3d4-e5f6-7890-abcd-ef1234567890
 ```
 
 > Este header es especialmente valioso en entornos donde varias peticiones independientes forman parte de un único flujo de trabajo agentivo: el header permite al proxy tratarlas como una unidad de observabilidad. *(Novedad v2.1.86)*
+
+---
+
+## Confianza en el certificate store del sistema operativo (v2.1.101)
+
+Desde v2.1.101, Claude Code confía de forma predeterminada en el certificate store del sistema operativo, además de los certificados bundled de Node.js. Esto resuelve un problema habitual en entornos enterprise donde el tráfico HTTPS pasa por un proxy TLS corporativo firmado con una CA interna (no reconocida por las CAs públicas estándar).
+
+**Antes de v2.1.101**, los equipos de seguridad debían distribuir manualmente el certificado de la CA corporativa y configurarlo en la variable `NODE_EXTRA_CA_CERTS`. Desde v2.1.101, si la CA corporativa está instalada en el store del sistema operativo (que es la práctica habitual de los departamentos de IT), Claude Code la reconoce automáticamente sin configuración adicional.
+
+```bash
+# Comportamiento por defecto desde v2.1.101:
+# Claude Code confía en el OS CA store (incluye CAs corporativas instaladas por IT)
+
+# Para revertir al comportamiento anterior (solo certificados bundled de Node.js):
+export CLAUDE_CODE_CERT_STORE=bundled
+```
+
+| Valor de `CLAUDE_CODE_CERT_STORE` | Certificados de confianza |
+|-----------------------------------|--------------------------|
+| (no configurada) | OS CA store + certificados bundled |
+| `bundled` | Solo certificados bundled de Node.js |
+| `system` | Solo OS CA store |
+
+> **Recomendación**: En entornos enterprise con proxies TLS corporativos, dejar la variable sin configurar (comportamiento por defecto) es la opción correcta. Solo establecer `CLAUDE_CODE_CERT_STORE=bundled` si existe un conflicto específico con CAs del sistema.
 
 ---
 
@@ -538,3 +614,11 @@ Auto Mode permite que Claude Code tome decisiones de permisos automáticamente u
 | `X-Claude-Code-Session-Id` | Header de sesión para observabilidad en proxies | Todos (v2.1.86) |
 | `forceRemoteSettingsRefresh` | Arranque fail-closed sin políticas frescas | Enterprise (v2.1.92) |
 | Asistente Bedrock interactivo | Configuración guiada de AWS Bedrock | Todos (v2.1.92) |
+| Asistente Vertex AI interactivo | Configuración guiada de Google Vertex AI | Todos (v2.1.98) |
+| `CLAUDE_CODE_USE_MANTLE=1` | Soporte Bedrock powered by Mantle | Todos |
+| `OTEL_LOG_USER_PROMPTS` | Incluye prompts en trazas OTEL | Todos (v2.1.101) |
+| `OTEL_LOG_TOOL_DETAILS` | Incluye parámetros de herramientas en OTEL | Todos (v2.1.101) |
+| `OTEL_LOG_TOOL_CONTENT` | Incluye resultados de herramientas en OTEL | Todos (v2.1.101) |
+| `TRACEPARENT` W3C | Propagación de traza en subprocesos Bash | Todos (v2.1.98) |
+| OS CA certificate store | Confianza automática en CAs corporativas | Todos (v2.1.101) |
+| `CLAUDE_CODE_CERT_STORE=bundled` | Revertir a certificados bundled únicamente | Todos (v2.1.101) |

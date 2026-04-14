@@ -166,6 +166,44 @@ exit 0
 
 > **Exit code 2 es el unico que bloquea:** Solo exit code 2 bloquea la operacion (ya sea una herramienta en `PreToolUse` o un prompt en `UserPromptSubmit`). Exit code 1 u otros codigos no-zero no bloquean; simplemente muestran stderr en modo verbose.
 
+### Definir el título de sesión programáticamente (desde v2.1.94)
+
+Desde la versión 2.1.94, los hooks `UserPromptSubmit` pueden devolver un campo `hookSpecificOutput.sessionTitle` en su respuesta JSON para **asignar el título de la sesión** de forma automática. El título aparece en el historial de sesiones y facilita identificar conversaciones en proyectos con múltiples sesiones activas.
+
+```bash
+#!/bin/bash
+# Hook que asigna título de sesión basado en el branch actual
+BRANCH=$(git branch --show-current 2>/dev/null || echo "sin-repo")
+echo "{\"hookSpecificOutput\": {\"sessionTitle\": \"[$BRANCH] $(date +%H:%M)\"}}"
+```
+
+Configuración correspondiente en `settings.json`:
+
+```json
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/scripts/set-session-title.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+El campo `sessionTitle` solo se procesa cuando lo devuelve un hook `UserPromptSubmit`. Si el hook devuelve además otros campos (como `stopReason` o stderr con exit 2 para bloquear), estos se siguen procesando con independencia del título.
+
+Casos de uso habituales:
+
+- Identificar la sesión por branch de git y hora de inicio
+- Incluir el nombre del ticket o issue activo (leyendo desde un fichero `.claude/ticket`)
+- Mostrar el entorno activo (`[prod]`, `[staging]`, `[local]`) al inicio de cada sesión
+
 ### PermissionRequest
 
 Se dispara **cuando aparece un dialogo de permisos** (por ejemplo, al intentar ejecutar un comando no permitido). Util para auto-aprobar patrones conocidos y seguros.

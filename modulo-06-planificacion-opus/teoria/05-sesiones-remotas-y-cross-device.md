@@ -22,6 +22,8 @@ claude --remote
 
 Al ejecutar este comando Claude Code muestra una URL. Abrirla en el navegador abre la sesión con el estado completo: historial, contexto y herramientas.
 
+**Creación automática del entorno cloud (v2.1.101):** Comandos como `/ultraplan` y otras features de sesión remota crean automáticamente el entorno cloud por defecto, sin necesidad de ejecutar `--remote` explícitamente. Esto simplifica el flujo para planificaciones largas que se benefician de ejecución en la nube.
+
 **Casos de uso típicos:**
 
 - Trabajar desde una tablet o un dispositivo sin Claude Code instalado

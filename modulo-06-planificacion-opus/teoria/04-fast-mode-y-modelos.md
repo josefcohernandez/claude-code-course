@@ -59,11 +59,11 @@ La variable de entorno `CLAUDE_CODE_EFFORT_LEVEL` controla cuánto razonamiento 
 | Valor | Comportamiento | Tokens de razonamiento | Disponibilidad |
 |-------|---------------|----------------------|----------------|
 | `low` | Respuesta rápida, razonamiento mínimo | Pocos | Todos los modelos |
-| `medium` | Balance entre velocidad y profundidad **(default)** | Moderados | Todos los modelos |
-| `high` | Razonamiento profundo antes de responder | Muchos | Todos los modelos |
+| `medium` | Balance entre velocidad y profundidad | Moderados | Todos los modelos |
+| `high` | Razonamiento profundo antes de responder **(default)** | Muchos | Todos los modelos |
 | `max` | Máximo razonamiento posible, sin límites | Máximos | **Solo Opus 4.6** |
 
-> **Nota:** Opus 4.6 y Sonnet 4.6 usan **medium** como nivel de esfuerzo por defecto. Medium es el nivel recomendado para la mayoría de tareas de programación.
+> **Nota:** Desde v2.1.94, el nivel de esfuerzo por defecto es **high** para usuarios de API key, Bedrock, Vertex, Team y Enterprise. High proporciona razonamiento profundo adecuado para la mayoría de tareas de programación. Puedes reducirlo a `medium` o `low` para tareas simples donde priorices velocidad.
 
 ```bash
 # Configurar para la sesión actual
@@ -71,9 +71,9 @@ export CLAUDE_CODE_EFFORT_LEVEL=low
 claude
 
 # Configurar de forma persistente en tu shell
-echo 'export CLAUDE_CODE_EFFORT_LEVEL=medium' >> ~/.bashrc
+echo 'export CLAUDE_CODE_EFFORT_LEVEL=high' >> ~/.bashrc
 
-# Volver al default (medium)
+# Volver al default (high)
 unset CLAUDE_CODE_EFFORT_LEVEL
 claude
 ```
@@ -173,7 +173,7 @@ claude --model claude-haiku-4-5-20251001
 - Fast Mode es una optimización de velocidad sobre Opus 4.6, no un cambio de modelo
 - Se activa con `/fast` en la sesión activa
 - Los modelos actuales son Opus 4.6 (1M tokens), Sonnet 4.6 y Haiku 4.5
-- `CLAUDE_CODE_EFFORT_LEVEL` (low/medium/high/max) controla la profundidad de razonamiento; el default es **medium**
+- `CLAUDE_CODE_EFFORT_LEVEL` (low/medium/high/max) controla la profundidad de razonamiento; el default es **high** (desde v2.1.94)
 - Usa `/effort` o `--effort` para cambiar el nivel durante o al iniciar una sesión
 - Incluye "ultrathink" en un prompt para activar high effort en un solo turno
 - El nivel `max` solo está disponible para Opus 4.6

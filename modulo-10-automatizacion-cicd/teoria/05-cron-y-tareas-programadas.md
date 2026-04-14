@@ -85,6 +85,8 @@ El intervalo se especifica con sufijos de tiempo:
 
 Si no se especifica intervalo, el valor por defecto es **10 minutos**.
 
+> **Alias:** Desde v2.1.105, `/proactive` es un alias de `/loop`. Ambos comandos son equivalentes.
+
 ### Casos de uso del skill /loop
 
 **Monitorizar el estado de un deploy:**
@@ -126,6 +128,30 @@ Cuando una tarea programada (`/loop` o `CronCreate`) se dispara, Claude Code añ
 ### Detener un /loop activo
 
 Para detener un loop en ejecución, interrumpe la sesión con `Ctrl+C` o escribe `stop` cuando Claude te pregunte si continuar.
+
+### Monitor: streaming de eventos en tiempo real
+
+> **Novedad v2.1.98**
+
+La herramienta `Monitor` permite recibir eventos en streaming desde procesos que se ejecutan en background. A diferencia de `/loop`, que ejecuta un prompt completo cada N minutos (polling), `Monitor` se suscribe a la salida estándar de un comando y notifica a Claude de cada línea emitida a medida que llega.
+
+**Cuándo usar Monitor vs /loop:**
+
+| Herramienta | Patrón | Cuándo usarla |
+|-------------|--------|---------------|
+| `/loop` | Polling | Ejecutar un prompt completo cada N minutos |
+| `Monitor` | Streaming | Observar la salida continua de un proceso en tiempo real |
+
+**Ejemplo:** monitorizar los logs de un servidor de desarrollo:
+
+```text
+Lanza el servidor en background con `npm run dev` y usa Monitor
+para avisarme si aparece algún error en los logs.
+```
+
+Claude ejecutará el servidor con `run_in_background`, usará `Monitor` para suscribirse a su stdout, y te notificará en cuanto detecte errores en el flujo de logs.
+
+**Casos de uso típicos:** debugging de procesos largos, observar builds en curso, vigilar logs durante el desarrollo.
 
 ---
 

@@ -42,7 +42,7 @@ Los slash commands se invocan escribiendo `/` seguido del nombre del comando en 
 | `/effort` | `/effort [low\|medium\|high\|max]` | Establece el nivel de esfuerzo del modelo. `low`, `medium`, `high` persisten entre sesiones. `max` solo para la sesion actual (requiere Opus 4.6) | Sin argumento muestra el nivel actual |
 | `/fast` | `/fast [on\|off]` | Activa o desactiva el modo rapido | — |
 | `/powerup` | `/powerup` | Lecciones interactivas con demos animadas de features de Claude Code. Ideal para descubrir funcionalidades (v2.1.90) | — |
-| `/loop` | `/loop [intervalo] <prompt>` | Skill que ejecuta un prompt repetidamente en un intervalo (ej: `/loop 5m comprueba si el deploy ha terminado`). El intervalo por defecto es 10 minutos | Es una skill bundled, no un comando built-in |
+| `/loop` | `/loop [intervalo] <prompt>` | Skill que ejecuta un prompt repetidamente en un intervalo (ej: `/loop 5m comprueba si el deploy ha terminado`). El intervalo por defecto es 10 minutos | Alias: `/proactive` (v2.1.105). Es una skill bundled, no un comando built-in |
 
 ### Configuracion e informacion
 
@@ -103,6 +103,7 @@ Los slash commands se invocan escribiendo `/` seguido del nombre del comando en 
 | Comando | Sintaxis | Descripcion | Notas |
 |---------|----------|-------------|-------|
 | `/plan` | `/plan` | Entra en modo plan directamente desde el prompt | Equivalente a `Shift+Tab` hasta llegar a Plan mode |
+| `/ultraplan` | `/ultraplan [prompt]` | Inicia una sesion de planificacion extendida con razonamiento profundo. Desde v2.1.101, auto-crea un entorno cloud por defecto sin necesidad de `--remote` | Combina effort max con sesion remota |
 
 ### Integraciones
 
@@ -128,8 +129,9 @@ Los slash commands se invocan escribiendo `/` seguido del nombre del comando en 
 
 | Comando | Sintaxis | Descripcion | Notas |
 |---------|----------|-------------|-------|
-| `/doctor` | `/doctor` | Diagnostica y verifica la instalacion y configuracion de Claude Code | Util para resolver problemas de configuracion |
+| `/doctor` | `/doctor` | Diagnostica y verifica la instalacion y configuracion de Claude Code. Desde v2.1.105 muestra iconos de estado y ofrece la opcion `f` para que Claude repare automaticamente los problemas detectados | Util para resolver problemas de configuracion |
 | `/feedback` | `/feedback [report]` | Envia feedback sobre Claude Code | Alias: `/bug` |
+| `/team-onboarding` | `/team-onboarding` | Genera automaticamente una guia de rampa para nuevos miembros del equipo basandose en el uso local de Claude Code (CLAUDE.md, settings, skills, hooks configurados) | v2.1.101. Util para documentar la configuracion del equipo |
 
 ### Apariencia
 
