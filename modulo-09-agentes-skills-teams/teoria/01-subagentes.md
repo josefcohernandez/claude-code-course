@@ -406,3 +406,7 @@ Paso 3: Presentar el plan al usuario en el contexto principal
 > **Deprecaciones v3.0:**
 > - La herramienta `TaskOutput` está deprecada. Usa `Read` sobre el fichero de output de la tarea en su lugar.
 > - El parámetro `task.resume` ha sido eliminado. Usa `SendMessage()` para continuar un agente existente (ver [fichero 04](04-aislamiento-worktree-y-comunicacion.md)).
+
+---
+
+> **Profundiza**: Para aprender a aplicar subagentes en escenarios reales del día a día — onboarding a codebases, incidentes en producción, debugging cross-stack con investigación paralela — consulta el [Módulo B1: Escenarios End-to-End](https://github.com/josefcohernandez/curso-ia-agentica/blob/master/modulo-B1-escenarios-end-to-end/README.md) del curso "Desarrollo Profesional con IA Agéntica".

@@ -307,3 +307,7 @@ son caras y cuáles son baratas.
 
 7. **La degradación es gradual e invisible.** No recibes un aviso cuando
    Claude empieza a olvidar cosas. Tú debes prevenirlo.
+
+---
+
+> **Profundiza**: Para entender en detalle cómo la saturación de contexto degrada la calidad del agente, los 8 tipos de fallo que produce y cuándo NO deberías usar IA — consulta el [Módulo A2: Limitaciones, Fallos y Pensamiento Crítico](https://github.com/josefcohernandez/curso-ia-agentica/blob/master/modulo-A2-limitaciones-fallos/README.md) del curso "Desarrollo Profesional con IA Agéntica".

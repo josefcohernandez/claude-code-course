@@ -602,3 +602,7 @@ claude -p "Compara la estructura y patrones de estos dos proyectos. Identifica i
 | Multi-proyecto | Claude `-p` + `--add-dir` | `--add-dir /ruta` |
 
 La clave de la automatización exitosa con Claude Code es combinar el modo no interactivo (`-p`) con límites adecuados (`--max-turns`, `--max-budget-usd`) y el formato de salida correcto para cada caso de uso.
+
+---
+
+> **Profundiza**: Para dominar la orquestación multi-agente, prompts robustos para CI/CD desatendido, procesamiento en lote a escala y testing de prompts — consulta el [Módulo D2: Orquestación Multi-Agente y Automatización a Escala](https://github.com/josefcohernandez/curso-ia-agentica/blob/master/modulo-D2-orquestacion-automatizacion/README.md) del curso "Desarrollo Profesional con IA Agéntica".

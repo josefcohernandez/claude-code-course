@@ -479,3 +479,7 @@ Un servidor MCP comprometido podría:
 | MCP servers | Servidores comprometidos | Solo fuentes confiables, revisión de código |
 | Sandbox | Ejecución sin restricciones | `sandbox.enabled: true` en settings.json o `/sandbox` |
 | Código generado | Errores de seguridad en el código | Revisión humana obligatoria |
+
+---
+
+> **Profundiza**: Para threat modeling STRIDE asistido por IA, security code review profundo por stack, token budgeting y benchmarking de productividad — consulta el [Módulo D4: Seguridad, Costes y Optimización](https://github.com/josefcohernandez/curso-ia-agentica/blob/master/modulo-D4-seguridad-costes/README.md) del curso "Desarrollo Profesional con IA Agéntica".

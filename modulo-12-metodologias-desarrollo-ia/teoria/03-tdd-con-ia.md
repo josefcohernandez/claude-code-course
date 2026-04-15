@@ -291,3 +291,7 @@ Objetivo: > 90% coverage.
 | Cobertura | Objetivo mínimo 90% con tests enfocados |
 
 TDD con Claude no es más lento que implementar directamente. De hecho, suele ser más rápido porque los tests atrapan bugs inmediatamente en vez de descubrirlos horas después.
+
+---
+
+> **Profundiza**: Para técnicas avanzadas de testing con IA — property-based testing, mutation testing, visual regression, y patrones de AI pair programming — consulta el [Módulo D3: Testing Avanzado y AI Pair Programming](https://github.com/josefcohernandez/curso-ia-agentica/blob/master/modulo-D3-testing-pair-programming/README.md) del curso "Desarrollo Profesional con IA Agéntica".

@@ -188,3 +188,7 @@ Preferencias globales que aplican a TODOS tus proyectos:
 - [ ] ¿Pide respuestas concisas?
 - [ ] ¿Es menor a 200 líneas?
 - [ ] ¿Cada línea es accionable (no informativa)?
+
+---
+
+> **Profundiza**: Para aprender a diseñar arquitectura de software que maximice la efectividad de los agentes — AI-readability, patrones modulares, documentación como contrato bidireccional — consulta el [Módulo D1: Arquitectura de Software Orientada a IA](https://github.com/josefcohernandez/curso-ia-agentica/blob/master/modulo-D1-arquitectura-para-ia/README.md) del curso "Desarrollo Profesional con IA Agéntica".

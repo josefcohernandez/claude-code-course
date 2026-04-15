@@ -531,3 +531,7 @@ git branch               # Ver ramas creadas
 | Nunca credenciales en CLAUDE.md | Crítica | Seguridad |
 | Settings.json restrictivo | Alta | Seguridad |
 | Skills compartidas en el repo | Media | Productividad |
+
+---
+
+> **Profundiza**: Para una guía completa de adopción de IA en equipos — las 4 fases, gestión de resistencia al cambio, métricas de productividad y cómo presentar el ROI a management — consulta el [Módulo C1: Adopción en Equipos y Métricas](https://github.com/josefcohernandez/curso-ia-agentica/blob/master/modulo-C1-adopcion-equipos/README.md) del curso "Desarrollo Profesional con IA Agéntica".

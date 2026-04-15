@@ -295,3 +295,7 @@ git worktree prune
 | Visual-driven | UI, landing pages, componentes | Precisión visual, iteración rápida |
 | Fan-out | Migraciones, documentación masiva | Paralelismo, escala |
 | Git worktrees | Múltiples features en paralelo | Aislamiento completo, sin interferencias |
+
+---
+
+> **Profundiza**: Para aprender a revisar código generado por IA de forma profesional — checklist priorizado, 8 red flags, método de lectura en 3 pasadas — y debugging sistemático con workflow de 4 pasos, consulta los módulos [A3: Revisión de Código](https://github.com/josefcohernandez/curso-ia-agentica/blob/master/modulo-A3-revision-codigo-ia/README.md) y [A4: Debugging Sistemático](https://github.com/josefcohernandez/curso-ia-agentica/blob/master/modulo-A4-debugging-sistematico/README.md) del curso "Desarrollo Profesional con IA Agéntica".

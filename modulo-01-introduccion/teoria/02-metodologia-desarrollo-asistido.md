@@ -523,3 +523,7 @@ Actualiza la API para que se pueda filtrar y ordenar por prioridad.
 ```
 
 El contexto de negocio ayuda a Claude Code a tomar mejores decisiones cuando se encuentra con ambigüedades.
+
+---
+
+> **Profundiza**: Para dominar el arte de escribir prompts efectivos para agentes de código — patrones por tipo de tarea, cookbook de antes/después, y la regla de las 2 correcciones — consulta el [Módulo A1: Prompting Efectivo](https://github.com/josefcohernandez/curso-ia-agentica/blob/master/modulo-A1-prompting-efectivo/README.md) del curso "Desarrollo Profesional con IA Agéntica".
