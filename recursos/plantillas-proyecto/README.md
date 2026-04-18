@@ -1,62 +1,62 @@
 # Plantillas de Proyecto para Claude Code
 
-Coleccion centralizada de plantillas listas para copiar en tus proyectos. Incluye plantillas propias de esta carpeta y referencias a las que viven en los modulos del curso.
+Colección centralizada de plantillas listas para copiar en tus proyectos. Incluye plantillas propias de esta carpeta y referencias a las que viven en los módulos del curso.
 
 ---
 
-## Plantillas de configuracion (en esta carpeta)
+## Plantillas de configuración (en esta carpeta)
 
-| Archivo | Descripcion | Uso |
+| Archivo | Descripción | Uso |
 |---------|-------------|-----|
-| [claude-md-starter.md](./claude-md-starter.md) | CLAUDE.md minimo para arrancar cualquier proyecto | Copiar como `CLAUDE.md` en la raiz |
+| [claude-md-starter.md](./claude-md-starter.md) | CLAUDE.md mínimo para arrancar cualquier proyecto | Copiar como `CLAUDE.md` en la raíz |
 | [settings-starter.json](./settings-starter.json) | settings.json equilibrado (ni muy restrictivo ni muy permisivo) | Copiar como `.claude/settings.json` |
-| [rules-codigo.md](./rules-codigo.md) | Reglas de codigo genericas | Copiar en `.claude/rules/codigo.md` |
+| [rules-codigo.md](./rules-codigo.md) | Reglas de código genéricas | Copiar en `.claude/rules/codigo.md` |
 | [rules-api.md](./rules-api.md) | Reglas para APIs REST | Copiar en `.claude/rules/api.md` |
 | [rules-testing.md](./rules-testing.md) | Reglas para tests | Copiar en `.claude/rules/testing.md` |
-| [gitignore-claude.md](./gitignore-claude.md) | Lineas de .gitignore relevantes para Claude Code | Anadir a tu `.gitignore` |
+| [gitignore-claude.md](./gitignore-claude.md) | Líneas de `.gitignore` relevantes para Claude Code | Añadir a tu `.gitignore` |
 
 ---
 
-## Plantillas de metodologia (Modulo 12)
+## Plantillas de metodología (Módulo 12)
 
-| Archivo | Descripcion | Modulo |
+| Archivo | Descripción | Módulo |
 |---------|-------------|--------|
-| [plantilla-spec.md](../../modulo-12-metodologias-desarrollo-ia/plantillas/plantilla-spec.md) | Especificacion tecnica (SPEC.md) para SDD | M12 |
+| [plantilla-spec.md](../../modulo-12-metodologias-desarrollo-ia/plantillas/plantilla-spec.md) | Especificación técnica (`SPEC.md`) para SDD | M12 |
 | [plantilla-user-story-gherkin.md](../../modulo-12-metodologias-desarrollo-ia/plantillas/plantilla-user-story-gherkin.md) | Historia de usuario en formato Gherkin | M12 |
-| [plantilla-plan-implementacion.md](../../modulo-12-metodologias-desarrollo-ia/plantillas/plantilla-plan-implementacion.md) | Plan de implementacion por fases | M12 |
+| [plantilla-plan-implementacion.md](../../modulo-12-metodologias-desarrollo-ia/plantillas/plantilla-plan-implementacion.md) | Plan de implementación por fases | M12 |
 
 ---
 
-## Plantillas de CLAUDE.md por stack (Modulo 04)
+## Plantillas de CLAUDE.md por stack (Módulo 04)
 
-| Archivo | Descripcion | Modulo |
+| Archivo | Descripción | Módulo |
 |---------|-------------|--------|
 | [claude-md-backend.md](../../modulo-04-memoria-claude-md/plantillas/claude-md-backend.md) | CLAUDE.md orientado a backend (Python/Node/Go) | M04 |
 | [claude-md-frontend.md](../../modulo-04-memoria-claude-md/plantillas/claude-md-frontend.md) | CLAUDE.md orientado a frontend (React/Vue/Angular) | M04 |
-| [claude-md-fullstack.md](../../modulo-04-memoria-claude-md/plantillas/claude-md-fullstack.md) | CLAUDE.md para proyectos fullstack | M04 |
+| [claude-md-fullstack.md](../../modulo-04-memoria-claude-md/plantillas/claude-md-fullstack.md) | CLAUDE.md para proyectos full stack | M04 |
 
 ---
 
-## Plantillas de permisos (Modulo 05)
+## Plantillas de permisos (Módulo 05)
 
-| Archivo | Descripcion | Modulo |
+| Archivo | Descripción | Módulo |
 |---------|-------------|--------|
 | [settings-restrictivo.json](../../modulo-05-configuracion-permisos/plantillas/settings-restrictivo.json) | Permisos muy restrictivos (entorno seguro) | M05 |
-| [settings-permisivo.json](../../modulo-05-configuracion-permisos/plantillas/settings-permisivo.json) | Permisos amplios (desarrollo rapido) | M05 |
+| [settings-permisivo.json](../../modulo-05-configuracion-permisos/plantillas/settings-permisivo.json) | Permisos amplios (desarrollo rápido) | M05 |
 
 ---
 
-## Plantillas enterprise (Modulo 11)
+## Plantillas enterprise (Módulo 11)
 
-| Archivo | Descripcion | Modulo |
+| Archivo | Descripción | Módulo |
 |---------|-------------|--------|
-| [managed-policy-ejemplo.md](../../modulo-11-enterprise-seguridad/plantillas/managed-policy-ejemplo.md) | Politica managed para organizaciones | M11 |
+| [managed-policy-ejemplo.md](../../modulo-11-enterprise-seguridad/plantillas/managed-policy-ejemplo.md) | Política managed para organizaciones | M11 |
 
 ---
 
-## Como usar las plantillas
+## Cómo usar las plantillas
 
-### Inicio rapido de un proyecto nuevo
+### Inicio rápido de un proyecto nuevo
 
 ```bash
 mkdir mi-proyecto && cd mi-proyecto
@@ -82,6 +82,6 @@ mkdir features  # para Gherkin
 claude
 ```
 
-### Personalizar despues de copiar
+### Personalizar después de copiar
 
-Todas las plantillas tienen marcadores `[...]` que debes reemplazar con valores reales de tu proyecto. Busca todos los `[` en los archivos copiados y personaliza.
+Todas las plantillas tienen marcadores `[...]` que debes reemplazar con valores reales de tu proyecto. Busca todos los `[` en los archivos copiados y personaliza cada plantilla antes de usarla.

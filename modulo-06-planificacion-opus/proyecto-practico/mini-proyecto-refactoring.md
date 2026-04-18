@@ -2,14 +2,14 @@
 
 ## Objetivo
 
-Usar Plan Mode con Opus para disenar un refactoring de codigo legacy,
+Usar Plan Mode con Opus para diseñar un refactoring de código legacy,
 implementar con Sonnet, y medir el impacto completo.
 
 ---
 
-## El Codigo Legacy
+## El Código Legacy
 
-El siguiente codigo es un "servicio" monolitico tipico que necesita refactoring.
+El siguiente código es un "servicio" monolítico típico que necesita refactoring.
 Copia este contenido en un archivo `legacy_service.py`:
 
 ```python
@@ -195,16 +195,16 @@ def handle_order_status(order_id, new_status):
 
 ---
 
-## Problemas del Codigo Legacy
+## Problemas del Código Legacy
 
 Antes de usar Claude, identifica manualmente los problemas:
 
 1. **SQL Injection**: `str(user_id)` y `'" + coupon + "'`
-2. **Responsabilidad multiple**: Una funcion hace DB, validacion, email, calculos
+2. **Responsabilidad multiple**: Una función hace DB, validación, email, calculos
 3. **Magic numbers**: `product[3]`, `user[2]`, `order[1]`
 4. **Sin manejo de errores**: `except: pass`
 5. **Sin transacciones**: Datos inconsistentes si falla a mitad
-6. **Acoplamiento**: DB, email y logica de negocio mezclados
+6. **Acoplamiento**: DB, email y lógica de negocio mezclados
 7. **Sin tests**: Imposible testear sin refactorizar
 
 ---
@@ -213,7 +213,7 @@ Antes de usar Claude, identifica manualmente los problemas:
 
 ```bash
 cd ~/refactoring-exercise
-# Copiar el codigo legacy a legacy_service.py
+# Copiar el código legacy a legacy_service.py
 claude --model opus
 > Shift+Tab (Plan Mode)
 > "Refactoriza legacy_service.py aplicando principios SOLID.
@@ -222,8 +222,8 @@ claude --model opus
 >  2. Modelos de datos (clases/dataclasses en vez de tuplas)
 >  3. Repositorio para BD (sin SQL injection)
 >  4. Servicio de email desacoplado
->  5. Servicio de ordenes con logica de negocio
->  6. Validacion de input
+>  5. Servicio de ordenes con lógica de negocio
+>  6. Validación de input
 >  7. Manejo de errores apropiado
 >  8. Tests para cada componente
 >
@@ -242,7 +242,7 @@ claude --model opus
 > "Implementa paso 2: Repositorio de BD"
 > "Implementa paso 3: Servicio de email"
 > "Implementa paso 4: Servicio de ordenes"
-> "Implementa paso 5: Validacion"
+> "Implementa paso 5: Validación"
 > "Implementa paso 6: Tests"
 > "Ejecuta tests"
 ```
@@ -252,7 +252,7 @@ claude --model opus
 ## Paso 3: Verificar (5 min)
 
 ```
-> "Compara la funcionalidad del codigo refactorizado con el original.
+> "Compara la funcionalidad del código refactorizado con el original.
 >  Verifica que no se perdio ninguna funcionalidad."
 > "Ejecuta todos los tests"
 > /cost
@@ -260,12 +260,12 @@ claude --model opus
 
 ---
 
-## Metricas
+## Métricas
 
-| Metrica | Antes | Despues |
+| Métrica | Antes | Después |
 |---------|-------|---------|
 | Archivos | 1 | ? |
-| Funciones/clases | 2 | ? |
+| Funciónes/clases | 2 | ? |
 | SQL injections | 2+ | 0 |
 | except: pass | 2 | 0 |
 | Magic numbers | muchos | 0 |
@@ -277,10 +277,10 @@ claude --model opus
 
 ## Criterios de Completitud
 
-- [ ] Codigo legacy copiado y problemas identificados
-- [ ] Plan de refactoring disenado con Opus
+- [ ] Código legacy copiado y problemas identificados
+- [ ] Plan de refactoring diseñado con Opus
 - [ ] Refactoring implementado con Sonnet
 - [ ] SQL injection eliminada
-- [ ] Responsabilidades separadas (minimo 3 archivos)
+- [ ] Responsabilidades separadas (mínimo 3 archivos)
 - [ ] Tests escritos y pasando
-- [ ] Metricas documentadas
+- [ ] Métricas documentadas

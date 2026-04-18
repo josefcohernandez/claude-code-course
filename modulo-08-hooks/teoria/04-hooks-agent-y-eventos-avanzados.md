@@ -1,17 +1,17 @@
 # 04 - Hooks de Tipo Agent y Eventos Avanzados
 
-Este tema cubre la configuracion de hooks de tipo `agent` para lanzar subagentes
+Este tema cubre la configuración de hooks de tipo `agent` para lanzar subagentes
 como respuesta a eventos, los nuevos eventos del ciclo de vida de Claude Code,
-la definicion de hooks en subagentes y skills con frontmatter YAML, y el uso de
-hooks asincronos para operaciones largas sin bloquear la sesion.
+la definición de hooks en subagentes y skills con frontmatter YAML, y el uso de
+hooks asíncronos para operaciones largas sin bloquear la sesión.
 
 ---
 
-## Hooks de tipo Agent (profundizacion)
+## Hooks de tipo Agent (profundización)
 
-Ademas de los hooks `command` (que ejecutan un script shell) y `prompt` (que envian texto al modelo), existe un tercer tipo: `agent`. Un hook de tipo `agent` lanza un **subagente completo** como respuesta a un evento. Ese subagente tiene acceso a herramientas y puede tomar acciones autonomas.
+Además de los hooks `command` (que ejecutan un script shell) y `prompt` (que envían texto al modelo), existe un tercer tipo: `agent`. Un hook de tipo `agent` lanza un **subagente completo** como respuesta a un evento. Ese subagente tiene acceso a herramientas y puede tomar acciones autónomas.
 
-### Configuracion basica
+### Configuración básica
 
 ```json
 {
@@ -22,7 +22,7 @@ Ademas de los hooks `command` (que ejecutan un script shell) y `prompt` (que env
         "hooks": [
           {
             "type": "agent",
-            "prompt": "Analiza el output del comando ejecutado. Si detectas errores de seguridad o credenciales expuestas, reportalos con detalle."
+            "prompt": "Analiza el output del comando ejecutado. Si detectas errores de seguridad o credenciales expuestas, repórtalos con detalle."
           }
         ]
       }
@@ -35,17 +35,17 @@ Ademas de los hooks `command` (que ejecutan un script shell) y `prompt` (que env
 
 | Tipo | Cuando usarlo | Costo |
 |------|---------------|-------|
-| `command` | Validaciones rapidas, scripts shell, formateo | Bajo (solo CPU local) |
-| `prompt` | Anadir contexto al modelo sin accion autonoma | Medio (tokens de entrada) |
-| `agent` | Analisis complejos, acciones que requieren herramientas | Alto (llama al modelo + consume tokens) |
+| `command` | Validaciones rápidas, scripts shell, formateo | Bajo (solo CPU local) |
+| `prompt` | Añadir contexto al modelo sin acción autónoma | Medio (tokens de entrada) |
+| `agent` | Análisis complejos, acciones que requieren herramientas | Alto (llama al modelo + consume tokens) |
 
-### Casos de uso tipicos para hooks agent
+### Casos de uso típicos para hooks agent
 
-- **Revision automatica de seguridad post-commit:** Despues de cada `Bash` que ejecute `git commit`, lanzar un agente que revise si el commit expone secretos o introduce vulnerabilidades
-- **Analisis de calidad post-edicion:** Despues de cada `Write` o `Edit`, lanzar un agente que verifique si el codigo cumple los estandares del proyecto
-- **Diagnostico automatico de fallos:** Despues de un `Bash` con exit code distinto de cero, lanzar un agente que analice el error y sugiera una solucion
+- **Revisión automática de seguridad post-commit:** Después de cada `Bash` que ejecute `git commit`, lanzar un agente que revise si el commit expone secretos o introduce vulnerabilidades
+- **Análisis de calidad postedición:** Después de cada `Write` o `Edit`, lanzar un agente que verifique si el código cumple los estándares del proyecto
+- **Diagnóstico automático de fallos:** Después de un `Bash` con exit code distinto de cero, lanzar un agente que analice el error y sugiera una solución
 
-### Ejemplo completo: revision de seguridad post-commit
+### Ejemplo completo: revisión de seguridad post-commit
 
 ```json
 {
@@ -56,7 +56,7 @@ Ademas de los hooks `command` (que ejecutan un script shell) y `prompt` (que env
         "hooks": [
           {
             "type": "agent",
-            "prompt": "El comando bash que acaba de ejecutarse hizo un commit de git. Revisa el diff del ultimo commit con 'git show HEAD --stat'. Si detectas que se han incluido archivos .env, credenciales, tokens o claves privadas, reporta el problema con la ruta exacta del archivo afectado y el tipo de dato sensible encontrado. Si todo esta bien, responde solo: 'Revision OK'."
+            "prompt": "El comando bash que acaba de ejecutarse hizo un commit de git. Revisa el diff del último commit con 'git show HEAD --stat'. Si detectas que se han incluido archivos .env, credenciales, tokens o claves privadas, reporta el problema con la ruta exacta del archivo afectado y el tipo de dato sensible encontrado. Si todo está bien, responde solo: 'Revisión OK'."
           }
         ]
       }
@@ -65,17 +65,17 @@ Ademas de los hooks `command` (que ejecutan un script shell) y `prompt` (que env
 }
 ```
 
-> **Importante:** Los hooks de tipo `agent` consumen tokens del modelo para cada ejecucion. Usa `matcher` para limitarlos a las herramientas relevantes y evita activarlos en cada operacion si el volumen es alto.
+> **Importante:** Los hooks de tipo `agent` consumen tokens del modelo para cada ejecución. Usa `matcher` para limitarlos a las herramientas relevantes y evita activarlos en cada operación si el volumen es alto.
 
 ---
 
 ## Nuevos eventos del ciclo de vida
 
-El sistema de hooks de Claude Code va mas alla de los cuatro eventos basicos (`PreToolUse`, `PostToolUse`, `Notification`, `Stop`). Existen eventos adicionales para cubrir casos de uso avanzados:
+El sistema de hooks de Claude Code va más allá de los cuatro eventos básicos (`PreToolUse`, `PostToolUse`, `Notification`, `Stop`). Existen eventos adicionales para cubrir casos de uso avanzados:
 
 ### SessionStart
 
-Se dispara al **iniciar o reanudar** una sesion de Claude Code.
+Se dispara al **iniciar o reanudar** una sesión de Claude Code.
 
 ```json
 {
@@ -85,7 +85,7 @@ Se dispara al **iniciar o reanudar** una sesion de Claude Code.
         "hooks": [
           {
             "type": "command",
-            "command": "echo \"$(date): Sesion iniciada por $USER\" >> ~/.claude/sessions.log"
+            "command": "echo \"$(date): Sesión iniciada por $USER\" >> ~/.claude/sessions.log"
           }
         ]
       }
@@ -94,11 +94,11 @@ Se dispara al **iniciar o reanudar** una sesion de Claude Code.
 }
 ```
 
-Casos de uso: cargar variables de entorno del proyecto, verificar que las dependencias estan instaladas, mostrar el estado del repo al empezar.
+Casos de uso: cargar variables de entorno del proyecto, verificar que las dependencias están instaladas, mostrar el estado del repo al empezar.
 
 ### SessionEnd
 
-Se dispara al **terminar** una sesion.
+Se dispara al **terminar** una sesión.
 
 ```json
 {
@@ -117,7 +117,7 @@ Se dispara al **terminar** una sesion.
 }
 ```
 
-Casos de uso: cleanup de ficheros temporales, enviar resumen de la sesion por Slack, hacer commit de los cambios pendientes.
+Casos de uso: cleanup de ficheros temporales, enviar resumen de la sesión por Slack, hacer commit de los cambios pendientes.
 
 ### UserPromptSubmit
 
@@ -156,7 +156,7 @@ FORBIDDEN_PATTERNS=(
 
 for pattern in "${FORBIDDEN_PATTERNS[@]}"; do
   if echo "$PROMPT" | grep -qi "$pattern"; then
-    echo "Prompt bloqueado: contiene instruccion prohibida." >&2
+    echo "Prompt bloqueado: contiene una instrucción prohibida." >&2
     exit 2
   fi
 done
@@ -164,7 +164,7 @@ done
 exit 0
 ```
 
-> **Exit code 2 es el unico que bloquea:** Solo exit code 2 bloquea la operacion (ya sea una herramienta en `PreToolUse` o un prompt en `UserPromptSubmit`). Exit code 1 u otros codigos no-zero no bloquean; simplemente muestran stderr en modo verbose.
+> **Exit code 2 es el único que bloquea:** Solo exit code 2 bloquea la operación (ya sea una herramienta en `PreToolUse` o un prompt en `UserPromptSubmit`). Exit code 1 u otros códigos no-zero no bloquean; simplemente muestran stderr en modo verbose.
 
 ### Definir el título de sesión programáticamente (desde v2.1.94)
 
@@ -206,7 +206,7 @@ Casos de uso habituales:
 
 ### PermissionRequest
 
-Se dispara **cuando aparece un dialogo de permisos** (por ejemplo, al intentar ejecutar un comando no permitido). Util para auto-aprobar patrones conocidos y seguros.
+Se dispara **cuando aparece un diálogo de permisos** (por ejemplo, al intentar ejecutar un comando no permitido). Útil para autoaprobar patrones conocidos y seguros.
 
 ```json
 {
@@ -228,7 +228,7 @@ Se dispara **cuando aparece un dialogo de permisos** (por ejemplo, al intentar e
 
 ### PostToolUseFailure
 
-Se dispara **despues de que una herramienta falla** (exit code distinto de cero). Permite diagnostico automatico de errores.
+Se dispara **después de que una herramienta falla** (exit code distinto de cero). Permite diagnóstico automático de errores.
 
 ```json
 {
@@ -239,7 +239,7 @@ Se dispara **despues de que una herramienta falla** (exit code distinto de cero)
         "hooks": [
           {
             "type": "agent",
-            "prompt": "El comando bash acaba de fallar. Analiza el error en el output, identifica la causa probable y sugiere una solucion concreta."
+            "prompt": "El comando bash acaba de fallar. Analiza el error en el output, identifica la causa probable y sugiere una solución concreta."
           }
         ]
       }
@@ -250,7 +250,7 @@ Se dispara **despues de que una herramienta falla** (exit code distinto de cero)
 
 ### StopFailure
 
-Se dispara **cuando ocurre un error de API durante la respuesta de Claude**. Util para logging, reintentos o notificacion de fallos.
+Se dispara **cuando ocurre un error de API durante la respuesta de Claude**. Útil para logging, reintentos o notificación de fallos.
 
 ```json
 {
@@ -271,7 +271,7 @@ Se dispara **cuando ocurre un error de API durante la respuesta de Claude**. Uti
 
 ### SubagentStart
 
-Se dispara **cuando se crea un subagente**. Util para tracking de subagentes activos.
+Se dispara **cuando se crea un subagente**. Útil para tracking de subagentes activos.
 
 ```json
 {
@@ -292,7 +292,7 @@ Se dispara **cuando se crea un subagente**. Util para tracking de subagentes act
 
 ### TeammateIdle
 
-Se dispara **cuando un teammate de un Agent Team no tiene tareas asignadas**. Util para reasignar trabajo o liberar recursos.
+Se dispara **cuando un teammate de un Agent Team no tiene tareas asignadas**. Útil para reasignar trabajo o liberar recursos.
 
 ```json
 {
@@ -313,7 +313,7 @@ Se dispara **cuando un teammate de un Agent Team no tiene tareas asignadas**. Ut
 
 ### TaskCompleted
 
-Se dispara **cuando una tarea de la lista compartida de un Agent Team se marca como completada**. Util para notificaciones o para desencadenar la siguiente fase de trabajo.
+Se dispara **cuando una tarea de la lista compartida de un Agent Team se marca como completada**. Útil para notificaciones o para desencadenar la siguiente fase de trabajo.
 
 ```json
 {
@@ -334,7 +334,7 @@ Se dispara **cuando una tarea de la lista compartida de un Agent Team se marca c
 
 ### Notification
 
-Se dispara **cuando Claude Code envia una notificacion al usuario**, por ejemplo al completar una tarea en background o cuando un agente termina su trabajo. Por defecto, estas notificaciones se envian como notificaciones de sistema del SO (desktop notifications).
+Se dispara **cuando Claude Code envía una notificación al usuario**, por ejemplo al completar una tarea en background o cuando un agente termina su trabajo. Por defecto, estas notificaciones se envían como notificaciones de sistema del sistema operativo (desktop notifications).
 
 Un hook en el evento `Notification` permite personalizar ese comportamiento: redirigir a Slack, reproducir un sonido, registrar en un log, etc.
 
@@ -367,22 +367,22 @@ notify-send 'Claude Code' "$MESSAGE"
 
 Casos de uso frecuentes:
 
-- Enviar la notificacion a un canal de Slack cuando un agente de larga duracion termina
-- Reproducir un sonido con `paplay` o `afplay` ademas de mostrar la notificacion visual
-- Registrar todas las notificaciones en un fichero de log para auditoria
+- Enviar la notificación a un canal de Slack cuando un agente de larga duración termina
+- Reproducir un sonido con `paplay` o `afplay` además de mostrar la notificación visual
+- Registrar todas las notificaciones en un fichero de log para auditoría
 
 ---
 
 ## Hooks en subagentes y skills
 
-Los hooks no se limitan a la configuracion global de `settings.json`. Tambien pueden definirse en el frontmatter YAML de un subagente o un skill, usando la misma estructura pero con alcance limitado a ese agente o skill en particular.
+Los hooks no se limitan a la configuración global de `settings.json`. También pueden definirse en el frontmatter YAML de un subagente o un skill, usando la misma estructura pero con alcance limitado a ese agente o skill en particular.
 
 ### Ejemplo: skill con hook PostToolUse
 
 ```markdown
 ---
 name: implementar-feature
-description: Implementa una nueva feature siguiendo los estandares del proyecto
+description: Implementa una nueva feature siguiendo los estándares del proyecto
 hooks:
   PostToolUse:
     - matcher: Write
@@ -395,15 +395,15 @@ hooks:
 
 Al implementar una nueva feature:
 1. Crea los archivos necesarios siguiendo la estructura del proyecto
-2. Escribe los tests antes que el codigo de produccion
-3. Documenta las funciones publicas con JSDoc
+2. Escribe los tests antes que el código de producción
+3. Documenta las funciones públicas con JSDoc
 ```
 
-En este ejemplo, cada vez que el skill escribe un fichero, se ejecuta automaticamente Prettier y ESLint sin necesidad de configurarlo a nivel global.
+En este ejemplo, cada vez que el skill escribe un fichero, se ejecuta automáticamente Prettier y ESLint sin necesidad de configurarlo a nivel global.
 
 ### Consideraciones sobre alcance
 
-- Los hooks definidos en un skill solo se activan **mientras ese skill esta ejecutandose**
+- Los hooks definidos en un skill solo se activan **mientras ese skill está ejecutándose**
 - Los hooks globales (en `settings.json`) se activan en **todas las sesiones**
 - Si ambos aplican a la misma herramienta, **se ejecutan ambos** (no se cancelan)
 
@@ -411,9 +411,9 @@ En este ejemplo, cada vez que el skill escribe un fichero, se ejecuta automatica
 
 ## Hooks async para operaciones largas
 
-Por defecto, Claude Code espera a que el hook termine antes de continuar. Para operaciones que pueden tardar varios segundos o minutos (tests, builds, deploys), esto bloquea la interaccion.
+Por defecto, Claude Code espera a que el hook termine antes de continuar. Para operaciones que pueden tardar varios segundos o minutos (tests, builds, deploys), esto bloquea la interacción.
 
-La solucion es marcar el hook como `"async": true`:
+La solución es marcar el hook como `"async": true`:
 
 ```json
 {
@@ -437,23 +437,23 @@ La solucion es marcar el hook como `"async": true`:
 
 ### Comportamiento de hooks async
 
-- El hook se lanza en **background** inmediatamente despues del evento
-- Claude Code **no espera** a que termine y continua con la interaccion
-- Si el hook falla, el error se registra en el log pero **no interrumpe la sesion**
-- El parametro `timeout` (en segundos) define el tiempo maximo antes de cancelar el hook
+- El hook se lanza en **background** inmediatamente después del evento
+- Claude Code **no espera** a que termine y continúa con la interacción
+- Si el hook falla, el error se registra en el log pero **no interrumpe la sesión**
+- El parámetro `timeout` (en segundos) define el tiempo máximo antes de cancelar el hook
 
 ### Cuando usar async
 
-| Escenario | Sincrono | Async |
+| Escenario | Síncrono | Async |
 |-----------|----------|-------|
-| Validacion de seguridad (debe bloquear) | Si | No |
+| Validación de seguridad (debe bloquear) | Si | No |
 | Suite de tests completa (2-5 min) | No | Si |
-| Formateo de codigo (< 1 segundo) | Si | No |
-| Build de produccion (varios minutos) | No | Si |
-| Registro en log de auditoria | No | Si |
-| Notificacion Slack al completar | No | Si |
+| Formateo de código (< 1 segundo) | Si | No |
+| Build de producción (varios minutos) | No | Si |
+| Registro en log de auditoría | No | Si |
+| Notificación a Slack al completar | No | Si |
 
-### Ejemplo practico: build en background
+### Ejemplo práctico: build en background
 
 ```json
 {
@@ -479,11 +479,11 @@ La solucion es marcar el hook como `"async": true`:
 
 ## Nuevos eventos del ciclo de vida (v2.1.76 - v2.1.83)
 
-Los siguientes eventos se anadieron en las versiones mas recientes de Claude Code:
+Los siguientes eventos se añadieron en las versiones más recientes de Claude Code:
 
 ### PostCompact
 
-Se dispara **despues de que el contexto ha sido compactado**, ya sea por `/compact` manual o por la Compaction API automatica. Incluye el campo `compact_summary` con el resumen generado.
+Se dispara **después de que el contexto ha sido compactado**, ya sea por `/compact` manual o por la Compaction API automática. Incluye el campo `compact_summary` con el resumen generado.
 
 ```json
 {
@@ -493,7 +493,7 @@ Se dispara **despues de que el contexto ha sido compactado**, ya sea por `/compa
         "hooks": [
           {
             "type": "command",
-            "command": "echo \"$(date): Compactacion realizada\" >> ~/.claude/compaction.log"
+            "command": "echo \"$(date): Compactación realizada\" >> ~/.claude/compaction.log"
           }
         ]
       }
@@ -502,11 +502,11 @@ Se dispara **despues de que el contexto ha sido compactado**, ya sea por `/compa
 }
 ```
 
-Casos de uso: logging de compactaciones, verificar que el resumen mantiene informacion critica, enviar alerta si la compactacion se dispara demasiado frecuentemente.
+Casos de uso: logging de compactaciones, verificar que el resumen mantiene información crítica, enviar alerta si la compactación se dispara demasiado frecuentemente.
 
 ### CwdChanged
 
-Se dispara **cuando cambia el directorio de trabajo** de la sesion. Util para integracion con herramientas que dependen del directorio, como `direnv`.
+Se dispara **cuando cambia el directorio de trabajo** de la sesión. Útil para la integración con herramientas que dependen del directorio, como `direnv`.
 
 ```json
 {
@@ -527,7 +527,7 @@ Se dispara **cuando cambia el directorio de trabajo** de la sesion. Util para in
 
 ### FileChanged
 
-Se dispara **cuando se modifica un fichero en el filesystem**. Permite reacciones automaticas a cambios.
+Se dispara **cuando se modifica un fichero en el filesystem**. Permite reacciones automáticas a cambios.
 
 ```json
 {
@@ -549,11 +549,11 @@ Se dispara **cuando se modifica un fichero en el filesystem**. Permite reaccione
 
 ### InstructionsLoaded
 
-Se dispara **cuando se cargan instrucciones** (CLAUDE.md, ficheros de rules). Util para validar o auditar las reglas que se estan aplicando.
+Se dispara **cuando se cargan instrucciones** (CLAUDE.md, ficheros de rules). Útil para validar o auditar las reglas que se están aplicando.
 
 ### ConfigChange
 
-Se dispara **cuando cambia la configuracion** de Claude Code (settings.json, permisos). Util para auditoria en entornos enterprise.
+Se dispara **cuando cambia la configuración** de Claude Code (settings.json, permisos). Útil para auditoría en entornos enterprise.
 
 ### WorktreeCreate / WorktreeRemove
 
@@ -588,7 +588,7 @@ echo "Worktree creado: $WORKTREE_PATH" >> ~/.claude/worktrees.log
 
 ### Elicitation / ElicitationResult
 
-Se disparan durante el flujo de **MCP Elicitation** (ver [Modulo 07](../../modulo-07-mcp/teoria/05-mcp-elicitation.md)). `Elicitation` intercepta la solicitud de input del servidor MCP; `ElicitationResult` intercepta la respuesta del usuario.
+Se disparan durante el flujo de **MCP Elicitation** (ver [Módulo 07](../../modulo-07-mcp/teoria/05-mcp-elicitation.md)). `Elicitation` intercepta la solicitud de input del servidor MCP; `ElicitationResult` intercepta la respuesta del usuario.
 
 ### PermissionDenied (v2.1.89)
 
@@ -673,23 +673,23 @@ El comportamiento es automático y no requiere configuración. El fichero tempor
 
 ## Errores comunes
 
-| Error | Causa | Solucion |
+| Error | Causa | Solución |
 |-------|-------|---------|
-| Hook agent muy lento | Se lanza en cada operacion sin matcher | Anadir `matcher` especifico |
+| Hook agent muy lento | Se lanza en cada operación sin matcher | Añadir `matcher` específico |
 | Loop infinito | Hook agent que escribe ficheros y dispara su propio PostToolUse | Usar matcher preciso o flag de guard |
 | Usar exit 1 para bloquear | exit 1 no bloquea, solo muestra en verbose | Usar **exit 2** para bloquear operaciones |
-| Hooks async que fallan silenciosamente | Los errores de hooks async no interrumpen la sesion | Redirigir stderr a un log |
+| Hooks async que fallan silenciosamente | Los errores de hooks async no interrumpen la sesión | Redirigir stderr a un log |
 | Hooks en skills ignorados | Frontmatter YAML mal formateado | Validar el YAML con un linter |
-| Leer variables de entorno inexistentes | Los datos llegan via stdin (JSON), no como env vars | Usar `INPUT=$(cat)` y `jq` para extraer campos |
+| Leer variables de entorno inexistentes | Los datos llegan vía stdin (JSON), no como env vars | Usar `INPUT=$(cat)` y `jq` para extraer campos |
 
 ---
 
 ## Resumen
 
-- Los hooks de tipo `agent` lanzan subagentes completos como respuesta a eventos; son los mas potentes pero tambien los mas costosos en tokens
-- Los eventos avanzados (`SessionStart`, `SessionEnd`, `UserPromptSubmit`, `PermissionRequest`, `PostToolUseFailure`, `StopFailure`, `SubagentStart`, `TeammateIdle`, `TaskCompleted`, `Notification`) cubren todo el ciclo de vida de la sesion
-- Los **nuevos eventos v3.0** (`PostCompact`, `CwdChanged`, `FileChanged`, `InstructionsLoaded`, `ConfigChange`, `WorktreeCreate`, `WorktreeRemove`, `Elicitation`, `ElicitationResult`) amplian la cobertura a compactacion, filesystem, configuracion, worktrees y MCP Elicitation
-- Los hooks pueden definirse en el frontmatter YAML de skills y subagentes, con alcance limitado a su ejecucion
-- El parametro `"async": true` permite ejecutar hooks en background para operaciones largas sin bloquear la sesion
-- `"timeout"` limita el tiempo maximo de ejecucion de un hook async
-- Solo **exit 2** bloquea operaciones; exit 1 u otros codigos no-zero no bloquean
+- Los hooks de tipo `agent` lanzan subagentes completos como respuesta a eventos; son los más potentes, pero también los más costosos en tokens
+- Los eventos avanzados (`SessionStart`, `SessionEnd`, `UserPromptSubmit`, `PermissionRequest`, `PostToolUseFailure`, `StopFailure`, `SubagentStart`, `TeammateIdle`, `TaskCompleted`, `Notification`) cubren todo el ciclo de vida de la sesión
+- Los **nuevos eventos v3.0** (`PostCompact`, `CwdChanged`, `FileChanged`, `InstructionsLoaded`, `ConfigChange`, `WorktreeCreate`, `WorktreeRemove`, `Elicitation`, `ElicitationResult`) amplían la cobertura a compactación, filesystem, configuración, worktrees y MCP Elicitation
+- Los hooks pueden definirse en el frontmatter YAML de skills y subagentes, con alcance limitado a su ejecución
+- El parámetro `"async": true` permite ejecutar hooks en background para operaciones largas sin bloquear la sesión
+- `"timeout"` limita el tiempo máximo de ejecución de un hook async
+- Solo **exit 2** bloquea operaciones; exit 1 u otros códigos no-zero no bloquean

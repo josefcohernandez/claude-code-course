@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Crear un CLAUDE.md efectivo para un proyecto real, aplicando las mejores practicas.
+Crear un CLAUDE.md efectivo para un proyecto real, aplicando las mejores prácticas.
 
 ---
 
@@ -19,9 +19,9 @@ Pide a Claude que analice el proyecto:
 
 ```
 Analiza este proyecto y dame:
-1. Stack tecnologico detectado
+1. Stack tecnológico detectado
 2. Comandos de build/test/lint disponibles
-3. Convenciones de codigo que observas
+3. Convenciones de código que observas
 4. Estructura de directorios principal
 Formato: lista breve por cada punto.
 ```
@@ -40,17 +40,17 @@ Crea el archivo usando la plantilla:
 
 Luego editalo para incluir:
 
-1. **Descripcion** (1-2 frases)
-2. **Stack tecnologico** (lista)
+1. **Descripción** (1-2 frases)
+2. **Stack tecnológico** (lista)
 3. **Comandos** (build, test, lint, dev)
-4. **Convenciones de codigo** (naming, imports, estructura)
+4. **Convenciones de código** (naming, imports, estructura)
 5. **Restricciones** (que NO debe hacer Claude)
 6. **Estilo de respuesta** (conciso, sin explicaciones innecesarias)
 
 ### Criterios de Calidad
 
-- [ ] Menos de 100 lineas
-- [ ] Cada linea es accionable
+- [ ] Menos de 100 líneas
+- [ ] Cada línea es accionable
 - [ ] Comandos verificados (que funcionen)
 - [ ] Sin documentacion general (solo instrucciones)
 
@@ -65,7 +65,7 @@ Prueba tu CLAUDE.md:
 ```
 
 ```
-"Crea una funcion nueva siguiendo las convenciones del proyecto"
+"Crea una función nueva siguiendo las convenciones del proyecto"
 ```
 
 Verifica:
@@ -94,13 +94,13 @@ o crea un fichero personal importado desde CLAUDE.md.
 mkdir -p ~/.claude
 cat > ~/.claude/mis-preferencias.md << 'EOF'
 # Mis preferencias personales
-- Trabajo principalmente en el modulo de [tu modulo]
-- Prefiero respuestas en espanol
-- Siempre ejecutar lint despues de editar
+- Trabajo principalmente en el módulo de [tu módulo]
+- Prefiero respuestas en español
+- Siempre ejecutar lint después de editar
 EOF
 ```
 
-Luego, en el `CLAUDE.md` del proyecto, anade la linea de import:
+Luego, en el `CLAUDE.md` del proyecto, añade la línea de import:
 
 ```markdown
 @~/.claude/mis-preferencias.md
@@ -113,7 +113,7 @@ no se commitea al repositorio).
 
 ## Entregable
 
-Tu CLAUDE.md final deberia verse similar a:
+Tu CLAUDE.md final debería verse similar a:
 
 ```markdown
 # [Nombre del Proyecto]
@@ -133,7 +133,7 @@ API REST para gestion de [dominio].
 - `make migrate` - Aplicar migraciones
 
 ## Convenciones
-- Funciones: snake_case
+- Funciónes: snake_case
 - Clases: PascalCase
 - Archivos: snake_case.py
 - Endpoints: /api/v1/resource (plural)
@@ -147,7 +147,7 @@ API REST para gestion de [dominio].
 
 ## Respuestas
 - Concisas, sin explicaciones innecesarias
-- No repetir codigo sin cambios
+- No repetir código sin cambios
 - Preferir editar sobre crear archivos nuevos
 ```
 
@@ -156,7 +156,7 @@ API REST para gestion de [dominio].
 ## Criterios de Completitud
 
 - [ ] CLAUDE.md creado con las 6 secciones
-- [ ] Menos de 100 lineas
+- [ ] Menos de 100 líneas
 - [ ] Verificado con una tarea real
 - [ ] Preferencias locales configuradas (settings.local.json o fichero personal importado)
 - [ ] Commiteado al repositorio (excepto ficheros locales)

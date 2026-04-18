@@ -4,17 +4,17 @@
 
 ---
 
-## Vista general del arbol
+## Vista general del árbol
 
 ```
 mi-proyecto/
-├── CLAUDE.md                          # Memoria compartida (raiz del proyecto)
+├── CLAUDE.md                          # Memoria compartida (raíz del proyecto)
 ├── CLAUDE.local.md                    # Memoria personal (gitignored)
 ├── .mcp.json                          # Servidores MCP del proyecto
 │
 └── .claude/
-    ├── settings.json                  # Configuracion compartida del proyecto
-    ├── settings.local.json            # Configuracion personal (gitignored)
+    ├── settings.json                  # Configuración compartida del proyecto
+    ├── settings.local.json            # Configuración personal (gitignored)
     ├── CLAUDE.md                      # Memoria alternativa (dentro de .claude/)
     ├── CLAUDE.local.md                # Memoria personal alternativa
     ├── .gitignore                     # Ignorar ficheros locales/personales
@@ -46,24 +46,24 @@ mi-proyecto/
 
 ---
 
-## Ficheros de configuracion
+## Ficheros de configuración
 
 ### `CLAUDE.md`
 
 | Campo | Detalle |
 |-------|---------|
-| **Ubicacion** | Raiz del proyecto o `.claude/CLAUDE.md` |
-| **Compartido** | Si (se commitea en git) |
-| **Proposito** | Memoria persistente del proyecto que se carga automaticamente al iniciar sesion |
+| **Ubicación** | Raíz del proyecto o `.claude/CLAUDE.md` |
+| **Compartido** | Sí (se commitea en git) |
+| **Propósito** | Memoria persistente del proyecto que se carga automáticamente al iniciar sesión |
 
-Contiene contexto del proyecto, convenciones de codigo, comandos utiles, estructura del repositorio, y cualquier instruccion que Claude deba conocer. Se puede generar automaticamente con `/init`.
+Contiene contexto del proyecto, convenciones de código, comandos útiles, estructura del repositorio, y cualquier instrucción que Claude deba conocer. Se puede generar automáticamente con `/init`.
 
-Se pueden tener multiples `CLAUDE.md` en distintos directorios (jerarquia). El mas cercano al archivo en edicion tiene prioridad.
+Se pueden tener múltiples `CLAUDE.md` en distintos directorios (jerarquía). El más cercano al archivo en edición tiene prioridad.
 
 ```markdown
 # Mi Proyecto
 
-## Stack tecnologico
+## Stack tecnológico
 - Frontend: React + TypeScript
 - Backend: Node.js + Express
 
@@ -78,9 +78,9 @@ Se pueden tener multiples `CLAUDE.md` en distintos directorios (jerarquia). El m
 
 | Campo | Detalle |
 |-------|---------|
-| **Ubicacion** | Raiz del proyecto o `.claude/CLAUDE.local.md` |
-| **Compartido** | No (gitignored automaticamente) |
-| **Proposito** | Instrucciones personales que solo aplican a ti |
+| **Ubicación** | Raíz del proyecto o `.claude/CLAUDE.local.md` |
+| **Compartido** | No (gitignored automáticamente) |
+| **Propósito** | Instrucciones personales que solo aplican a ti |
 
 Ideal para preferencias individuales, rutas locales, o configuraciones que no quieres compartir con el equipo.
 
@@ -90,11 +90,11 @@ Ideal para preferencias individuales, rutas locales, o configuraciones que no qu
 
 | Campo | Detalle |
 |-------|---------|
-| **Ubicacion** | `.claude/settings.json` |
-| **Compartido** | Si (se commitea en git) |
-| **Proposito** | Configuracion del proyecto: permisos, hooks, servidores MCP y plugins |
+| **Ubicación** | `.claude/settings.json` |
+| **Compartido** | Sí (se commitea en git) |
+| **Propósito** | Configuración del proyecto: permisos, hooks, servidores MCP y plugins |
 
-Es el fichero principal de configuracion del proyecto. Se comparte con el equipo.
+Es el fichero principal de configuración del proyecto. Se comparte con el equipo.
 
 ```json
 {
@@ -143,16 +143,16 @@ Es el fichero principal de configuracion del proyecto. Se comparte con el equipo
 | Evento | Cuando se ejecuta |
 |--------|-------------------|
 | `PreToolUse` | Antes de que Claude use una herramienta |
-| `PostToolUse` | Despues de que Claude use una herramienta |
+| `PostToolUse` | Después de que Claude use una herramienta |
 | `PostToolUseFailure` | Cuando una herramienta falla |
-| `Notification` | Cuando Claude genera una notificacion |
+| `Notification` | Cuando Claude genera una notificación |
 | `Stop` | Cuando Claude termina su turno |
 | `StopFailure` | Cuando Claude falla al detenerse |
 | `SubagentStart` | Cuando un subagente inicia |
 | `SubagentStop` | Cuando un subagente termina |
-| `SessionStart` | Al iniciar o reanudar una sesion |
-| `SessionEnd` | Al finalizar una sesion |
-| `UserPromptSubmit` | Cuando el usuario envia un prompt |
+| `SessionStart` | Al iniciar o reanudar una sesión |
+| `SessionEnd` | Al finalizar una sesión |
+| `UserPromptSubmit` | Cuando el usuario envía un prompt |
 | `PermissionRequest` | Cuando Claude solicita un permiso |
 | `InstructionsLoaded` | Cuando se cargan las instrucciones (CLAUDE.md) |
 | `TaskCreated` | Cuando se crea una tarea |
@@ -160,12 +160,12 @@ Es el fichero principal de configuracion del proyecto. Se comparte con el equipo
 | `TeammateIdle` | Cuando un teammate de Agent Teams queda inactivo |
 | `FileChanged` | Cuando un fichero cambia |
 | `CwdChanged` | Cuando cambia el directorio de trabajo |
-| `ConfigChange` | Cuando cambia la configuracion |
+| `ConfigChange` | Cuando cambia la configuración |
 | `PreCompact` | Antes de compactar el contexto |
-| `PostCompact` | Despues de compactar el contexto |
+| `PostCompact` | Después de compactar el contexto |
 | `WorktreeCreate` | Cuando se crea un worktree |
 | `WorktreeRemove` | Cuando se elimina un worktree |
-| `Elicitation` | Cuando Claude solicita informacion al usuario |
+| `Elicitation` | Cuando Claude solicita información al usuario |
 | `ElicitationResult` | Cuando el usuario responde a una elicitacion |
 
 ---
@@ -174,11 +174,11 @@ Es el fichero principal de configuracion del proyecto. Se comparte con el equipo
 
 | Campo | Detalle |
 |-------|---------|
-| **Ubicacion** | `.claude/settings.local.json` |
-| **Compartido** | No (gitignored automaticamente) |
-| **Proposito** | Sobreescrituras personales de configuracion del proyecto |
+| **Ubicación** | `.claude/settings.local.json` |
+| **Compartido** | No (gitignored automáticamente) |
+| **Propósito** | Sobreescrituras personales de configuración del proyecto |
 
-Misma estructura que `settings.json`, pero para ajustes que no quieres compartir con el equipo (ej: permisos mas permisivos para tu maquina de desarrollo).
+Misma estructura que `settings.json`, pero para ajustes que no quieres compartir con el equipo (ej: permisos más permisivos para tu maquína de desarrollo).
 
 ---
 
@@ -186,9 +186,9 @@ Misma estructura que `settings.json`, pero para ajustes que no quieres compartir
 
 | Campo | Detalle |
 |-------|---------|
-| **Ubicacion** | Raiz del proyecto |
+| **Ubicación** | Raíz del proyecto |
 | **Compartido** | Si |
-| **Proposito** | Configuracion de servidores MCP a nivel de proyecto |
+| **Propósito** | Configuración de servidores MCP a nivel de proyecto |
 
 ```json
 {
@@ -213,44 +213,44 @@ Misma estructura que `settings.json`, pero para ajustes que no quieres compartir
 | Campo | Detalle |
 |-------|---------|
 | **Compartido** | Si |
-| **Proposito** | Definir agentes IA especializados para tareas concretas |
+| **Propósito** | Definir agentes IA especializados para tareas concretas |
 
-Cada subagente es un fichero Markdown con frontmatter YAML + un system prompt. Claude delega automaticamente a subagentes cuando la tarea encaja con su `description`.
+Cada subagente es un fichero Markdown con frontmatter YAML + un system prompt. Claude delega automáticamente a subagentes cuando la tarea encaja con su `description`.
 
 **Campos del frontmatter:**
 
-| Campo | Obligatorio | Descripcion |
+| Campo | Obligatorio | Descripción |
 |-------|-------------|-------------|
-| `name` | Si | Identificador unico (minusculas y guiones) |
+| `name` | Si | Identificador único (minusculas y guiones) |
 | `description` | Si | Cuando Claude debe delegar a este agente |
 | `tools` | No | Herramientas permitidas. Si se omite, hereda todas |
 | `disallowedTools` | No | Herramientas a denegar |
 | `model` | No | `sonnet`, `opus`, `haiku` o `inherit` (por defecto) |
 | `permissionMode` | No | `default`, `acceptEdits`, `dontAsk`, `delegate`, `bypassPermissions`, `plan` |
-| `maxTurns` | No | Maximo de turnos del agente |
+| `maxTurns` | No | Máximo de turnos del agente |
 | `skills` | No | Skills a precargar en el contexto del agente |
 | `mcpServers` | No | Servidores MCP disponibles para el agente |
 | `hooks` | No | Hooks del ciclo de vida del agente |
 | `memory` | No | Memoria persistente: `user`, `project` o `local` |
 
-**Ejemplo:** `.claude/agents/revisor-codigo.md`
+**Ejemplo:** `.claude/agents/revisor-código.md`
 
 ```markdown
 ---
-name: revisor-codigo
-description: Revisa codigo para calidad y buenas practicas. Usar proactivamente despues de cambios.
+name: revisor-código
+description: Revisa código para calidad y buenas prácticas. Usar proactivamente después de cambios.
 tools: Read, Grep, Glob, Bash
 model: sonnet
 ---
 
-Eres un revisor de codigo senior. Analiza el codigo y proporciona
-feedback especifico y accionable sobre calidad, seguridad y buenas practicas.
+Eres un revisor de código senior. Analiza el código y proporciona
+feedback específico y accionable sobre calidad, seguridad y buenas prácticas.
 
-Checklist de revision:
-- Codigo claro y legible
+Checklist de revisión:
+- Código claro y legible
 - Manejo adecuado de errores
 - Sin secretos expuestos
-- Validacion de inputs
+- Validación de inputs
 - Cobertura de tests
 ```
 
@@ -261,7 +261,7 @@ Checklist de revision:
 | Campo | Detalle |
 |-------|---------|
 | **Compartido** | Si |
-| **Proposito** | Crear atajos de prompts invocables con `/nombre` |
+| **Propósito** | Crear atajos de prompts invocables con `/nombre` |
 
 > **Nota:** Los commands han sido fusionados con skills. Los ficheros existentes en `commands/` siguen funcionando, pero se recomienda usar `skills/` para nuevos comandos.
 
@@ -274,7 +274,7 @@ Cada fichero `.md` en este directorio crea un comando `/nombre-del-fichero`. Sop
 description: Revisa el PR actual
 ---
 
-Revisa el PR actual siguiendo nuestros estandares:
+Revisa el PR actual siguiendo nuestros estándares:
 
 1. Lee el diff con `gh pr diff`
 2. Analiza los cambios
@@ -290,16 +290,16 @@ Se invoca con: `/review-pr`
 | Campo | Detalle |
 |-------|---------|
 | **Compartido** | Si |
-| **Proposito** | Extender las capacidades de Claude con instrucciones reutilizables |
+| **Propósito** | Extender las capacidades de Claude con instrucciones reutilizables |
 
-Cada skill es un **directorio** con un fichero `SKILL.md` obligatorio y ficheros de soporte opcionales. Claude las usa automaticamente cuando son relevantes, o puedes invocarlas manualmente con `/nombre-skill`.
+Cada skill es un **directorio** con un fichero `SKILL.md` obligatorio y ficheros de soporte opcionales. Claude las usa automáticamente cuando son relevantes, o puedes invocarlas manualmente con `/nombre-skill`.
 
 **Campos del frontmatter de SKILL.md:**
 
-| Campo | Obligatorio | Descripcion |
+| Campo | Obligatorio | Descripción |
 |-------|-------------|-------------|
 | `name` | No | Nombre (por defecto usa el nombre del directorio) |
-| `description` | Recomendado | Que hace y cuando usarla |
+| `description` | Recomendado | Qué hace y cuándo usarla |
 | `argument-hint` | No | Pista para argumentos (ej: `[issue-number]`) |
 | `disable-model-invocation` | No | `true` = solo invocacion manual con `/nombre` |
 | `user-invocable` | No | `false` = oculta del menu `/`, solo para Claude |
@@ -314,28 +314,28 @@ Cada skill es un **directorio** con un fichero `SKILL.md` obligatorio y ficheros
 ```yaml
 ---
 name: deploy
-description: Despliega la aplicacion a produccion
+description: Despliega la aplicación a produccion
 context: fork
 disable-model-invocation: true
 ---
 
-Despliega $ARGUMENTS a produccion:
+Despliega $ARGUMENTS a producción:
 
 1. Ejecuta la suite de tests
-2. Construye la aplicacion
+2. Construye la aplicación
 3. Publica en el target de despliegue
 4. Verifica que el despliegue fue exitoso
 ```
 
 **Sustituciones de variables disponibles en skills:**
 
-| Variable | Descripcion |
+| Variable | Descripción |
 |----------|-------------|
 | `$ARGUMENTS` | Todos los argumentos pasados |
-| `$ARGUMENTS[N]` | Argumento por indice (base 0) |
+| `$ARGUMENTS[N]` | Argumento por índice (base 0) |
 | `$N` | Atajo para `$ARGUMENTS[N]` |
-| `${CLAUDE_SESSION_ID}` | ID de la sesion actual |
-| `` !`comando` `` | Inyeccion dinamica: ejecuta un comando shell y sustituye por su salida |
+| `${CLAUDE_SESSION_ID}` | ID de la sesión actual |
+| `` !`comando` `` | Inyección dinámica: ejecuta un comando shell y sustituye por su salida |
 
 ---
 
@@ -344,18 +344,18 @@ Despliega $ARGUMENTS a produccion:
 | Campo | Detalle |
 |-------|---------|
 | **Compartido** | Si |
-| **Proposito** | Guias de comportamiento que se cargan automaticamente junto con CLAUDE.md |
+| **Propósito** | Guías de comportamiento que se cargan automáticamente junto con CLAUDE.md |
 
-Todos los ficheros Markdown en este directorio se cargan automaticamente con la misma prioridad que `CLAUDE.md`. No necesitan imports ni configuracion adicional.
+Todos los ficheros Markdown en este directorio se cargan automáticamente con la misma prioridad que `CLAUDE.md`. No necesitan imports ni configuración adicional.
 
-**Ejemplo:** `.claude/rules/estilo-codigo.md`
+**Ejemplo:** `.claude/rules/estilo-código.md`
 
 ```markdown
 # Reglas de estilo
 
 - Usar TypeScript estricto en todo el proyecto
 - Funciones puras siempre que sea posible
-- Maximo 80 caracteres por linea
+- Máximo 80 caracteres por línea
 - Imports agrupados: stdlib > terceros > locales
 ```
 
@@ -377,9 +377,9 @@ Todos los ficheros Markdown en este directorio se cargan automaticamente con la 
 | Campo | Detalle |
 |-------|---------|
 | **Compartido** | Si (se puede commitear) |
-| **Proposito** | Conocimiento acumulado por subagentes entre sesiones |
+| **Propósito** | Conocimiento acumulado por subagentes entre sesiones |
 
-Cuando un subagente tiene `memory: project` en su frontmatter, almacena aqui sus aprendizajes. Cada agente tiene su propia subcarpeta con un `MEMORY.md`.
+Cuando un subagente tiene `memory: project` en su frontmatter, almacena aquí sus aprendizajes. Cada agente tiene su propia subcarpeta con un `MEMORY.md`.
 
 ---
 
@@ -388,7 +388,7 @@ Cuando un subagente tiene `memory: project` en su frontmatter, almacena aqui sus
 | Campo | Detalle |
 |-------|---------|
 | **Compartido** | No (gitignored) |
-| **Proposito** | Igual que `agent-memory/` pero para conocimiento que no se commitea |
+| **Propósito** | Igual que `agent-memory/` pero para conocimiento que no se commitea |
 
 Se activa con `memory: local` en el frontmatter del subagente.
 
@@ -397,7 +397,7 @@ Se activa con `memory: local` en el frontmatter del subagente.
 ## Fichero `.claude/.gitignore` recomendado
 
 ```gitignore
-# Configuracion personal (no compartir)
+# Configuración personal (no compartir)
 settings.local.json
 CLAUDE.local.md
 agent-memory-local/
@@ -408,13 +408,13 @@ agent-memory-local/
 
 ---
 
-## Jerarquia de prioridad
+## Jerarquía de prioridad
 
 Los ajustes se resuelven de mayor a menor prioridad:
 
 | Prioridad | Origen | Ejemplo |
 |-----------|--------|---------|
-| 1 (mayor) | Gestionado (enterprise) | Politicas de la organizacion |
+| 1 (mayor) | Gestionado (enterprise) | Políticas de la organización |
 | 2 | Argumentos CLI | `--model opus`, `--agents '{...}'` |
 | 3 | Local del proyecto | `.claude/settings.local.json`, `CLAUDE.local.md` |
 | 4 | Proyecto | `.claude/settings.json`, `CLAUDE.md` |
@@ -432,16 +432,16 @@ Casi todos los directorios de `.claude/` del proyecto tienen un equivalente en `
 | `.claude/agents/` | `~/.claude/agents/` |
 | `.claude/commands/` | `~/.claude/commands/` |
 | `.claude/skills/` | `~/.claude/skills/` |
-| `CLAUDE.md` (raiz) | `~/CLAUDE.md` |
+| `CLAUDE.md` (raíz) | `~/CLAUDE.md` |
 
 ---
 
 ## Referencias
 
-- [Documentacion oficial de Claude Code - Settings](https://code.claude.com/docs/en/settings)
-- [Documentacion oficial - Subagentes](https://code.claude.com/docs/en/sub-agents)
-- [Documentacion oficial - Skills](https://code.claude.com/docs/en/skills)
-- [Documentacion oficial - Hooks](https://code.claude.com/docs/en/hooks)
+- [Documentación oficial de Claude Code - Settings](https://code.claude.com/docs/en/settings)
+- [Documentación oficial - Subagentes](https://code.claude.com/docs/en/sub-agents)
+- [Documentación oficial - Skills](https://code.claude.com/docs/en/skills)
+- [Documentación oficial - Hooks](https://code.claude.com/docs/en/hooks)
 - [Blog: Using CLAUDE.md files](https://claude.com/blog/using-claude-md-files)
 - [Blog: How to configure hooks](https://claude.com/blog/how-to-configure-hooks)
-- [Ejemplo completo de configuracion](https://github.com/ChrisWiles/claude-code-showcase)
+- [Ejemplo completo de configuración](https://github.com/ChrisWiles/claude-code-showcase)

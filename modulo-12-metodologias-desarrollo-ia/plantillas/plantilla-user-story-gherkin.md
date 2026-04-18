@@ -5,21 +5,21 @@
 ```gherkin
 Feature: [ID] - [Nombre descriptivo de la funcionalidad]
   Como [rol de usuario]
-  Quiero [accion o capacidad]
+  Quiero [acción o capacidad]
   Para [beneficio o valor de negocio]
 
   # Precondiciones comunes a todos los escenarios
   Background:
     Given [estado inicial compartido]
-    And [otra precondicion compartida]
+    And [otra precondición compartida]
 
   # --------------------------------------------------
   # Camino feliz (Happy Path)
   # --------------------------------------------------
 
-  Scenario: [Accion exitosa con datos validos]
-    Given [precondicion especifica]
-    When [accion del usuario]
+  Scenario: [Acción exitosa con datos válidos]
+    Given [precondición específica]
+    When [acción del usuario]
     Then [resultado esperado principal]
     And [resultado secundario]
 
@@ -28,63 +28,63 @@ Feature: [ID] - [Nombre descriptivo de la funcionalidad]
   # --------------------------------------------------
 
   Scenario: [Error por dato faltante]
-    When [accion sin dato obligatorio]
+    When [acción sin dato obligatorio]
     Then [error con mensaje descriptivo]
     And [estado no cambia]
 
-  Scenario: [Error por dato invalido]
-    When [accion con dato invalido]
+  Scenario: [Error por dato inválido]
+    When [acción con dato inválido]
     Then [error con mensaje descriptivo]
 
   # --------------------------------------------------
-  # Permisos y autorizacion
+  # Permisos y autorización
   # --------------------------------------------------
 
-  Scenario: [Accion sin permiso]
+  Scenario: [Acción sin permiso]
     Given [usuario sin permiso adecuado]
-    When [intenta la accion]
+    When [intenta la acción]
     Then [error 403 con mensaje]
 
   # --------------------------------------------------
   # Escenarios parametrizados
   # --------------------------------------------------
 
-  Scenario Outline: [Validacion de campo con multiples valores]
-    When [accion con campo] "<valor>"
+  Scenario Outline: [Validación de campo con múltiples valores]
+    When [acción con campo] "<valor>"
     Then la respuesta tiene status <status>
 
     Examples:
       | valor    | status |
-      | valido1  | 200    |
-      | valido2  | 200    |
-      | invalido | 400    |
+      | válido1  | 200    |
+      | válido2  | 200    |
+      | inválido | 400    |
       |          | 400    |
 
   # --------------------------------------------------
   # Edge cases
   # --------------------------------------------------
 
-  Scenario: [Caso limite 1]
-    Given [condicion especial]
-    When [accion]
-    Then [comportamiento esperado en caso limite]
+  Scenario: [Caso límite 1]
+    Given [condición especial]
+    When [acción]
+    Then [comportamiento esperado en caso límite]
 ```
 
 ---
 
-## Ejemplo Completo: API de Autenticacion
+## Ejemplo Completo: API de Autenticación
 
 ```gherkin
 Feature: US-001 - Registro de usuarios
-  Como visitante de la aplicacion
+  Como visitante de la aplicación
   Quiero crear una cuenta con email y password
   Para poder acceder a las funcionalidades protegidas
 
   Background:
-    Given la base de datos de usuarios esta limpia
+    Given la base de datos de usuarios está limpia
 
   # Happy path
-  Scenario: Registro exitoso con datos validos
+  Scenario: Registro exitoso con datos válidos
     When envio POST /register con:
       | campo    | valor             |
       | nombre   | Ana Garcia        |
@@ -104,38 +104,38 @@ Feature: US-001 - Registro de usuarios
     Then la respuesta tiene status 400
     And el body contiene error "El email es obligatorio"
 
-  Scenario: Registro con email invalido
+  Scenario: Registro con email inválido
     When envio POST /register con email "no-es-un-email"
     Then la respuesta tiene status 400
-    And el body contiene error "El formato de email es invalido"
+    And el body contiene error "El formato de email es inválido"
 
   Scenario: Registro con email duplicado
     Given existe un usuario con email "ana@example.com"
     When envio POST /register con email "ana@example.com"
     Then la respuesta tiene status 409
-    And el body contiene error "El email ya esta registrado"
+    And el body contiene error "El email ya está registrado"
 
-  Scenario: Registro con password debil
+  Scenario: Registro con password débil
     When envio POST /register con password "123"
     Then la respuesta tiene status 400
-    And el body contiene error "El password debe tener minimo 8 caracteres"
+    And el body contiene error "El password debe tener mínimo 8 caracteres"
 
-  Scenario Outline: Validacion de password
+  Scenario Outline: Validación de password
     When envio POST /register con password "<password>"
     Then la respuesta tiene status <status>
 
     Examples:
       | password         | status | razon                        |
       | Ab1              | 400    | Muy corto                    |
-      | abcdefgh         | 400    | Sin mayuscula ni numero      |
-      | ABCDEFGH         | 400    | Sin minuscula ni numero      |
+      | abcdefgh         | 400    | Sin mayúscula ni número      |
+      | ABCDEFGH         | 400    | Sin minúscula ni número      |
       | Abcdefg1         | 201    | Cumple todos los requisitos  |
-      | MyP@ssw0rd!      | 201    | Valido con caracteres esp.   |
+      | MyP@ssw0rd!      | 201    | Válido con caracteres esp.   |
 
 
 Feature: US-002 - Login de usuarios
   Como usuario registrado
-  Quiero iniciar sesion con mis credenciales
+  Quiero iniciar sesión con mis credenciales
   Para obtener un token de acceso
 
   Background:
@@ -149,7 +149,7 @@ Feature: US-002 - Login de usuarios
       | email    | ana@example.com   |
       | password | MiPassword123     |
     Then la respuesta tiene status 200
-    And el body contiene un campo "token" con JWT valido
+    And el body contiene un campo "token" con JWT válido
     And el token contiene el user_id del usuario
     And el token expira en 24 horas
 
@@ -159,13 +159,13 @@ Feature: US-002 - Login de usuarios
       | email    | ana@example.com   |
       | password | PasswordIncorrect |
     Then la respuesta tiene status 401
-    And el body contiene error "Credenciales invalidas"
+    And el body contiene error "Credenciales inválidas"
     But el error NO indica si el email o password es incorrecto
 
   Scenario: Login con email inexistente
     When envio POST /login con email "noexiste@example.com"
     Then la respuesta tiene status 401
-    And el body contiene error "Credenciales invalidas"
+    And el body contiene error "Credenciales inválidas"
 
   Scenario: Login sin campos requeridos
     When envio POST /login sin campo email
@@ -180,9 +180,9 @@ Antes de dar por terminada una feature Gherkin, verifica:
 
 - [ ] Cada escenario tiene nombre descriptivo (comportamiento, no "test 1")
 - [ ] Background contiene solo precondiciones comunes a TODOS los escenarios
-- [ ] Given = estado, When = accion, Then = resultado (sin mezclar)
+- [ ] Given = estado, When = acción, Then = resultado (sin mezclar)
 - [ ] Hay escenarios de camino feliz Y errores
 - [ ] Los Scenario Outline se usan cuando hay 3+ variaciones del mismo caso
-- [ ] Los mensajes de error son descriptivos y especificos
-- [ ] Los edge cases estan cubiertos
+- [ ] Los mensajes de error son descriptivos y específicos
+- [ ] Los edge cases están cubiertos
 - [ ] Cada escenario es independiente (no depende de otro)

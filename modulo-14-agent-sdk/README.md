@@ -1,88 +1,88 @@
-# Modulo 14: Claude Agent SDK
+# Módulo 14: Claude Agent SDK
 
-## Construir Agentes Personalizados Programaticamente
+## Construir agentes personalizados programáticamente
 
 > **Tiempo estimado:** 2 horas
 > **Nivel:** Experto (Bloque 4)
-> **Prerequisitos:** Modulos 01-09 completados
+> **Prerrequisitos:** Módulos 01-09 completados
 
 ---
 
-## Objetivos de Aprendizaje
+## Objetivos de aprendizaje
 
-Al terminar este modulo seras capaz de:
+Al terminar este módulo serás capaz de:
 
-- Distinguir el Agent SDK de otras formas de usar Claude (API directa, subagentes de Claude Code, CLI)
+- Distinguir el Agent SDK de otras formas de usar Claude (API directa, subagentes de Claude Code y CLI)
 - Instalar y configurar el Agent SDK en Python y TypeScript
-- Construir un agente basico con herramientas integradas y bucle agentico automatico
-- Aplicar patrones avanzados: orquestacion de sub-agentes, pipelines y evaluadores
+- Construir un agente básico con herramientas integradas y bucle agéntico automático
+- Aplicar patrones avanzados: orquestación de subagentes, pipelines y evaluadores
 - Integrar servidores MCP como fuentes de datos y herramientas del agente
-- Gestionar sesiones, hooks y permisos desde codigo
-- Decidir cuando usar el Agent SDK frente a otras alternativas
+- Gestionar sesiones, hooks y permisos desde código
+- Decidir cuándo usar el Agent SDK frente a otras alternativas
 
 ---
 
-## Prerequisitos
+## Prerrequisitos
 
-| Modulo | Por que es necesario |
+| Módulo | Por qué es necesario |
 |--------|----------------------|
-| [M01](../modulo-01-introduccion/README.md) | Conceptos de agencia, bucle agentico |
-| [M03](../modulo-03-contexto-y-tokens/README.md) | Gestion de contexto y tokens |
+| [M01](../modulo-01-introduccion/README.md) | Conceptos de agencia y bucle agéntico |
+| [M03](../modulo-03-contexto-y-tokens/README.md) | Gestión de contexto y tokens |
 | [M05](../modulo-05-configuracion-permisos/README.md) | Sistema de permisos |
 | [M07](../modulo-07-mcp/README.md) | Protocolo MCP, servidores y herramientas |
 | [M08](../modulo-08-hooks/README.md) | Hooks del ciclo de vida |
-| [M09](../modulo-09-agentes-skills-teams/README.md) | Subagentes, skills, orquestacion |
+| [M09](../modulo-09-agentes-skills-teams/README.md) | Subagentes, skills y orquestación |
 
 ---
 
-## Duracion Estimada
+## Duración estimada
 
-| Seccion | Tiempo |
+| Sección | Tiempo |
 |---------|--------|
-| Teoria (4 ficheros) | 80 min |
-| Ejercicios practicos | 40 min |
+| Teoría (4 ficheros) | 80 min |
+| Ejercicios prácticos | 40 min |
 | **Total** | **2 horas** |
 
 ---
 
 ## Contenido
 
-### Teoria
+### Teoría
 
-| Archivo | Tema | Duracion |
+| Archivo | Tema | Duración |
 |---------|------|----------|
-| [01-introduccion-agent-sdk.md](teoria/01-introduccion-agent-sdk.md) | Que es el Agent SDK, cuando usarlo y arquitectura | 20 min |
-| [02-construir-agente-basico.md](teoria/02-construir-agente-basico.md) | Estructura minima, herramientas integradas, bucle agentico | 20 min |
+| [01-introduccion-agent-sdk.md](teoria/01-introduccion-agent-sdk.md) | Qué es el Agent SDK, cuándo usarlo y su arquitectura | 20 min |
+| [02-construir-agente-basico.md](teoria/02-construir-agente-basico.md) | Estructura mínima, herramientas integradas y bucle agéntico | 20 min |
 | [03-herramientas-y-patrones-avanzados.md](teoria/03-herramientas-y-patrones-avanzados.md) | Patrones avanzados, MCP, sesiones, hooks y observabilidad | 25 min |
-| [04-integracion-con-claude-code.md](teoria/04-integracion-con-claude-code.md) | Workflow Claude Code + Agent SDK, deploy, comparativa de frameworks | 15 min |
+| [04-integracion-con-claude-code.md](teoria/04-integracion-con-claude-code.md) | Workflow Claude Code + Agent SDK, deploy y comparativa de frameworks | 15 min |
 
-### Ejercicios Practicos
+### Ejercicios prácticos
 
-| Archivo | Tema | Duracion |
+| Archivo | Tema | Duración |
 |---------|------|----------|
-| [01-primer-agente.md](ejercicios/01-primer-agente.md) | Cinco ejercicios progresivos desde agente basico hasta CLI personalizado | 40 min |
+| [01-primer-agente.md](ejercicios/01-primer-agente.md) | Cinco ejercicios progresivos, desde un agente básico hasta una CLI personalizada | 40 min |
 
 ---
 
-## Conceptos Clave
+## Conceptos clave
 
-| Concepto | Descripcion |
+| Concepto | Descripción |
 |----------|-------------|
-| `query()` | Funcion principal del SDK; devuelve un iterador asincrono de mensajes |
-| Bucle agentico | Claude decide que herramientas usar, las ejecuta y observa resultados automaticamente |
-| `ClaudeAgentOptions` | Configuracion del agente: herramientas, permisos, system prompt, MCP, hooks |
-| `allowed_tools` | Lista de herramientas pre-aprobadas que el agente puede usar sin pedir permiso |
-| `permission_mode` | Nivel de supervision humana: `acceptEdits`, `bypassPermissions`, `default` |
-| `AgentDefinition` | Definicion de un sub-agente especializado |
+| `query()` | Función principal del SDK; devuelve un iterador asíncrono de mensajes |
+| Bucle agéntico | Claude decide qué herramientas usar, las ejecuta y observa resultados automáticamente |
+| `ClaudeAgentOptions` | Configuración del agente: herramientas, permisos, system prompt, MCP y hooks |
+| `allowed_tools` | Lista de herramientas preaprobadas que el agente puede usar sin pedir permiso |
+| `permission_mode` | Nivel de supervisión humana: `acceptEdits`, `bypassPermissions`, `default` |
+| `AgentDefinition` | Definición de un subagente especializado |
 | `HookMatcher` | Asocia callbacks a eventos del ciclo de vida dentro del SDK |
-| `resume` | Reanuda una sesion existente por su ID para mantener contexto entre ejecuciones |
+| `resume` | Reanuda una sesión existente por su ID para mantener contexto entre ejecuciones |
 
 ---
 
-## Flujo de Trabajo Recomendado
+## Flujo de trabajo recomendado
 
-```
-1. DISENAR el agente en Claude Code (Plan Mode)
+```text
+1. DISEÑAR el agente en Claude Code (Plan Mode)
         |
         v
 2. PROTOTIPAR con subagentes de Claude Code (M09)
@@ -99,20 +99,20 @@ Al terminar este modulo seras capaz de:
 
 ---
 
-## Diferencias Clave con Subagentes de Claude Code
+## Diferencias clave con los subagentes de Claude Code
 
 | Aspecto | Subagentes (M09) | Agent SDK |
-|---------|-----------------|-----------|
-| Entorno | Dentro de Claude Code CLI | Tu propia aplicacion |
-| Control | Declarativo (YAML frontmatter) | Programatico (Python/TS) |
-| Integracion | Con tu flujo de desarrollo | Con cualquier sistema |
-| Despliegue | No aplica (es interactivo) | Servicio, CLI, CI/CD |
+|---------|------------------|-----------|
+| Entorno | Dentro de Claude Code CLI | Tu propia aplicación |
+| Control | Declarativo (YAML frontmatter) | Programático (Python/TS) |
+| Integración | Con tu flujo de desarrollo | Con cualquier sistema |
+| Despliegue | No aplica (es interactivo) | Servicio, CLI o CI/CD |
 | Casos de uso | Automatizar tareas de desarrollo | Construir productos con agentes |
 
 ---
 
-## Navegacion
+## Navegación
 
 | Anterior | Siguiente |
 |----------|-----------|
-| [Modulo 13: Multimodalidad y Notebooks](../modulo-13-multimodalidad-notebooks/README.md) | [Modulo 15: Plugins y Marketplaces](../modulo-15-plugins-marketplaces/README.md) |
+| [Módulo 13: Multimodalidad y Notebooks](../modulo-13-multimodalidad-notebooks/README.md) | [Módulo 15: Plugins y Marketplaces](../modulo-15-plugins-marketplaces/README.md) |

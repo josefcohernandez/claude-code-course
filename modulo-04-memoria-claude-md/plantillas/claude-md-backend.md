@@ -1,14 +1,14 @@
 # Plantilla CLAUDE.md - Proyecto Backend
 
-> Copia este archivo como `CLAUDE.md` en la raiz de tu proyecto backend
-> y adaptalo a tu stack especifico.
+> Copia este archivo como `CLAUDE.md` en la raíz de tu proyecto backend
+> y adáptalo a tu stack específico.
 
 ---
 
 ```markdown
 # [Nombre del Proyecto]
 
-API REST para [descripcion breve].
+API REST para [descripción breve].
 
 ## Stack
 - Lenguaje: Python 3.12
@@ -20,25 +20,25 @@ API REST para [descripcion breve].
 - Auth: JWT con python-jose
 
 ## Comandos
-- `make dev` - Servidor desarrollo (uvicorn --reload)
+- `make dev` - Servidor de desarrollo (uvicorn --reload)
 - `make test` - Tests con pytest
 - `make lint` - Ruff + mypy
 - `make migrate` - Aplicar migraciones pendientes
-- `make migrate:create MSG="descripcion"` - Nueva migracion
+- `make migrate:create MSG="descripcion"` - Nueva migración
 - `make seed` - Cargar datos de prueba
 
 ## Estructura
 src/
   api/          - Endpoints FastAPI (routers)
-  services/     - Logica de negocio
+  services/     - Lógica de negocio
   models/       - Modelos SQLAlchemy
   schemas/      - Schemas Pydantic (request/response)
   middleware/   - Middleware (auth, logging, cors)
   utils/        - Utilidades
-  config/       - Configuracion y settings
+  config/       - Configuración y settings
 tests/
   unit/         - Tests unitarios
-  integration/  - Tests de integracion
+  integration/  - Tests de integración
   fixtures/     - Fixtures compartidas
 
 ## Convenciones
@@ -52,12 +52,12 @@ tests/
 
 ## Reglas
 - Async handlers siempre (async def)
-- Validacion con Pydantic v2, no manual
+- Validación con Pydantic v2, no manual
 - Return Response models, no dicts
 - Dependency injection via Depends()
 - Logging con structlog, no print()
 - Error handling con HTTPException
-- Transacciones explicitas en servicios
+- Transacciones explícitas en servicios
 
 ## Restricciones
 - No modificar alembic/env.py
@@ -69,6 +69,6 @@ tests/
 
 ## Respuestas
 - Concisas, sin explicaciones innecesarias
-- Mostrar solo codigo que cambia
+- Mostrar solo código que cambia
 - No generar docstrings obvias
 ```

@@ -90,13 +90,13 @@ claude --permission-mode plan
 
 ### 4. dontAsk
 
-Auto-deniega herramientas a menos que esten pre-aprobadas via reglas `allow`. Si una herramienta no tiene una regla `allow` explicita, se deniega automaticamente sin preguntar al usuario.
+Auto-deniega herramientas a menos que estén preaprobadas vía reglas `allow`. Si una herramienta no tiene una regla `allow` explícita, se deniega automáticamente sin preguntar al usuario.
 
 ```bash
 claude --permission-mode dontAsk
 ```
 
-Este modo es util cuando se quiere un comportamiento estrictamente controlado: solo se ejecutan las acciones explicitamente permitidas.
+Este modo es útil cuando se quiere un comportamiento estrictamente controlado: solo se ejecutan las acciones explícitamente permitidas.
 
 ### 5. bypassPermissions
 

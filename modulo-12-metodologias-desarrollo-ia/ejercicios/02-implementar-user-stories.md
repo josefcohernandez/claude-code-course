@@ -1,16 +1,16 @@
-# Ejercicio 02: De Historias Gherkin a Codigo Funcionando
+# Ejercicio 02: De Historias Gherkin a Código Funcionando
 
 ## Objetivo
 
-Implementar una funcionalidad completa partiendo unicamente de historias de usuario escritas en formato Gherkin. Claude genera tests desde los escenarios y luego implementa el codigo para pasarlos.
+Implementar una funcionalidad completa partiendo únicamente de historias de usuario escritas en formato Gherkin. Claude genera tests desde los escenarios y luego implementa el código para pasarlos.
 
-**Duracion estimada:** 20 minutos
+**Duración estimada:** 20 minutos
 
 ---
 
 ## El Proyecto
 
-Vas a implementar un **servicio de carrito de compras** partiendo de escenarios Gherkin. No hay spec previa: las historias Gherkin SON la especificacion.
+Vas a implementar un **servicio de carrito de compras** partiendo de escenarios Gherkin. No hay spec previa: las historias Gherkin SON la especificación.
 
 ---
 
@@ -34,12 +34,12 @@ Feature: Carrito de compras
   Para poder realizar una compra
 
   Background:
-    Given un catalogo con los siguientes productos:
+    Given un catálogo con los siguientes productos:
       | id | nombre      | precio | stock |
       | 1  | Camiseta    | 25.00  | 10    |
-      | 2  | Pantalon    | 45.00  | 5     |
+      | 2  | Pantalón    | 45.00  | 5     |
       | 3  | Zapatos     | 80.00  | 3     |
-    And un carrito vacio para el usuario "cliente1"
+    And un carrito vacío para el usuario "cliente1"
 
   Scenario: Agregar producto al carrito
     When el usuario agrega el producto "Camiseta" con cantidad 2
@@ -55,11 +55,11 @@ Feature: Carrito de compras
 
   Scenario: Agregar producto sin stock suficiente
     When el usuario agrega el producto "Zapatos" con cantidad 5
-    Then el sistema rechaza la operacion con error "Stock insuficiente"
-    And el carrito sigue vacio
+    Then el sistema rechaza la operación con error "Stock insuficiente"
+    And el carrito sigue vacío
 
   Scenario: Eliminar producto del carrito
-    Given el carrito contiene 2 "Camiseta" y 1 "Pantalon"
+    Given el carrito contiene 2 "Camiseta" y 1 "Pantalón"
     When el usuario elimina "Camiseta" del carrito
     Then el carrito contiene 1 item
     And el total del carrito es 45.00
@@ -73,27 +73,27 @@ Feature: Carrito de compras
   Scenario: Actualizar cantidad a cero elimina el producto
     Given el carrito contiene 2 "Camiseta"
     When el usuario actualiza la cantidad de "Camiseta" a 0
-    Then el carrito esta vacio
+    Then el carrito está vacío
 
   Scenario: Vaciar carrito completo
-    Given el carrito contiene 2 "Camiseta" y 1 "Pantalon"
-    When el usuario vacia el carrito
-    Then el carrito esta vacio
+    Given el carrito contiene 2 "Camiseta" y 1 "Pantalón"
+    When el usuario vacía el carrito
+    Then el carrito está vacío
     And el total del carrito es 0.00
 
-  Scenario Outline: Calcular total con multiples productos
+  Scenario Outline: Calcular total con múltiples productos
     Given el carrito contiene <cant_a> "<prod_a>" y <cant_b> "<prod_b>"
     Then el total del carrito es <total>
 
     Examples:
       | cant_a | prod_a   | cant_b | prod_b   | total  |
-      | 1      | Camiseta | 1      | Pantalon | 70.00  |
+      | 1      | Camiseta | 1      | Pantalón | 70.00  |
       | 2      | Camiseta | 1      | Zapatos  | 130.00 |
-      | 3      | Pantalon | 2      | Zapatos  | 295.00 |
+      | 3      | Pantalón | 2      | Zapatos  | 295.00 |
 
   Scenario: No se puede agregar producto inexistente
     When el usuario agrega el producto "Sombrero" con cantidad 1
-    Then el sistema rechaza la operacion con error "Producto no encontrado"
+    Then el sistema rechaza la operación con error "Producto no encontrado"
 ```
 
 ---
@@ -114,11 +114,11 @@ Lee features/cart.feature. Genera tests en Python (pytest) que
 implementen cada escenario Gherkin.
 
 Reglas:
-- Cada Scenario = exactamente 1 funcion de test
+- Cada Scenario = exactamente 1 función de test
 - Cada Scenario Outline = 1 test parametrizado con @pytest.mark.parametrize
 - El Background se implementa como fixtures
-- Los tests deben llamar a funciones/metodos del modulo src/cart.py
-- Los tests deben FALLAR porque src/cart.py no existe todavia
+- Los tests deben llamar a funciones/métodos del módulo `src/cart.py`
+- Los tests deben FALLAR porque src/cart.py no existe todavía
 
 Guarda los tests en tests/test_cart.py.
 Ejecuta los tests para confirmar que fallan.
@@ -133,14 +133,14 @@ Ejecuta los tests para confirmar que fallan.
 ### Paso 5: Implementar
 
 ```
-Los tests en tests/test_cart.py estan fallando porque no existe
-la implementacion. Implementa src/cart.py con las clases y funciones
+Los tests en tests/test_cart.py están fallando porque no existe
+la implementación. Implementa src/cart.py con las clases y funciones
 necesarias para que TODOS los tests pasen.
 
 Reglas:
 - NO modifiques los tests
-- Implementa el minimo codigo necesario
-- Ejecuta los tests despues de cada cambio significativo
+- Implementa el mínimo código necesario
+- Ejecuta los tests después de cada cambio significativo
 - Cuando todos pasen, muestra el resultado final
 ```
 
@@ -148,32 +148,32 @@ Reglas:
 
 ```
 Ejecuta los tests con cobertura (pytest --cov=src).
-Si hay lineas no cubiertas, anade tests adicionales en
-tests/test_cart_extra.py para cubrir esas lineas.
+Si hay líneas no cubiertas, añade tests adicionales en
+tests/test_cart_extra.py para cubrir esas líneas.
 ```
 
 ---
 
-## Parte 4: Traza Gherkin → Test → Codigo
+## Parte 4: Traza Gherkin → Test → Código
 
 ### Paso 7: Verificar trazabilidad
 
 ```
 Genera una tabla de trazabilidad que muestre:
-- Escenario Gherkin → Funcion de test → Funcion/metodo implementado
+- Escenario Gherkin → Función de test → Función/metodo implementado
 
 Formato:
-| Escenario | Test | Implementacion |
+| Escenario | Test | Implementación |
 |-----------|------|----------------|
 
-Verifica que cada escenario tiene test y cada test tiene implementacion.
+Verifica que cada escenario tiene test y cada test tiene implementación.
 ```
 
 ---
 
-## Verificacion
+## Verificación
 
-Al completar este ejercicio, deberias tener:
+Al completar este ejercicio, deberías tener:
 
 ```
 /tmp/shopping-cart/
@@ -183,7 +183,7 @@ Al completar este ejercicio, deberias tener:
 │   ├── test_cart.py          # Tests generados desde Gherkin
 │   └── test_cart_extra.py    # Tests adicionales de cobertura
 └── src/
-    └── cart.py               # Implementacion
+    └── cart.py               # Implementación
 ```
 
 ### Checklist
@@ -194,17 +194,17 @@ Al completar este ejercicio, deberias tener:
 | Cada Scenario tiene exactamente 1 test | |
 | El Scenario Outline genera tests parametrizados | |
 | src/cart.py no fue modificado por ti (solo por Claude) | |
-| Los tests no fueron modificados despues de generarlos | |
+| Los tests no fueron modificados después de generarlos | |
 | La cobertura es >= 90% | |
 
 ---
 
-## Criterios de Evaluacion
+## Criterios de Evaluación
 
 | Criterio | Puntos |
 |----------|--------|
 | Features Gherkin bien escritas (proporcionadas) | 2 |
 | Tests generados correctamente desde Gherkin | 3 |
-| Implementacion pasa todos los tests | 3 |
+| Implementación pasa todos los tests | 3 |
 | Cobertura >= 90% | 2 |
 | **Total** | **10** |

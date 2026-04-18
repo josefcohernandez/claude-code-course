@@ -2,23 +2,23 @@
 
 ## Objetivo
 
-Crear workflows especializados que aprovechan las capacidades avanzadas de `claude-code-action@v1`: revision por rutas criticas, tareas programadas, skills del proyecto en CI, y triaje automatico de issues.
+Crear workflows especializados que aprovechan las capacidades avanzadas de `claude-code-action@v1`: revisión por rutas críticas, tareas programadas, skills del proyecto en CI, y triaje automático de issues.
 
-**Duracion estimada:** 20 minutos
+**Duración estimada:** 20 minutos
 
 ---
 
 ## Prerequisitos
 
-- Haber completado el Ejercicio 02 (GitHub Action basico funcionando)
+- Haber completado el Ejercicio 02 (GitHub Action básico funcionando)
 - Repositorio en GitHub con `ANTHROPIC_API_KEY` configurado
-- Familiaridad con la estructura `.claude/` del proyecto (modulo 4 y 5)
+- Familiaridad con la estructura `.claude/` del proyecto (módulo 4 y 5)
 
 ---
 
-## Parte 1: Crear una Skill de Revision para CI
+## Parte 1: Crear una Skill de Revisión para CI
 
-Vamos a crear una skill de revision que funcione tanto en la terminal como en GitHub Actions.
+Vamos a crear una skill de revisión que funcione tanto en la terminal como en GitHub Actions.
 
 ### Paso 1: Crear la skill
 
@@ -31,19 +31,19 @@ Crea `.claude/skills/review/SKILL.md`:
 ```markdown
 ---
 name: review
-description: Revision de codigo enfocada en calidad, seguridad y buenas practicas
+description: Revisión de código enfocada en calidad, seguridad y buenas prácticas
 ---
 
-Revisa el codigo siguiendo estos criterios:
+Revisa el código siguiendo estos criterios:
 
 ## Seguridad
-- Busca secrets hardcodeados, eval(), inyeccion SQL/XSS
-- Verifica validacion de inputs del usuario
+- Busca secrets hardcodeados, eval(), inyección SQL/XSS
+- Verifica validación de inputs del usuario
 - Comprueba manejo seguro de archivos (context managers)
 
 ## Calidad
 - Manejo adecuado de errores (no silenciar excepciones)
-- Funciones con responsabilidad unica
+- Funciones con responsabilidad única
 - Nombres descriptivos de variables y funciones
 
 ## Tests
@@ -51,9 +51,9 @@ Revisa el codigo siguiendo estos criterios:
 - Sugiere casos de prueba faltantes
 
 ## Formato de salida
-Organiza en: Critico > Importante > Sugerencia > Positivo
-Incluye numeros de linea y ejemplos de codigo para corregir.
-Responde en espanol.
+Organiza en: Crítico > Importante > Sugerencia > Positivo
+Incluye números de línea y ejemplos de código para corregir.
+Responde en español.
 ```
 
 ### Paso 2: Probar localmente
@@ -98,11 +98,11 @@ git commit -m "feat: add review skill for local and CI use"
 git push origin main
 ```
 
-**Verificacion:** La misma skill `/review` funciona en tu terminal y en CI.
+**Verificación:** La misma skill `/review` funciona en tu terminal y en CI.
 
 ---
 
-## Parte 2: Workflow de Revision de Seguridad por Rutas
+## Parte 2: Workflow de Revisión de Seguridad por Rutas
 
 ### Paso 1: Crear el workflow
 
@@ -134,8 +134,8 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           prompt: |
-            Revision de seguridad enfocada en OWASP Top 10.
-            Si encuentras algo critico, solicita cambios.
+            Revisión de seguridad enfocada en OWASP Top 10.
+            Si encuentras algo crítico, solicita cambios.
           claude_args: "--max-turns 8 --model claude-sonnet-4-5-20250929"
 ```
 
@@ -144,7 +144,7 @@ jobs:
 ```bash
 git checkout -b feature/auth-change
 
-# Crear un archivo de autenticacion con problemas intencionales
+# Crear un archivo de autenticación con problemas intencionales
 mkdir -p src/auth
 cat > src/auth/login.py << 'EOF'
 import sqlite3
@@ -159,7 +159,7 @@ def authenticate(username, password):
     return result is not None
 
 def reset_password(email):
-    # Sin rate limiting ni validacion
+    # Sin rate limiting ni validación
     token = email  # Token predecible
     return f"https://app.com/reset?token={token}"
 EOF
@@ -169,7 +169,7 @@ git commit -m "feat: add login authentication"
 git push origin feature/auth-change
 ```
 
-Crea un PR y observa como se activa **solo** el workflow de seguridad (no el general).
+Crea un PR y observa cómo se activa **solo** el workflow de seguridad (no el general).
 
 ---
 
@@ -185,7 +185,7 @@ name: Claude - Reporte Semanal
 on:
   schedule:
     - cron: "0 10 * * 1"  # Lunes a las 10:00 UTC
-  workflow_dispatch:  # Permitir ejecucion manual
+  workflow_dispatch:  # Permitir ejecución manual
 
 permissions:
   contents: read
@@ -206,7 +206,7 @@ jobs:
           prompt: |
             Genera un reporte semanal del repositorio:
             1. Resumen de actividad (commits, PRs, issues)
-            2. Archivos mas modificados
+            2. Archivos más modificados
             3. Sugerencias de mejora
             Publica como issue con etiqueta 'weekly-report'.
           claude_args: "--max-turns 8"
@@ -248,9 +248,9 @@ jobs:
             Clasifica este issue:
             - Tipo (bug/feature/question/docs)
             - Prioridad (critical/high/medium/low)
-            - Area del codigo afectada
+            - Área del código afectada
             - Sugiere etiquetas
-            Responde en espanol.
+            Responde en español.
           claude_args: "--max-turns 3 --model claude-sonnet-4-5-20250929"
 ```
 
@@ -258,26 +258,26 @@ jobs:
 
 ```bash
 gh issue create \
-    --title "Bug: la funcion divide() no maneja division por cero" \
-    --body "Cuando llamo calculator.divide(10, 0), la aplicacion crashea con ZeroDivisionError en vez de mostrar un mensaje de error amigable."
+    --title "Bug: la función divide() no maneja división por cero" \
+    --body "Cuando llamo calculator.divide(10, 0), la aplicación crashea con ZeroDivisionError en vez de mostrar un mensaje de error amigable."
 ```
 
-Observa como Claude comenta automaticamente con el triaje.
+Observa como Claude comenta automáticamente con el triaje.
 
 ---
 
-## Parte 5: Tareas de Personalizacion
+## Parte 5: Tareas de Personalización
 
-### Tarea 1: Combinar revision general + seguridad
+### Tarea 1: Combinar revisión general + seguridad
 
-- [ ] Modifica los workflows para que un PR en `src/auth/` active **ambos**: la revision general Y la de seguridad
-- [ ] Usa `concurrency` para evitar que se ejecuten dos veces si se actualizan commits rapidamente
+- [ ] Modifica los workflows para que un PR en `src/auth/` active **ambos**: la revisión general Y la de seguridad
+- [ ] Usa `concurrency` para evitar que se ejecuten dos veces si se actualizan commits rápidamente
 
 ### Tarea 2: Crear una skill de triaje
 
 - [ ] Mueve las instrucciones de triaje del workflow a `.claude/skills/triage/SKILL.md`
 - [ ] Usa `prompt: "/triage"` en el workflow
-- [ ] Prueba que `/triage` tambien funciona en la terminal
+- [ ] Prueba que `/triage` también funciona en la terminal
 
 ### Tarea 3: Workflow con GitHub App personalizada
 
@@ -287,25 +287,25 @@ Observa como Claude comenta automaticamente con el triaje.
 
 ---
 
-## Verificacion
+## Verificación
 
-Al completar este ejercicio, deberias tener:
+Al completar este ejercicio, deberías tener:
 
 1. Una skill `/review` que funciona en terminal y en CI
-2. Un workflow de seguridad activado por rutas criticas
+2. Un workflow de seguridad activado por rutas críticas
 3. Un workflow programado ejecutable manualmente
-4. Un workflow de triaje automatico de issues
-5. Al menos una personalizacion implementada
+4. Un workflow de triaje automático de issues
+5. Al menos una personalización implementada
 
 ---
 
-## Criterios de Evaluacion
+## Criterios de Evaluación
 
 | Criterio | Puntos |
 |----------|--------|
 | Skill `/review` funciona en terminal y CI | 2 |
 | Workflow de seguridad se activa solo en rutas correctas | 2 |
 | Workflow programado es ejecutable manualmente | 2 |
-| Triaje automatico funciona en un issue nuevo | 2 |
-| Al menos una tarea de personalizacion completada | 2 |
+| Triaje automático funciona en un issue nuevo | 2 |
+| Al menos una tarea de personalización completada | 2 |
 | **Total** | **10** |

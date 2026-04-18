@@ -1,18 +1,18 @@
 # 03 - Hooks de Seguridad
 
-## PreToolUse como Guardian
+## PreToolUse como Guardían
 
 El evento **PreToolUse** es la herramienta principal de seguridad:
-- Se ejecuta **antes** de cada operacion
-- Si el script retorna **exit 2**, la operacion se **bloquea**
-- Si el script retorna **exit 1** u otro codigo distinto de 0 y 2, la operacion **no se bloquea** (solo se muestra en modo verbose)
+- Se ejecuta **antes** de cada operación
+- Si el script retorna **exit 2**, la operación se **bloquea**
+- Si el script retorna **exit 1** u otro código distinto de 0 y 2, la operación **no se bloquea** (solo se muestra en modo verbose)
 - Puede validar comandos, archivos y patrones
 
 ---
 
 ## Hook: Validar Comandos Bash
 
-Bloquear comandos peligrosos que no estan en la lista de deny:
+Bloquear comandos peligrosos que no están en la lista de deny:
 
 ```json
 {
@@ -94,9 +94,9 @@ exit 0
 
 ---
 
-## Hook: Auditoria de Operaciones
+## Hook: Auditoría de Operaciones
 
-Registrar todas las operaciones para revision posterior:
+Registrar todas las operaciones para revisión posterior:
 
 ```bash
 #!/bin/bash
@@ -146,12 +146,12 @@ exit 0
 
 > **Novedad v3.2 (v2.1.85)**
 
-Los hooks `PreToolUse` ahora pueden **satisfacer automaticamente** la herramienta `AskUserQuestion` devolviendo `updatedInput` junto con `permissionDecision: "allow"`. Esto permite que integraciones headless (CI/CD, pipelines automatizados, agentes remotos) respondan a preguntas de Claude sin intervencion humana.
+Los hooks `PreToolUse` ahora pueden **satisfacer automáticamente** la herramienta `AskUserQuestion` devolviendo `updatedInput` junto con `permissionDecision: "allow"`. Esto permite que integraciones headless (CI/CD, pipelines automatizados, agentes remotos) respondan a preguntas de Claude sin intervención humana.
 
 ```bash
 #!/bin/bash
 # auto-responder-headless.sh
-# Responde automaticamente a AskUserQuestion en entornos headless
+# Responde automáticamente a AskUserQuestion en entornos headless
 
 INPUT=$(cat)
 TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name')
@@ -159,9 +159,9 @@ TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name')
 if [ "$TOOL_NAME" = "AskUserQuestion" ]; then
   QUESTION=$(echo "$INPUT" | jq -r '.tool_input.question // empty')
 
-  # Responder automaticamente segun el patron de la pregunta
+  # Responder automáticamente según el patrón de la pregunta
   if echo "$QUESTION" | grep -qi "continuar"; then
-    echo '{"permissionDecision":"allow","updatedInput":"Si, continua con la implementacion."}'
+    echo '{"permissionDecision":"allow","updatedInput":"Si, continua con la implementación."}'
     exit 0
   fi
 fi
@@ -170,7 +170,7 @@ fi
 exit 0
 ```
 
-Configuracion:
+Configuración:
 
 ```json
 {
@@ -190,28 +190,28 @@ Configuracion:
 }
 ```
 
-Esto es especialmente util en combinacion con el modo no interactivo (`claude -p`) donde no hay un usuario para responder preguntas.
+Esto es especialmente útil en combinación con el modo no interactivo (`claude -p`) donde no hay un usuario para responder preguntas.
 
 ---
 
 ## Riesgos de Hooks Mal Configurados
 
-| Riesgo | Consecuencia | Prevencion |
+| Riesgo | Consecuencia | Prevención |
 |--------|-------------|-----------|
-| Hook lento | Bloquea cada operacion | Timeout, async cuando posible |
+| Hook lento | Bloquea cada operación | Timeout, async cuando posible |
 | Hook con bug | Bloquea todo | Probar hooks aislados |
 | Hook que expone datos | Log con secrets | No loggear tool_input completo |
-| Hook sin exit 0 | Bloquea operaciones validas si retorna exit 2 | Siempre exit 0 al final |
+| Hook sin exit 0 | Bloquea operaciones válidas si retorna exit 2 | Siempre exit 0 al final |
 | Hook recursivo | Loop infinito | No llamar Claude desde hooks |
 
 ---
 
 ## Testing de Hooks
 
-Antes de activar un hook, pruebalo aislado. Dado que los hooks reciben datos via stdin (JSON), se deben simular con un pipe:
+Antes de activar un hook, pruébalo aislado. Dado que los hooks reciben datos vía stdin (JSON), se deben simular con un pipe:
 
 ```bash
-# Simular datos de entrada como JSON via stdin
+# Simular datos de entrada como JSON vía stdin
 echo '{"tool_name":"Write","tool_input":{"file_path":"src/auth.ts"}}' | bash hook-protect-files.sh
 echo "Exit code: $?"   # Debe ser 0 (no protegido)
 
@@ -221,7 +221,7 @@ echo "Exit code: $?"   # Debe ser 2 (protegido, bloqueado)
 
 ---
 
-## Configuracion Recomendada de Seguridad
+## Configuración Recomendada de Seguridad
 
 ```json
 {

@@ -10,17 +10,17 @@ El contenido está basado en la **documentación oficial de Anthropic** (code.cl
 
 ### Público objetivo
 
-- Desarrolladores backend, frontend y fullstack
+- Desarrolladores backend, frontend y full stack
 - Ingenieros DevOps y SRE
-- QA Engineers y testers
-- Tech Leads y arquitectos de software
+- Profesionales de QA y testing
+- Tech leads y arquitectos de software
 - Cualquier perfil técnico que quiera integrar IA en su flujo de trabajo
 
 ### Requisitos previos
 
 - Experiencia básica en programación (cualquier lenguaje)
 - Familiaridad con la terminal/línea de comandos
-- Cuenta en Anthropic (claude.ai) o acceso via API/Bedrock/Vertex
+- Cuenta en Anthropic (`claude.ai`) o acceso vía API, Bedrock o Vertex
 - Node.js 18+ instalado (para Claude Code CLI)
 
 ---
@@ -34,7 +34,7 @@ El curso está organizado en **4 bloques progresivos** con **16 módulos**:
 | Módulo | Título | Tiempo | Descripción |
 |--------|--------|--------|-------------|
 | [01](modulo-01-introduccion/README.md) | Introducción y Metodología | 1.5h | Qué es Claude Code, paradigma agéntico, plataformas y modelos |
-| [02](modulo-02-cli-primeros-pasos/README.md) | CLI y Primeros Pasos | 2h | Comandos, modo interactivo, sesiones, primer bugfix y feature |
+| [02](modulo-02-cli-primeros-pasos/README.md) | CLI y Primeros Pasos | 2h | Comandos, modo interactivo, sesiones, primer bug fix y primera feature |
 | [03](modulo-03-contexto-y-tokens/README.md) | Contexto y Tokens | 2h 15min | **El módulo más importante**: ventana de contexto, ahorro de tokens, estrategias de sesión, Compaction API |
 | [04](modulo-04-memoria-claude-md/README.md) | Memoria y CLAUDE.md | 2h | Sistema de memoria, memoria estructurada con tipos, CLAUDE.md efectivo, reglas modulares |
 
@@ -43,14 +43,14 @@ El curso está organizado en **4 bloques progresivos** con **16 módulos**:
 | Módulo | Título | Tiempo | Descripción |
 |--------|--------|--------|-------------|
 | [05](modulo-05-configuracion-permisos/README.md) | Configuración y Permisos | 2h 05min | Jerarquía de settings, permisos, sandbox, keybindings, Auto Mode |
-| [06](modulo-06-planificacion-opus/README.md) | Plan Mode, Opus 4.6 y Workflows | 2h 15min | Plan Mode, Fast Mode, razonamiento adaptativo, workflows eficientes |
+| [06](modulo-06-planificacion-opus/README.md) | Plan Mode, Opus 4.7 y Workflows | 2h 15min | Plan Mode, Fast Mode, razonamiento adaptativo, workflows eficientes |
 
 ### Bloque 3: Avanzado (Módulos 07-10)
 
 | Módulo | Título | Tiempo | Descripción |
 |--------|--------|--------|-------------|
 | [07](modulo-07-mcp/README.md) | MCP (Model Context Protocol) | 2h 35min | Servidores MCP, configuración, Deferred Tools, Tool Search, MCP Elicitation |
-| [08](modulo-08-hooks/README.md) | Hooks | 2h 05min | 16 eventos del ciclo de vida, hooks agent, hooks de seguridad, autoformateo |
+| [08](modulo-08-hooks/README.md) | Hooks | 2h 05min | 26 eventos del ciclo de vida, hooks de agente, hooks de seguridad y autoformateo |
 | [09](modulo-09-agentes-skills-teams/README.md) | Subagentes, Skills y Agent Teams | 3h | Subagentes, worktree isolation, SendMessage, skills, Agent Teams |
 | [10](modulo-10-automatizacion-cicd/README.md) | Automatización y CI/CD | 2h 20min | Modo headless, GitHub Actions, cron nativo, tareas programadas |
 
@@ -144,7 +144,7 @@ Cada módulo funciona como referencia independiente:
 - **"¿Cómo automatizo con CI/CD?"** → [Módulo 10](modulo-10-automatizacion-cicd/README.md)
 - **"¿Cómo aplico TDD/Gherkin con IA?"** → [Módulo 12](modulo-12-metodologias-desarrollo-ia/README.md)
 - **"¿Cómo trabajo con imágenes y PDFs?"** → [Módulo 13](modulo-13-multimodalidad-notebooks/README.md)
-- **"¿Cómo construyo agentes custom?"** → [Módulo 14](modulo-14-agent-sdk/README.md)
+- **"¿Cómo construyo agentes personalizados?"** → [Módulo 14](modulo-14-agent-sdk/README.md)
 - **"¿Cómo empaqueto y distribuyo capacidades?"** → [Módulo 15](modulo-15-plugins-marketplaces/README.md)
 
 ### Para equipos
@@ -184,6 +184,7 @@ claude_tutorial/
 ├── modulo-04-memoria-claude-md/       # CLAUDE.md, reglas modulares
 │   ├── teoria/
 │   ├── ejercicios/
+│   ├── ejemplos/
 │   └── plantillas/
 │
 ├── modulo-05-configuracion-permisos/  # Settings, permisos, sandbox
@@ -191,7 +192,7 @@ claude_tutorial/
 │   ├── ejercicios/
 │   └── plantillas/
 │
-├── modulo-06-planificacion-opus/      # Plan Mode, Opus 4.6, workflows
+├── modulo-06-planificacion-opus/      # Plan Mode, Opus 4.7, workflows
 │   ├── teoria/
 │   ├── ejercicios/
 │   └── proyecto-practico/

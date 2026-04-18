@@ -1,22 +1,22 @@
-# Referencia Rapida - Claude Code CLI
+# Referencia Rápida - Claude Code CLI
 
-## Modos de Ejecucion
+## Modos de Ejecución
 
 ```bash
 claude                          # Interactivo
 claude -p "prompt"              # One-shot
 cat file | claude -p "prompt"   # Pipe
-claude --resume                 # Continuar sesion
+claude --resume                 # Continuar sesión
 ```
 
 ## Flags Principales
 
-| Flag | Corto | Descripcion |
+| Flag | Corto | Descripción |
 |------|-------|-------------|
 | `--print` | `-p` | Modo one-shot |
-| `--resume` | | Continuar sesion |
+| `--resume` | | Continuar sesión |
 | `--model` | | Elegir modelo (opus/sonnet/haiku) |
-| `--output-format` | | json, stream-json, text |
+| `--output-format` | | `json`, `stream-json`, `text` |
 | `--max-turns` | | Limitar iteraciones |
 | `--allowedTools` | | Tools permitidos |
 | `--verbose` | | Output detallado |
@@ -25,49 +25,49 @@ claude --resume                 # Continuar sesion
 
 ## Slash Commands
 
-### Sesion
-| Comando | Funcion |
+### Sesión
+| Comando | Función |
 |---------|---------|
 | `/clear` | Limpiar contexto |
-| `/compact [foco]` | Comprimir conversacion |
+| `/compact [foco]` | Compactar conversación |
 | `/exit` | Salir |
-| `/resume` | Reanudar sesion anterior |
+| `/resume` | Reanudar sesión anterior |
 
 ### Info
-| Comando | Funcion |
+| Comando | Función |
 |---------|---------|
 | `/help` | Ayuda |
 | `/cost` | Tokens y coste |
-| `/model [nombre]` | Ver/cambiar modelo |
-| `/doctor` | Diagnostico |
-| `/status` | Estado sesion |
+| `/model [nombre]` | Ver o cambiar modelo |
+| `/doctor` | Diagnóstico |
+| `/status` | Estado de la sesión |
 
 ### Config
-| Comando | Funcion |
+| Comando | Función |
 |---------|---------|
 | `/init` | Crear CLAUDE.md |
 | `/permissions` | Gestionar permisos |
 | `/mcp` | Ver servidores MCP |
-| `/config` | Ver configuracion |
-| `/memory` | Memoria automatica |
+| `/config` | Ver configuración |
+| `/memory` | Memoria automática |
 
 ### Modo
-| Comando | Funcion |
+| Comando | Función |
 |---------|---------|
 | `/plan` | Activar Plan Mode |
-| `Shift+Tab` | Toggle Plan/Normal |
+| `Shift+Tab` | Alternar entre Plan y Normal |
 
 ## Atajos de Teclado
 
-| Atajo | Accion |
+| Atajo | Acción |
 |-------|--------|
 | `Enter` | Enviar |
-| `Shift+Enter` | Nueva linea |
-| `Shift+Tab` | Toggle Plan Mode |
+| `Shift+Enter` | Nueva línea |
+| `Shift+Tab` | Alternar Plan Mode |
 | `Tab` | Autocompletar |
 | `Esc` | Cancelar |
 | `Esc Esc` | Salir |
-| `Alt+T` | Toggle Extended Thinking |
+| `Alt+T` | Alternar Extended Thinking |
 | `Ctrl+L` | Limpiar pantalla |
 
 ## Modelos
@@ -76,18 +76,18 @@ claude --resume                 # Continuar sesion
 |--------|-----|-------------------------------------|
 | **Haiku** | Tareas simples | $1 / $5 |
 | **Sonnet** | Desarrollo diario | $3 / $15 |
-| **Opus** | Planificacion, debugging complejo | $5 / $25 |
+| **Opus** | Planificación, debugging complejo | $5 / $25 |
 
 ## Recetas Comunes
 
 ```bash
-# Commit message automatico
+# Commit message automático
 git diff --staged | claude -p "Genera commit message (conventional commits)"
 
 # Code review de PR
 git diff main..HEAD | claude -p "Revisa este diff buscando bugs"
 
-# Documentar funcion
+# Documentar función
 claude -p "Documenta todas las funciones en src/utils.ts"
 
 # Generar tests
@@ -103,7 +103,7 @@ claude -p "Explica este error: [pegar error]"
 ## Regla de Oro
 
 ```
-1 tarea = 1 sesion (o /clear entre tareas)
+1 tarea = 1 sesión (o /clear entre tareas)
 Monitoriza /cost regularmente
-Prompts especificos > prompts vagos
+Prompts específicos > prompts vagos
 ```

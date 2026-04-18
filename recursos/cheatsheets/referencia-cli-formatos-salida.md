@@ -1,8 +1,8 @@
 # Referencia CLI — Formatos de salida
 
-> Documentacion exhaustiva de los formatos de salida disponibles en Claude Code para el modo no interactivo (`-p`), incluyendo JSON Schema y ejemplos de parseo con jq.
+> Documentación exhaustiva de los formatos de salida disponibles en Claude Code para el modo no interactivo (`-p`), incluyendo JSON Schema y ejemplos de parseo con jq.
 
-Indice: [referencia-cli-indice.md](./referencia-cli-indice.md)
+Índice: [referencia-cli-indice.md](./referencia-cli-indice.md)
 
 ---
 
@@ -18,7 +18,7 @@ claude -p "query" --output-format <formato>
 
 ## Formato `text` (por defecto)
 
-### Descripcion
+### Descripción
 
 Salida en texto plano. Es el formato por defecto cuando no se especifica `--output-format`. El texto de la respuesta se escribe directamente a stdout, sin envolturas ni metadatos adicionales.
 
@@ -31,31 +31,31 @@ claude -p "query" --output-format text
 
 ### Cuando usarlo
 
-- Integracion sencilla con scripts bash que no necesitan metadatos
+- Integración sencilla con scripts bash que no necesitan metadatos
 - Cuando quieres redirigir la respuesta a un fichero de texto
 - Pipelines simples donde solo necesitas el contenido de la respuesta
 
 ### Ejemplos
 
 ```bash
-# Guardar documentacion en un fichero
-claude -p "genera documentacion para la funcion auth.login en src/auth.ts" > docs/auth.md
+# Guardar documentación en un fichero
+claude -p "genera documentación para la función auth.login en src/auth.ts" > docs/auth.md
 
 # Usar la respuesta en una variable
 MENSAJE=$(claude -p "genera un mensaje de commit para: $(git diff --staged --stat)")
 git commit -m "$MENSAJE"
 
-# Pipeline de transformacion
-claude -p "traduce al ingles este README" < README.md > README.en.md
+# Pipeline de transformación
+claude -p "traduce al inglés este README" < README.md > README.en.md
 ```
 
 ---
 
 ## Formato `json`
 
-### Descripcion
+### Descripción
 
-Al finalizar la ejecucion completa, emite un unico objeto JSON a stdout con la respuesta y metadatos completos de la sesion. No hay salida intermedia: el JSON se emite todo de una vez cuando Claude termina.
+Al finalizar la ejecución completa, emite un único objeto JSON a stdout con la respuesta y metadatos completos de la sesión. No hay salida intermedia: el JSON se emite todo de una vez cuando Claude termina.
 
 ### Sintaxis
 
@@ -83,30 +83,30 @@ claude -p "query" --output-format json
 
 ### Campos del objeto de resultado
 
-| Campo | Tipo | Descripcion |
+| Campo | Tipo | Descripción |
 |-------|------|-------------|
 | `type` | string | Siempre `"result"` |
-| `subtype` | string | `"success"` si la ejecucion fue correcta, `"error_max_turns"` si se alcanzo el limite de turnos |
+| `subtype` | string | `"success"` si la ejecución fue correcta, `"error_max_turns"` si se alcanzó el límite de turnos |
 | `result` | string | Texto de la respuesta final de Claude |
-| `session_id` | string (UUID) | ID unico de la sesion, util para reanudar con `--resume` |
-| `is_error` | boolean | `true` si la ejecucion termino en error |
-| `usage` | object | Estadisticas de uso de tokens |
+| `session_id` | string (UUID) | ID único de la sesión, útil para reanudar con `--resume` |
+| `is_error` | boolean | `true` si la ejecución terminó en error |
+| `usage` | object | Estadísticas de uso de tokens |
 | `usage.input_tokens` | number | Tokens de entrada consumidos |
 | `usage.output_tokens` | number | Tokens de salida generados |
-| `usage.cache_creation_input_tokens` | number | Tokens usados para crear la cache de prompt |
-| `usage.cache_read_input_tokens` | number | Tokens leidos desde la cache (no se facturan al precio completo) |
+| `usage.cache_creation_input_tokens` | number | Tokens usados para crear la caché de prompt |
+| `usage.cache_read_input_tokens` | number | Tokens leídos desde la caché (no se facturan al precio completo) |
 
 ### Cuando usarlo
 
-- Cuando necesitas los metadatos completos (coste, session_id) ademas de la respuesta
+- Cuando necesitas los metadatos completos (coste, session_id) además de la respuesta
 - Para integraciones que necesitan registrar el uso de tokens
-- Cuando quieres poder reanudar la sesion con `--resume`
+- Cuando quieres poder reanudar la sesión con `--resume`
 - En pipelines donde el resultado llega de una sola vez y puedes esperar
 
 ### Ejemplos
 
 ```bash
-# Capturar resultado y session_id para posible reanudacion
+# Capturar resultado y session_id para posible reanudación
 RESULTADO=$(claude -p "analiza el proyecto" --output-format json)
 SESSION_ID=$(echo "$RESULTADO" | jq -r '.session_id')
 RESPUESTA=$(echo "$RESULTADO" | jq -r '.result')
@@ -115,10 +115,10 @@ RESPUESTA=$(echo "$RESULTADO" | jq -r '.result')
 claude -p "query" --output-format json | \
   jq '{tokens_entrada: .usage.input_tokens, tokens_salida: .usage.output_tokens}' >> metricas.jsonl
 
-# Verificar si la ejecucion fue exitosa
+# Verificar si la ejecución fue exitosa
 SALIDA=$(claude -p "ejecuta los tests" --output-format json)
 if [ "$(echo "$SALIDA" | jq -r '.is_error')" = "true" ]; then
-  echo "Claude encontro un error"
+  echo "Claude encontró un error"
 fi
 ```
 
@@ -126,9 +126,9 @@ fi
 
 ## Formato `stream-json`
 
-### Descripcion
+### Descripción
 
-Emite objetos JSON separados por lineas (formato NDJSON / JSON Lines) conforme Claude genera la respuesta. Cada linea es un objeto JSON independiente. Este formato permite procesar la respuesta de Claude en tiempo real, sin esperar a que termine.
+Emite objetos JSON separados por líneas (formato NDJSON / JSON Lines) conforme Claude genera la respuesta. Cada línea es un objeto JSON independiente. Este formato permite procesar la respuesta de Claude en tiempo real, sin esperar a que termine.
 
 ### Sintaxis
 
@@ -138,7 +138,7 @@ claude -p "query" --output-format stream-json
 
 ### Tipos de eventos en el stream
 
-El stream emite varios tipos de eventos a lo largo de la ejecucion:
+El stream emite varios tipos de eventos a lo largo de la ejecución:
 
 #### Evento de sistema (inicio)
 
@@ -146,11 +146,11 @@ El stream emite varios tipos de eventos a lo largo de la ejecucion:
 {"type":"system","subtype":"init","session_id":"550e8400-e29b-41d4-a716-446655440000","model":"claude-sonnet-4-6","cwd":"/home/usuario/proyecto","tools":["Read","Edit","Bash","Glob","Grep"]}
 ```
 
-| Campo | Descripcion |
+| Campo | Descripción |
 |-------|-------------|
 | `type` | `"system"` |
-| `subtype` | `"init"` — evento de inicializacion |
-| `session_id` | ID de la sesion |
+| `subtype` | `"init"` — evento de inicialización |
+| `session_id` | ID de la sesión |
 | `model` | Modelo usado |
 | `cwd` | Directorio de trabajo |
 | `tools` | Herramientas disponibles |
@@ -176,12 +176,12 @@ El stream emite varios tipos de eventos a lo largo de la ejecucion:
 #### Evento de resultado final
 
 ```json
-{"type":"result","subtype":"success","result":"Aqui esta el analisis completo del proyecto...","session_id":"550e8400-e29b-41d4-a716-446655440000","is_error":false,"usage":{"input_tokens":2048,"output_tokens":512,"cache_read_input_tokens":1024,"cache_creation_input_tokens":0}}
+{"type":"result","subtype":"success","result":"Aquí está el análisis completo del proyecto...","session_id":"550e8400-e29b-41d4-a716-446655440000","is_error":false,"usage":{"input_tokens":2048,"output_tokens":512,"cache_read_input_tokens":1024,"cache_creation_input_tokens":0}}
 ```
 
 ### Eventos con mensajes parciales (`--include-partial-messages`)
 
-Si se anade `--include-partial-messages`, el stream incluye los bloques de contenido en construccion (streaming de texto caracter a caracter). Util para mostrar progreso en tiempo real en interfaces propias.
+Si se añade `--include-partial-messages`, el stream incluye los bloques de contenido en construcción (streaming de texto carácter a carácter). Útil para mostrar progreso en tiempo real en interfaces propias.
 
 ```bash
 claude -p "query" --output-format stream-json --include-partial-messages
@@ -198,14 +198,14 @@ claude -p "query" --output-format stream-json --include-partial-messages
 
 ```bash
 # Mostrar solo el texto de los mensajes del asistente en tiempo real
-claude -p "explica el codigo en src/auth.ts" --output-format stream-json | \
+claude -p "explica el código en src/auth.ts" --output-format stream-json | \
   jq -r 'select(.type == "assistant") | .message.content[] | select(.type == "text") | .text'
 
 # Capturar solo el resultado final
 claude -p "analiza el proyecto" --output-format stream-json | \
   jq -r 'select(.type == "result") | .result'
 
-# Registrar todas las herramientas usadas durante la ejecucion
+# Registrar todas las herramientas usadas durante la ejecución
 claude -p "implementa los tests" --output-format stream-json | \
   jq 'select(.type == "tool_use") | {herramienta: .name, input: .input}' >> herramientas-usadas.jsonl
 
@@ -229,10 +229,10 @@ done
 
 ## Formato de entrada (`--input-format`)
 
-Cuando se usa `--input-format stream-json`, Claude Code acepta eventos JSON Lines en stdin como entrada (en lugar de texto plano). Util para encadenar sesiones de Claude Code.
+Cuando se usa `--input-format stream-json`, Claude Code acepta eventos JSON Lines en stdin como entrada (en lugar de texto plano). Útil para encadenar sesiones de Claude Code.
 
 ```bash
-# Encadenar: la salida stream-json de una sesion es la entrada de la siguiente
+# Encadenar: la salida stream-json de una sesión es la entrada de la siguiente
 claude -p "genera tests" --output-format stream-json | \
   claude -p "revisa los tests generados" --input-format stream-json --output-format json
 ```
@@ -241,9 +241,9 @@ claude -p "genera tests" --output-format stream-json | \
 
 ## JSON Schema (`--json-schema`)
 
-### Descripcion
+### Descripción
 
-Valida y fuerza que la salida de Claude sea un objeto JSON valido que cumpla un schema especifico. Disponible solo en modo print (`-p`). Claude completa su workflow normalmente y al final genera una respuesta estructurada que cumple el schema indicado.
+Valida y fuerza que la salida de Claude sea un objeto JSON válido que cumpla un schema específico. Disponible solo en modo print (`-p`). Claude completa su workflow normalmente y al final genera una respuesta estructurada que cumple el schema indicado.
 
 ### Sintaxis
 
@@ -254,12 +254,12 @@ claude -p "query" --json-schema "$(cat schema.json)"
 
 ### Cuando usarlo
 
-- Cuando necesitas una respuesta estructurada para consumir desde codigo
-- Integracion con pipelines que esperan datos con formato especifico
-- Cuando necesitas multiples campos de informacion en lugar de texto libre
-- Validacion automatica del formato de respuesta
+- Cuando necesitas una respuesta estructurada para consumir desde código
+- Integración con pipelines que esperan datos con formato específico
+- Cuando necesitas múltiples campos de información en lugar de texto libre
+- Validación automática del formato de respuesta
 
-### Ejemplo: analisis de codigo con schema
+### Ejemplo: análisis de código con schema
 
 Fichero `schema-analisis.json`:
 
@@ -270,7 +270,7 @@ Fichero `schema-analisis.json`:
   "properties": {
     "resumen": {
       "type": "string",
-      "description": "Resumen ejecutivo del analisis"
+      "description": "Resumen ejecutivo del análisis"
     },
     "issues": {
       "type": "array",
@@ -279,7 +279,7 @@ Fichero `schema-analisis.json`:
         "required": ["tipo", "severidad", "descripcion", "fichero"],
         "properties": {
           "tipo": {"type": "string", "enum": ["bug", "seguridad", "rendimiento", "estilo"]},
-          "severidad": {"type": "string", "enum": ["critica", "alta", "media", "baja"]},
+          "severidad": {"type": "string", "enum": ["crítica", "alta", "media", "baja"]},
           "descripcion": {"type": "string"},
           "fichero": {"type": "string"}
         }
@@ -296,7 +296,7 @@ Fichero `schema-analisis.json`:
 
 ```bash
 # Usar el schema desde fichero
-git diff --staged | claude -p "analiza este codigo" \
+git diff --staged | claude -p "analiza este código" \
   --json-schema "$(cat schema-analisis.json)" \
   --output-format json
 ```
@@ -307,7 +307,7 @@ Salida resultante:
 {
   "type": "result",
   "subtype": "success",
-  "result": "{\"resumen\":\"El codigo modifica el sistema de autenticacion...\",\"issues\":[{\"tipo\":\"seguridad\",\"severidad\":\"alta\",\"descripcion\":\"Falta validacion del token JWT\",\"fichero\":\"src/auth.ts\"}],\"puntuacion\":7.5}",
+  "result": "{\"resumen\":\"El código modifica el sistema de autenticación...\",\"issues\":[{\"tipo\":\"seguridad\",\"severidad\":\"alta\",\"descripcion\":\"Falta validación del token JWT\",\"fichero\":\"src/auth.ts\"}],\"puntuacion\":7.5}",
   "session_id": "...",
   "is_error": false,
   "usage": {...}
@@ -318,13 +318,13 @@ Salida resultante:
 
 ```bash
 # Extraer el JSON del campo result (que es un string JSON embebido)
-ANALISIS=$(git diff --staged | claude -p "analiza este codigo" \
+ANALISIS=$(git diff --staged | claude -p "analiza este código" \
   --json-schema "$(cat schema-analisis.json)" \
   --output-format json | jq -r '.result')
 
 # Ahora ANALISIS es un JSON parseable
 echo "$ANALISIS" | jq '.puntuacion'
-echo "$ANALISIS" | jq '.issues[] | select(.severidad == "critica")'
+echo "$ANALISIS" | jq '.issues[] | select(.severidad == "crítica")'
 ```
 
 ---
@@ -370,7 +370,7 @@ claude -p "query" --output-format stream-json | \
          .text' 2>/dev/null
 ```
 
-### Guardar metricas de uso en fichero de log
+### Guardar métricas de uso en fichero de log
 
 ```bash
 #!/bin/bash
@@ -381,7 +381,7 @@ LOG_FILE="metricas-claude.jsonl"
 
 RESULTADO=$(claude -p "$QUERY" --output-format json)
 
-# Extraer y registrar metricas
+# Extraer y registrar métricas
 echo "$RESULTADO" | jq \
   --arg fecha "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
   --arg query "$QUERY" \
@@ -406,12 +406,12 @@ echo "$RESULTADO" | jq -r '.result'
 | Criterio | `text` | `json` | `stream-json` |
 |----------|--------|--------|---------------|
 | Tiempo hasta primera salida | Inmediato (streaming) | Al finalizar | Inmediato (streaming) |
-| Metadatos disponibles | No | Si (al final) | Si (en evento `result`) |
-| Progreso en tiempo real | Si (texto) | No | Si (todos los eventos) |
-| Facilidad de parseo | Alta (texto directo) | Media (un JSON) | Baja (multiples JSONs) |
-| Uso de herramientas visible | No | No | Si |
-| Complejidad de integracion | Baja | Media | Alta |
-| Recomendado para | Scripts simples | Automatizacion con metadatos | Interfaces o monitoreo detallado |
+| Metadatos disponibles | No | Sí (al final) | Sí (en evento `result`) |
+| Progreso en tiempo real | Sí (texto) | No | Sí (todos los eventos) |
+| Facilidad de parseo | Alta (texto directo) | Media (un JSON) | Baja (múltiples JSONs) |
+| Uso de herramientas visible | No | No | Sí |
+| Complejidad de integración | Baja | Media | Alta |
+| Recomendado para | Scripts simples | Automatización con metadatos | Interfaces o monitoreo detallado |
 
 ---
 
@@ -450,8 +450,8 @@ Lista los agentes configurados, agrupados por origen (proyecto, usuario global, 
 
 ---
 
-## Ver tambien
+## Ver también
 
-- [Modos de ejecucion](./referencia-cli-modos-ejecucion.md) — El modo print (`-p`) es el que habilita estos formatos
+- [Modos de ejecución](./referencia-cli-modos-ejecucion.md) — El modo print (`-p`) es el que habilita estos formatos
 - [Flags de arranque](./referencia-cli-flags-arranque.md) — Todos los flags relacionados con output: `--output-format`, `--json-schema`, `--include-partial-messages`, `--input-format`
 - [github-actions-claude-code.md](./github-actions-claude-code.md) — Uso de formatos de salida en CI/CD

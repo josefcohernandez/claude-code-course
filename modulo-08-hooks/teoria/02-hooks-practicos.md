@@ -1,8 +1,8 @@
-# 02 - 7 Hooks Practicos
+# 02 - 7 Hooks Prácticos
 
 ## Hook 1: Auto-formateo con Prettier
 
-Despues de que Claude escriba o edite un archivo, formatearlo automaticamente:
+Después de que Claude escriba o edite un archivo, formatearlo automáticamente:
 
 ```json
 {
@@ -47,7 +47,7 @@ Para Python:
 
 ---
 
-## Hook 2: Linter despues de Cambios
+## Hook 2: Linter después de Cambios
 
 ```json
 {
@@ -71,7 +71,7 @@ Si el linter falla (exit code no-zero), Claude ve el error y puede corregir.
 
 ---
 
-## Hook 3: Tests Automaticos
+## Hook 3: Tests Automáticos
 
 Ejecutar tests del archivo modificado:
 
@@ -97,7 +97,7 @@ Ejecutar tests del archivo modificado:
 
 ## Hook 4: Logging de Operaciones
 
-Registrar todas las operaciones de Claude para auditoria:
+Registrar todas las operaciones de Claude para auditoría:
 
 ```json
 {
@@ -168,19 +168,19 @@ FILEPATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
 
 if echo "$FILEPATH" | grep -qE "(config/production|\.env|secrets/)"; then
   echo "BLOQUEADO: Archivo protegido: $FILEPATH" >&2
-  exit 2  # Exit 2 = bloquea la operacion
+  exit 2  # Exit 2 = bloquea la operación
 fi
 
 exit 0
 ```
 
-> **Importante:** Se usa `exit 2` para bloquear. Un `exit 1` no bloquea la operacion, solo muestra el error en modo verbose.
+> **Importante:** Se usa `exit 2` para bloquear. Un `exit 1` no bloquea la operación; solo muestra el error en modo verbose.
 
 ---
 
 ## Hook 6: Inyectar Contexto en PreCompact
 
-Cuando el contexto se compacta, asegurar que informacion critica no se pierde:
+Cuando el contexto se compacta, hay que asegurar que la información crítica no se pierda:
 
 ```json
 {
@@ -241,9 +241,9 @@ exit 0
 
 ---
 
-## Hook 7: Notificacion al Terminar
+## Hook 7: Notificación al Terminar
 
-Recibir notificacion cuando Claude termina una tarea larga:
+Recibir una notificación cuando Claude termina una tarea larga:
 
 ### Linux
 
@@ -289,12 +289,12 @@ Recibir notificacion cuando Claude termina una tarea larga:
 
 ## Resumen de Hooks
 
-| # | Proposito | Evento | Matcher | Sync? |
+| # | Propósito | Evento | Matcher | Sync? |
 |---|----------|--------|---------|-------|
 | 1 | Auto-formateo | PostToolUse | Write/Edit(*.ts) | Si |
 | 2 | Linter | PostToolUse | Edit(*.ts) | Si |
 | 3 | Tests auto | PostToolUse | Edit(src/**) | Si |
 | 4 | Logging | PostToolUse | (todos) | No (async) |
 | 5 | Bloquear protegido | PreToolUse | Write/Edit | Si |
-| 6 | Contexto critico | PreCompact | - | Si |
-| 7 | Notificacion | Stop | - | No (async) |
+| 6 | Contexto crítico | PreCompact | - | Si |
+| 7 | Notificación | Stop | - | No (async) |

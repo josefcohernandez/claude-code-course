@@ -10,23 +10,23 @@ para una feature real, midiendo eficiencia en cada fase.
 ## La Feature: Sistema de Notificaciones
 
 Implementar un sistema simple de notificaciones in-app:
-- Crear notificacion (titulo, mensaje, tipo: info/warning/error, destinatario)
+- Crear notificación (título, mensaje, tipo: info/warning/error, destinatario)
 - Listar notificaciones de un usuario (paginadas)
-- Marcar como leida
-- Contar notificaciones no leidas
+- Marcar como leída
+- Contar notificaciones no leídas
 
 ---
 
-## Fase 1: Planificacion (10 min)
+## Fase 1: Planificación (10 min)
 
 ```bash
 claude --model opus
 > Shift+Tab (Plan Mode)
-> "Diena un sistema de notificaciones in-app con:
->  - Crear notificacion (titulo, mensaje, tipo, destinatario)
->  - Listar por usuario con paginacion
->  - Marcar como leida
->  - Contar no leidas
+> "Diseña un sistema de notificaciones in-app con:
+>  - Crear notificación (título, mensaje, tipo, destinatario)
+>  - Listar por usuario con paginación
+>  - Marcar como leída
+>  - Contar no leídas
 >  Stack: [tu stack preferido]
 >  Incluir: modelos, endpoints, tests"
 > /cost
@@ -36,16 +36,16 @@ Anota: tokens_plan = ____
 
 ---
 
-## Fase 2: Implementacion (20 min)
+## Fase 2: Implementación (20 min)
 
 ```bash
 > Shift+Tab (Normal Mode)
 > /model sonnet
-> "Implementa los modelos segun el plan"
+> "Implementa los modelos según el plan"
 > /cost
 > "Implementa los endpoints"
 > /cost
-> "Implementa la paginacion"
+> "Implementa la paginación"
 > /cost
 ```
 
@@ -56,10 +56,10 @@ Anota: tokens_impl = ____
 ## Fase 3: Testing (10 min)
 
 ```bash
-> "Escribe tests para: crear notificacion, listar paginadas,
->  marcar como leida, contar no leidas"
+> "Escribe tests para: crear notificación, listar paginadas,
+>  marcar como leída, contar no leídas"
 > "Ejecuta los tests"
-> "Si alguno falla, corrigelo"
+> "Si alguno falla, corrígelo"
 > /cost
 ```
 
@@ -71,7 +71,7 @@ Anota: tokens_test = ____
 
 ```bash
 > /clear
-> "Revisa todo el codigo del sistema de notificaciones.
+> "Revisa todo el código del sistema de notificaciones.
 >  Busca: bugs, edge cases, mejoras de rendimiento, seguridad.
 >  No modifiques, solo reporta."
 > /cost
@@ -93,12 +93,12 @@ git diff --staged | claude --model haiku -p "Commit message conventional commits
 
 ---
 
-## Metricas Totales
+## Métricas Totales
 
 | Fase | Modelo | Tokens | Coste | Tiempo |
 |------|--------|--------|-------|--------|
 | Plan | Opus | ? | ? | ? min |
-| Implementacion | Sonnet | ? | ? | ? min |
+| Implementación | Sonnet | ? | ? | ? min |
 | Testing | Sonnet | ? | ? | ? min |
 | Review | Sonnet | ? | ? | ? min |
 | Commit | Haiku | ? | ? | ? min |
@@ -106,21 +106,21 @@ git diff --staged | claude --model haiku -p "Commit message conventional commits
 
 ---
 
-## Reflexion
+## Reflexión
 
-1. Que fase consumio mas tokens?
-2. Que fase fue mas valiosa?
-3. Usarias este workflow para todas las features?
-4. Que simplificarias para features pequenas?
-5. Que porcentaje del tiempo total fue planificacion vs implementacion?
+1. ¿Qué fase consumió más tokens?
+2. ¿Qué fase fue más valiosa?
+3. ¿Usarías este workflow para todas las features?
+4. ¿Qué simplificarías para features pequeñas?
+5. ¿Qué porcentaje del tiempo total fue planificación vs. implementación?
 
 ---
 
 ## Criterios de Completitud
 
 - [ ] Plan completado con Opus
-- [ ] Implementacion completada con Sonnet
+- [ ] Implementación completada con Sonnet
 - [ ] Tests escritos y pasando
 - [ ] Review ejecutado
-- [ ] Tabla de metricas rellenada
+- [ ] Tabla de métricas rellenada
 - [ ] Commit realizado

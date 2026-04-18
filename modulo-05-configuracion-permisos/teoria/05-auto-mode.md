@@ -103,7 +103,7 @@ Para que Auto Mode sea el comportamiento por defecto en un proyecto o para el us
 }
 ```
 
-### Personalizacion del clasificador
+### Personalización del clasificador
 
 El comportamiento del clasificador de seguridad se puede ajustar mediante las siguientes claves en `settings.json`:
 

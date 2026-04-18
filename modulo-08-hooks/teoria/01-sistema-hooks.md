@@ -1,9 +1,9 @@
 # 01 - Sistema de Hooks
 
-## Que son los Hooks
+## Qué son los Hooks
 
-Los hooks son **comandos shell que se ejecutan automaticamente** cuando ocurren
-eventos especificos en Claude Code. Son como "triggers" o "callbacks".
+Los hooks son **comandos shell que se ejecutan automáticamente** cuando ocurren
+eventos específicos en Claude Code. Son como "triggers" o "callbacks".
 
 ---
 
@@ -13,38 +13,38 @@ eventos especificos en Claude Code. Son como "triggers" o "callbacks".
 
 | Evento | Cuando se dispara | Puede bloquear |
 |--------|-------------------|----------------|
-| **SessionStart** | Sesion inicia o se reanuda | No |
-| **UserPromptSubmit** | Usuario envia un prompt | Si |
+| **SessionStart** | La sesión se inicia o se reanuda | No |
+| **UserPromptSubmit** | El usuario envía un prompt | Si |
 | **PreToolUse** | Antes de ejecutar una herramienta | Si |
-| **PermissionRequest** | Dialogo de permisos aparece | Si |
-| **PostToolUse** | Despues de herramienta exitosa | No |
-| **PostToolUseFailure** | Despues de herramienta fallida | No |
-| **Notification** | Notificacion enviada | No |
+| **PermissionRequest** | Aparece un diálogo de permisos | Si |
+| **PostToolUse** | Después de una herramienta exitosa | No |
+| **PostToolUseFailure** | Después de una herramienta fallida | No |
+| **Notification** | Se envía una notificación | No |
 | **SubagentStart** | Subagente creado | No |
-| **SubagentStop** | Subagente termina | Si |
-| **TaskCreated** | Tarea creada via TaskCreate | Si |
+| **SubagentStop** | El subagente termina | Si |
+| **TaskCreated** | Tarea creada vía TaskCreate | Si |
 | **TaskCompleted** | Tarea marcada completa | Si |
 | **Stop** | Claude termina de responder | Si |
 | **StopFailure** | Error API durante respuesta | No |
-| **TeammateIdle** | Teammate de equipo va a idle | Si |
-| **InstructionsLoaded** | CLAUDE.md o rules cargados | No |
-| **ConfigChange** | Fichero de configuracion cambia | Si |
-| **CwdChanged** | Directorio de trabajo cambia | No |
-| **FileChanged** | Fichero observado cambia | No |
+| **TeammateIdle** | Un teammate del equipo queda en idle | Si |
+| **InstructionsLoaded** | Se cargan `CLAUDE.md` o rules | No |
+| **ConfigChange** | Cambia un fichero de configuración | Si |
+| **CwdChanged** | Cambia el directorio de trabajo | No |
+| **FileChanged** | Cambia un fichero observado | No |
 | **WorktreeCreate** | Worktree creado | Si |
 | **WorktreeRemove** | Worktree eliminado | No |
-| **PreCompact** | Antes de compactacion | No |
-| **PostCompact** | Despues de compactacion | No |
+| **PreCompact** | Antes de la compactación | No |
+| **PostCompact** | Después de la compactación | No |
 | **Elicitation** | Servidor MCP solicita input | Si |
 | **ElicitationResult** | Usuario responde a elicitation | Si |
 | **PermissionDenied** | Auto mode deniega una acción | Sí |
-| **SessionEnd** | Sesion termina | No |
+| **SessionEnd** | La sesión termina | No |
 
 ---
 
 ## Tipos de Hook
 
-### 1. Command (mas comun)
+### 1. Command (más común)
 
 Ejecuta un comando shell:
 
@@ -89,7 +89,7 @@ Inyecta texto en el prompt de Claude:
 
 ### 3. HTTP
 
-Envia una peticion POST a un endpoint:
+Envía una petición POST a un endpoint:
 
 ```json
 {
@@ -117,7 +117,7 @@ Ejecuta un agente personalizado.
 
 ## Matchers
 
-Los matchers filtran para que herramienta se dispara el hook:
+Los matchers filtran para qué herramienta se dispara el hook:
 
 | Matcher | Coincide con |
 |---------|-------------|
@@ -131,11 +131,11 @@ Sin matcher, el hook se dispara para **todas** las herramientas del evento.
 
 ---
 
-## Ejecucion Condicional con `if`
+## Ejecución Condicional con `if`
 
 > **Novedad v3.2 (v2.1.85)**
 
-El campo `if` permite condicionar la ejecucion de un hook usando la misma sintaxis de las reglas de permisos. Esto reduce el overhead de spawning de procesos: el hook solo se ejecuta si la condicion se cumple, sin necesidad de que el propio script evalue si debe actuar.
+El campo `if` permite condicionar la ejecución de un hook usando la misma sintaxis de las reglas de permisos. Esto reduce el overhead de creación de procesos: el hook solo se ejecuta si la condición se cumple, sin necesidad de que el propio script evalúe si debe actuar.
 
 ```json
 {
@@ -156,29 +156,29 @@ El campo `if` permite condicionar la ejecucion de un hook usando la misma sintax
 }
 ```
 
-En este ejemplo, el hook solo se ejecuta cuando el comando Bash empieza por `git`. Sin el campo `if`, el hook se dispararia para **cualquier** comando Bash y el script tendria que filtrar internamente.
+En este ejemplo, el hook solo se ejecuta cuando el comando Bash empieza por `git`. Sin el campo `if`, el hook se dispararía para **cualquier** comando Bash y el script tendría que filtrar internamente.
 
 ### Sintaxis de `if`
 
-La sintaxis es identica a la de las reglas de permisos (`permissions.allow` / `permissions.deny`):
+La sintaxis es idéntica a la de las reglas de permisos (`permissions.allow` / `permissions.deny`):
 
-| Condicion | Se cumple cuando |
+| Condición | Se cumple cuando |
 |-----------|-----------------|
 | `"Bash(git *)"` | El comando empieza por `git` |
 | `"Write(src/**/*.ts)"` | Se escribe un fichero `.ts` dentro de `src/` |
 | `"Edit(*.json)"` | Se edita cualquier fichero JSON |
 
-### Cuando usar `if` vs logica en el script
+### Cuándo usar `if` vs. lógica en el script
 
-| Escenario | Recomendacion |
+| Escenario | Recomendación |
 |-----------|--------------|
-| Filtrar por nombre de herramienta o patron de fichero | Usar `if` -- evita lanzar el proceso |
-| Filtrar por contenido del comando o logica compleja | Usar logica dentro del script |
+| Filtrar por nombre de herramienta o patrón de fichero | Usar `if`: evita lanzar el proceso |
+| Filtrar por contenido del comando o lógica compleja | Usar lógica dentro del script |
 | Combinar ambos | Usar `if` para el filtro grueso y el script para el fino |
 
 ---
 
-## Configuracion
+## Configuración
 
 En `.claude/settings.json`:
 
@@ -221,7 +221,7 @@ En `.claude/settings.json`:
         "hooks": [
           {
             "type": "command",
-            "command": "echo 'Claude termino' | notify-send 'Claude Code'"
+            "command": "echo 'Claude terminó' | notify-send 'Claude Code'"
           }
         ]
       }
@@ -234,13 +234,13 @@ En `.claude/settings.json`:
 
 ## Datos Disponibles
 
-Los hooks de tipo `command` reciben los datos del evento como **JSON via stdin**. Los campos disponibles incluyen `tool_input`, `tool_name`, `session_id`, `cwd`, entre otros dependiendo del evento.
+Los hooks de tipo `command` reciben los datos del evento como **JSON vía stdin**. Los campos disponibles incluyen `tool_input`, `tool_name`, `session_id`, `cwd`, entre otros según el evento.
 
 Para leer los datos del evento en un script bash:
 
 ```bash
 #!/bin/bash
-# Leer JSON del evento via stdin
+# Leer JSON del evento vía stdin
 INPUT=$(cat)
 
 # Extraer campos con jq
@@ -255,7 +255,7 @@ CWD=$(echo "$INPUT" | jq -r '.cwd // empty')
 
 Variables de entorno disponibles (del sistema, no del evento):
 
-| Variable | Descripcion |
+| Variable | Descripción |
 |----------|------------|
 | `$CLAUDE_PROJECT_DIR` | Directorio raiz del proyecto |
 | `$CLAUDE_ENV_FILE` | Script de shell que se ejecuta antes de cada comando Bash |
@@ -264,15 +264,15 @@ Variables de entorno disponibles (del sistema, no del evento):
 
 ## Comportamiento de Exit Codes
 
-Los exit codes determinan como reacciona Claude Code al resultado de un hook. Es **critico** entenderlos para que los hooks de seguridad funcionen correctamente:
+Los exit codes determinan cómo reacciona Claude Code al resultado de un hook. Es **crítico** entenderlos para que los hooks de seguridad funcionen correctamente:
 
 | Exit code | Significado | Comportamiento |
 |-----------|-------------|----------------|
-| `0` | Exito | Operacion permitida, se parsea stdout como JSON |
-| `2` | Error bloqueante | Operacion **bloqueada**, stderr se muestra a Claude/usuario |
-| Otro (1, etc.) | Error no bloqueante | stderr en modo verbose, ejecucion continua |
+| `0` | Éxito | Operación permitida; se parsea stdout como JSON |
+| `2` | Error bloqueante | Operación **bloqueada**; stderr se muestra a Claude o al usuario |
+| Otro (1, etc.) | Error no bloqueante | stderr en modo verbose; la ejecución continúa |
 
-> **Atencion:** Solo `exit 2` bloquea la operacion. Un `exit 1` **no bloquea**: simplemente muestra el stderr en modo verbose y la ejecucion continua normalmente. Si tu hook de seguridad usa `exit 1` para intentar bloquear, **no funcionara**.
+> **Atención:** Solo `exit 2` bloquea la operación. Un `exit 1` **no bloquea**: simplemente muestra stderr en modo verbose y la ejecución continúa normalmente. Si tu hook de seguridad usa `exit 1` para intentar bloquear, **no funcionará**.
 
 ### Ejemplo correcto de hook bloqueante
 
@@ -283,17 +283,17 @@ FILEPATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
 
 if echo "$FILEPATH" | grep -q ".env"; then
   echo "BLOQUEADO: No se permite modificar $FILEPATH" >&2
-  exit 2  # Exit 2 = bloquea la operacion
+  exit 2  # Exit 2 = bloquea la operación
 fi
 
-exit 0  # Exit 0 = permite la operacion
+exit 0  # Exit 0 = permite la operación
 ```
 
 ---
 
-## Sincronos vs Asincronos
+## Síncronos vs Asíncronos
 
-Por defecto, los hooks son **sincronos**: Claude espera a que terminen.
+Por defecto, los hooks son **síncronos**: Claude espera a que terminen.
 
 Para hooks que no necesitan bloquear (logging, notificaciones):
 

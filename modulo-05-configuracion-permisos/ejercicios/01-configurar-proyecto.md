@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Crear y verificar la configuracion completa de Claude Code para un proyecto.
+Crear y verificar la configuración completa de Claude Code para un proyecto.
 
 ---
 
@@ -51,7 +51,7 @@ claude
 > /permissions
 ```
 
-Confirma que Read, Glob, Grep estan en allow.
+Confirma que Read, Glob y Grep están en allow.
 
 ---
 
@@ -70,7 +70,7 @@ Crea `.claude/settings.local.json` (personal, no commitear):
 }
 ```
 
-Anade a `.gitignore`:
+Añade a `.gitignore`:
 
 ```
 .claude/settings.local.json
@@ -85,7 +85,7 @@ claude
 
 ---
 
-## Parte 4: Probar Modos de Operacion (10 min)
+## Parte 4: Probar Modos de Operación (10 min)
 
 ### Modo Normal
 
@@ -94,7 +94,7 @@ claude
 > "Crea un archivo src/hello.js con un console.log"
 ```
 
-Claude deberia pedir confirmacion para Write.
+Claude debería pedir confirmacion para Write.
 
 ### Modo Plan
 
@@ -114,7 +114,7 @@ claude --permission-mode acceptEdits
 > "Modifica src/hello.js para que imprima 'hola mundo'"
 ```
 
-La edicion se aplica sin preguntar.
+La edición se aplica sin preguntar.
 
 ---
 
@@ -125,7 +125,7 @@ claude
 > "Ejecuta rm -rf /tmp/algo"
 ```
 
-Deberia ser **bloqueado** por el deny.
+Debería ser **bloqueado** por el deny.
 
 ```
 > "Ejecuta sudo apt update"

@@ -2,20 +2,20 @@
 
 ## Objetivo
 
-Practicar el ciclo completo Red → Green → Refactor con Claude Code, implementando un servicio de autenticacion requisito a requisito usando TDD estricto.
+Prácticar el ciclo completo Red → Green → Refactor con Claude Code, implementando un servicio de autenticación requisito a requisito usando TDD estricto.
 
-**Duracion estimada:** 20 minutos
+**Duración estimada:** 20 minutos
 
 ---
 
 ## El Proyecto
 
-Implementar un modulo de autenticacion (`src/auth.py`) con:
+Implementar un módulo de autenticación (`src/auth.py`) con:
 - Hash de passwords con bcrypt
-- Generacion y validacion de tokens JWT
-- Validacion de email y password
+- Generación y validación de tokens JWT
+- Validación de email y password
 
-Todo usando TDD: test primero, implementacion despues.
+Todo usando TDD: test primero, implementación después.
 
 ---
 
@@ -60,7 +60,7 @@ Paso 1: Escribe estos tests en tests/test_auth.py:
 
 Paso 2: Ejecuta los tests - deben FALLAR
 
-Paso 3: Implementa en src/auth.py el minimo codigo para pasar
+Paso 3: Implementa en src/auth.py el mínimo código para pasar
 
 Paso 4: Ejecuta los tests - deben PASAR
 
@@ -69,10 +69,10 @@ Muestra el resultado de cada paso.
 
 **Verifica:** Claude debe mostrar claramente los pasos Red → Green.
 
-### Requisito 2: Validacion de email
+### Requisito 2: Validación de email
 
 ```
-Continua con TDD. Anade tests para validate_email():
+Continua con TDD. Añade tests para validate_email():
 
 - test_valid_email_returns_true (user@example.com)
 - test_email_without_at_returns_false
@@ -85,12 +85,12 @@ Ciclo: tests fallan → implementa → tests pasan.
 Ejecuta TODOS los tests (incluidos los del requisito 1) al terminar.
 ```
 
-### Requisito 3: Validacion de password
+### Requisito 3: Validación de password
 
 ```
-Continua con TDD. Anade tests para validate_password():
+Continua con TDD. Añade tests para validate_password():
 
-- test_valid_password_returns_true (min 8 chars, 1 mayuscula, 1 numero)
+- test_valid_password_returns_true (min 8 chars, 1 mayuscula, 1 número)
 - test_short_password_returns_false (menos de 8 chars)
 - test_password_without_uppercase_returns_false
 - test_password_without_number_returns_false
@@ -100,10 +100,10 @@ Ciclo: tests fallan → implementa → tests pasan.
 Ejecuta TODOS los tests al terminar.
 ```
 
-### Requisito 4: Generacion y validacion de JWT
+### Requisito 4: Generación y validación de JWT
 
 ```
-Continua con TDD. Anade tests para create_token() y verify_token():
+Continua con TDD. Añade tests para create_token() y verify_token():
 
 - test_create_token_returns_string
 - test_create_token_contains_user_id
@@ -113,7 +113,7 @@ Continua con TDD. Anade tests para create_token() y verify_token():
 - test_verify_token_with_wrong_secret_raises_error
 - test_token_contains_expiration_claim
 
-Usa un secret configurable y expiracion de 24h por defecto.
+Usa un secret configurable y expiración de 24h por defecto.
 Ciclo: tests fallan → implementa → tests pasan.
 Ejecuta TODOS los tests al terminar.
 ```
@@ -131,8 +131,8 @@ Revisa src/auth.py. Refactoriza para mejorar:
 - Docstrings en funciones publicas
 - Type hints completos
 
-Despues de cada cambio, ejecuta TODOS los tests para verificar
-que no has roto nada. Si algun test falla, revierte el cambio.
+Después de cada cambio, ejecuta TODOS los tests para verificar
+que no has roto nada. Si algún test falla, revierte el cambio.
 ```
 
 ### Paso 6: Cobertura final
@@ -141,20 +141,20 @@ que no has roto nada. Si algun test falla, revierte el cambio.
 Ejecuta todos los tests con cobertura:
 pytest --cov=src --cov-report=term-missing
 
-Si hay lineas no cubiertas, anade tests adicionales.
-Objetivo: 95% de cobertura minimo.
+Si hay líneas no cubiertas, añade tests adicionales.
+Objetivo: 95% de cobertura mínimo.
 ```
 
 ---
 
-## Verificacion
+## Verificación
 
-Al completar este ejercicio, deberias tener:
+Al completar este ejercicio, deberías tener:
 
 ```
 /tmp/auth-tdd/
 ├── src/
-│   └── auth.py           # 4 funciones implementadas via TDD
+│   └── auth.py           # 4 funciones implementadas vía TDD
 ├── tests/
 │   └── test_auth.py      # ~20 tests, todos pasando
 └── requirements.txt
@@ -166,22 +166,22 @@ Al completar este ejercicio, deberias tener:
 |----------|-----------|
 | Todos los tests pasan | |
 | Cada requisito se implemento con ciclo Red → Green | |
-| Los tests se escribieron ANTES del codigo | |
+| Los tests se escribieron ANTES del código | |
 | El refactoring no rompio ningun test | |
 | Cobertura >= 95% | |
 | Las funciones tienen type hints y docstrings | |
 
 ---
 
-## Criterios de Evaluacion
+## Criterios de Evaluación
 
 | Criterio | Puntos |
 |----------|--------|
-| Tests escritos antes de la implementacion (Red visible) | 3 |
-| Implementacion minima para pasar tests (Green) | 2 |
+| Tests escritos antes de la implementación (Red visible) | 3 |
+| Implementación minima para pasar tests (Green) | 2 |
 | Refactoring sin romper tests | 2 |
 | Cobertura >= 95% | 2 |
-| Codigo limpio con type hints y docstrings | 1 |
+| Código limpio con type hints y docstrings | 1 |
 | **Total** | **10** |
 
 ---
@@ -191,12 +191,12 @@ Al completar este ejercicio, deberias tener:
 Si terminas antes de tiempo:
 
 ```
-Anade un requisito 5 usando TDD: funcion refresh_token() que:
-- Recibe un token valido no expirado
-- Genera un nuevo token con la misma informacion
-- El nuevo token tiene expiracion renovada
+Añade un requisito 5 usando TDD: función refresh_token() que:
+- Recibe un token válido no expirado
+- Genera un nuevo token con la misma información
+- El nuevo token tiene expiración renovada
 - Rechaza tokens expirados
-- Rechaza tokens invalidos
+- Rechaza tokens inválidos
 
 Escribe 5 tests, implementa, ejecuta.
 ```

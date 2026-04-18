@@ -1,27 +1,29 @@
-# Modulo 07: MCP (Model Context Protocol)
+# Módulo 07: MCP (Model Context Protocol)
 
-## Descripcion
+## Descripción general
 
-MCP es el estandar abierto que permite a Claude Code conectarse con herramientas
-externas, bases de datos, APIs y servicios. Aprenderas a configurar, optimizar
-y crear tus propios servidores MCP.
+MCP es el estándar abierto que permite a Claude Code conectarse con herramientas externas, bases de datos, APIs y servicios. Aprenderás a configurar, optimizar y crear tus propios servidores MCP.
 
 ## Objetivos
 
-1. Comprender la arquitectura y proposito de MCP
-2. Configurar servidores MCP en Claude Code
-3. Optimizar el consumo de tokens con MCP
-4. Crear un servidor MCP personalizado
-5. Aplicar buenas practicas de seguridad
-6. Implementar elicitation para solicitar input estructurado mid-task
+1. Comprender la arquitectura y el propósito de MCP.
+2. Configurar servidores MCP en Claude Code.
+3. Optimizar el consumo de tokens con MCP.
+4. Crear un servidor MCP personalizado.
+5. Aplicar buenas prácticas de seguridad.
+6. Implementar elicitation para solicitar input estructurado mid-task.
 
-## Duracion: 2h 35min (85 min teoria + 50 min ejercicios + 20 min exploracion)
+## Duración
 
-## Prerequisitos: Modulos 01-06 completados, Node.js 18+
+**2 h 35 min** (85 min de teoría + 50 min de ejercicios + 20 min de exploración)
+
+## Prerrequisitos
+
+Módulos 01-06 completados, Node.js 18+.
 
 ## Estructura
 
-```
+```text
 modulo-07-mcp/
 ├── README.md
 ├── teoria/

@@ -1,4 +1,4 @@
-# Configuracion MCP: GitHub
+# Configuración MCP: GitHub
 
 ## Settings
 
@@ -23,11 +23,11 @@
 export GITHUB_TOKEN="ghp_xxxxxxxxxxxxxxxxxxxx"
 ```
 
-Permisos del token: `repo`, `read:org` (minimo).
+Permisos del token: `repo`, `read:org` (mínimo).
 
 ## Herramientas Disponibles
 
-| Herramienta | Descripcion |
+| Herramienta | Descripción |
 |-------------|------------|
 | `list_issues` | Listar issues de un repo |
 | `create_issue` | Crear un issue |
@@ -37,7 +37,7 @@ Permisos del token: `repo`, `read:org` (minimo).
 
 ## Nota
 
-Para la mayoria de operaciones GitHub, la CLI `gh` integrada con Bash
+Para la mayoría de operaciones de GitHub, la CLI `gh` integrada con Bash
 es una alternativa viable sin overhead de MCP:
 
 ```bash
@@ -46,4 +46,4 @@ gh pr list
 gh api repos/owner/repo/contents/file.txt
 ```
 
-Usa MCP GitHub si necesitas operaciones mas complejas o frecuentes.
+Usa MCP GitHub si necesitas operaciones más complejas o frecuentes.

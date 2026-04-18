@@ -1,18 +1,18 @@
-# Ejercicio 01: Crear Scripts de Automatizacion
+# Ejercicio 01: Crear Scripts de Automatización
 
 ## Objetivo
 
-Crear dos scripts funcionales que utilicen Claude Code en modo no interactivo para automatizar tareas comunes de desarrollo: revision de codigo y generacion de notas de version.
+Crear dos scripts funcionales que utilicen Claude Code en modo no interactivo para automatizar tareas comunes de desarrollo: revisión de código y generación de notas de versión.
 
-**Duracion estimada:** 15 minutos
+**Duración estimada:** 15 minutos
 
 ---
 
-## Parte 1: Script de Revision Automatica de Codigo
+## Parte 1: Script de Revisión Automática de Código
 
 ### Contexto
 
-Tu equipo quiere automatizar la revision de codigo antes de cada commit. El script debe analizar los cambios staged en Git y proporcionar feedback constructivo.
+Tu equipo quiere automatizar la revisión de código antes de cada commit. El script debe analizar los cambios staged en Git y proporcionar feedback constructivo.
 
 ### Instrucciones
 
@@ -23,7 +23,7 @@ mkdir /tmp/proyecto-prueba && cd /tmp/proyecto-prueba
 git init
 ```
 
-2. **Crea un archivo con codigo que tenga problemas intencionales:**
+2. **Crea un archivo con código que tenga problemas intencionales:**
 
 ```bash
 cat > app.py << 'EOF'
@@ -49,17 +49,17 @@ EOF
 git add app.py
 ```
 
-3. **Examina el script de revision de ejemplo** ubicado en:
+3. **Examina el script de revisión de ejemplo** ubicado en:
    `../workflows/script-review-codigo.sh`
 
-4. **Ejecuta el script de revision:**
+4. **Ejecuta el script de revisión:**
 
 ```bash
 chmod +x ../workflows/script-review-codigo.sh
 ../workflows/script-review-codigo.sh
 ```
 
-5. **Verifica la salida.** El script deberia detectar:
+5. **Verifica la salida.** El script debería detectar:
    - El password hardcodeado (`DB_PASSWORD`)
    - La vulnerabilidad de SQL injection
    - El uso peligroso de `eval()`
@@ -71,7 +71,7 @@ chmod +x ../workflows/script-review-codigo.sh
 Modifica el script `script-review-codigo.sh` para que:
 
 - [ ] Use `--json-schema` para obtener salida estructurada con campos: `severidad`, `problemas[]`, `aprobado`
-- [ ] Bloquee el commit si la severidad es "critica"
+- [ ] Bloquee el commit si la severidad es "crítica"
 - [ ] Genere un archivo de informe en `/tmp/review-YYYYMMDD-HHMMSS.json`
 
 **Pista:**
@@ -82,7 +82,7 @@ SCHEMA='{
   "type": "object",
   "properties": {
     "aprobado": { "type": "boolean" },
-    "severidad": { "type": "string", "enum": ["baja", "media", "alta", "critica"] },
+    "severidad": { "type": "string", "enum": ["baja", "media", "alta", "crítica"] },
     "problemas": {
       "type": "array",
       "items": {
@@ -100,7 +100,7 @@ SCHEMA='{
   "required": ["aprobado", "severidad", "problemas"]
 }'
 
-resultado=$(git diff --staged | claude -p "Revisa este codigo..." \
+resultado=$(git diff --staged | claude -p "Revisa este código..." \
     --output-format json \
     --json-schema "$SCHEMA" \
     --max-turns 1)
@@ -108,11 +108,11 @@ resultado=$(git diff --staged | claude -p "Revisa este codigo..." \
 
 ---
 
-## Parte 2: Script de Generacion de Notas de Version
+## Parte 2: Script de Generación de Notas de Versión
 
 ### Contexto
 
-Cada vez que tu equipo lanza una nueva version, necesita generar notas de version a partir del historial de commits. Este proceso manual consume tiempo y es propenso a errores.
+Cada vez que tu equipo lanza una nueva versión, necesita generar notas de versión a partir del historial de commits. Este proceso manual consume tiempo y es propenso a errores.
 
 ### Instrucciones
 
@@ -137,7 +137,7 @@ git commit --allow-empty -m "perf: optimize database queries for dashboard"
 git tag v1.0.0 HEAD~10 2>/dev/null || git tag v1.0.0 $(git rev-list --max-parents=0 HEAD)
 ```
 
-2. **Examina el script de notas de version** ubicado en:
+2. **Examina el script de notas de versión** ubicado en:
    `../workflows/script-release-notes.sh`
 
 3. **Ejecuta el script:**
@@ -147,7 +147,7 @@ chmod +x ../workflows/script-release-notes.sh
 ../workflows/script-release-notes.sh v1.1.0
 ```
 
-4. **Revisa la salida.** Las notas deberian incluir:
+4. **Revisa la salida.** Las notas deberían incluir:
    - Nuevas funcionalidades (feat)
    - Correcciones de bugs (fix)
    - Mejoras de rendimiento (perf)
@@ -155,17 +155,17 @@ chmod +x ../workflows/script-release-notes.sh
 
 ### Tarea: Mejora el script
 
-Anade las siguientes funcionalidades al script:
+Añade las siguientes funcionalidades al script:
 
-- [ ] Genera la salida en formato Markdown y guardala en un archivo `RELEASE_NOTES.md`
-- [ ] Anade una seccion de "Contribuidores" extrayendo los autores de los commits
-- [ ] Incluye estadisticas: numero total de commits, archivos modificados, lineas anadidas/eliminadas
-- [ ] Acepta un segundo parametro opcional para especificar el tag anterior
+- [ ] Genera la salida en formato Markdown y guárdala en un archivo `RELEASE_NOTES.md`
+- [ ] Añade una sección de "Contribuidores" extrayendo los autores de los commits
+- [ ] Incluye estadisticas: número total de commits, archivos modificados, líneas añadidas/eliminadas
+- [ ] Acepta un segundo parámetro opcional para especificar el tag anterior
 
 **Pista:**
 
 ```bash
-# Obtener contribuidores
+# Obtener autores
 autores=$(git log "$RANGO" --pretty=format:"%an" | sort -u)
 
 # Obtener estadisticas
@@ -175,31 +175,31 @@ num_commits=$(git log "$RANGO" --oneline | wc -l)
 
 ---
 
-## Verificacion
+## Verificación
 
-Al completar este ejercicio, deberias tener:
+Al completar este ejercicio, deberías tener:
 
-1. Un script de revision de codigo que:
+1. Un script de revisión de código que:
    - Analiza cambios staged con Claude Code
    - Detecta problemas de seguridad, bugs y mejoras de estilo
    - Genera salida estructurada en JSON
    - Puede usarse como git hook pre-commit
 
-2. Un script de notas de version que:
-   - Lee el historial de commits desde el ultimo tag
-   - Genera notas organizadas por categoria
-   - Incluye contribuidores y estadisticas
+2. Un script de notas de versión que:
+   - Lee el historial de commits desde el último tag
+   - Genera notas organizadas por categoría
+   - Incluye autores y estadísticas
    - Produce un archivo Markdown listo para publicar
 
 ---
 
-## Criterios de Evaluacion
+## Criterios de Evaluación
 
 | Criterio | Puntos |
 |----------|--------|
-| El script de revision detecta los problemas del codigo de ejemplo | 3 |
+| El script de revisión detecta los problemas del código de ejemplo | 3 |
 | La salida JSON cumple con el esquema definido | 2 |
-| El script de notas genera categorias correctas | 3 |
+| El script de notas genera categorías correctas | 3 |
 | Las personalizaciones adicionales funcionan correctamente | 2 |
 | **Total** | **10** |
 
@@ -209,6 +209,6 @@ Al completar este ejercicio, deberias tener:
 
 Si terminas antes, intenta:
 
-1. **Crear un git hook pre-commit completo** que use tu script de revision y bloquee commits con problemas criticos
-2. **Anadir soporte para multiples idiomas** en las notas de version (espanol e ingles)
+1. **Crear un git hook pre-commit completo** que use tu script de revisión y bloquee commits con problemas críticos
+2. **Añadir soporte para múltiples idiomas** en las notas de versión (español e inglés)
 3. **Integrar notificaciones** enviando el resultado a Slack o email usando `curl`

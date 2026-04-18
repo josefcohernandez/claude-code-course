@@ -39,7 +39,7 @@ claude
 > /cost                   # Tokens base con MCP
 > "Usa la herramienta filesystem para listar archivos en /tmp/mcp-test"
 > "Lee el contenido de test.txt usando filesystem MCP"
-> /cost                   # Tokens despues de usar MCP
+> /cost                   # Tokens después de usar MCP
 ```
 
 ---
@@ -69,7 +69,7 @@ sqlite3 /tmp/mcp-test/test.db << 'SQL'
 CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT, email TEXT);
 INSERT INTO users VALUES (1, 'Ana', 'ana@test.com');
 INSERT INTO users VALUES (2, 'Carlos', 'carlos@test.com');
-INSERT INTO users VALUES (3, 'Diana', 'diana@test.com');
+INSERT INTO users VALUES (3, 'Díana', 'díana@test.com');
 
 CREATE TABLE orders (id INTEGER PRIMARY KEY, user_id INTEGER, total REAL, status TEXT);
 INSERT INTO orders VALUES (1, 1, 99.99, 'completed');
@@ -83,9 +83,9 @@ SQL
 ```bash
 claude
 > /mcp
-> "Que tablas hay en la base de datos?"
+> "Qué tablas hay en la base de datos?"
 > "Muestra todos los usuarios"
-> "Que pedidos tiene Ana?"
+> "Qué pedidos tiene Ana?"
 > "Cual es el total de ventas completadas?"
 > /cost
 ```
@@ -128,7 +128,7 @@ claude
 
 ### Tabla de Resultados
 
-| Configuracion | Tokens inicio | Tokens por "Hola" | Overhead |
+| Configuración | Tokens inicio | Tokens por "Hola" | Overhead |
 |--------------|--------------|-------------------|---------|
 | Sin MCP | ? | ? | 0 |
 | 1 MCP (filesystem) | ? | ? | +? |

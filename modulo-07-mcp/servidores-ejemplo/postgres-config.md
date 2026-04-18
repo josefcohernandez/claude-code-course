@@ -1,4 +1,4 @@
-# Configuracion MCP: PostgreSQL
+# Configuración MCP: PostgreSQL
 
 ## Settings
 
@@ -24,7 +24,7 @@ export DATABASE_URL="postgresql://usuario:password@localhost:5432/mi_database"
 
 ## Herramientas Disponibles
 
-| Herramienta | Descripcion |
+| Herramienta | Descripción |
 |-------------|------------|
 | `query` | Ejecutar SELECT queries |
 | `list_tables` | Listar tablas de la BD |
@@ -50,8 +50,8 @@ export DATABASE_URL="postgresql://usuario:password@localhost:5432/mi_database"
 ## Queries de Ejemplo
 
 ```
-> "Que tablas hay en la base de datos?"
+> "Qué tablas hay en la base de datos?"
 > "Muestra el schema de la tabla users"
-> "Dame los ultimos 10 pedidos con el nombre del usuario"
-> "Cuantos usuarios se registraron este mes?"
+> "Dame los últimos 10 pedidos con el nombre del usuario"
+> "¿Cuántos usuarios se registraron este mes?"
 ```

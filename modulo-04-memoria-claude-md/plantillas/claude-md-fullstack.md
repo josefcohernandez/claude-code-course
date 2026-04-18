@@ -1,6 +1,6 @@
 # Plantilla CLAUDE.md - Proyecto Fullstack
 
-> Copia como `CLAUDE.md` en la raiz del monorepo. Complementar con
+> Copia como `CLAUDE.md` en la raíz del monorepo. Complementa con
 > reglas modulares en `.claude/rules/` para cada parte del stack.
 
 ---
@@ -8,7 +8,7 @@
 ```markdown
 # [Nombre del Proyecto]
 
-Aplicacion fullstack para [descripcion breve].
+Aplicación full stack para [descripción breve].
 
 ## Stack
 - Frontend: React 19 + TypeScript + Vite
@@ -27,23 +27,23 @@ Aplicacion fullstack para [descripcion breve].
 - `npm run test:front` - Tests frontend
 - `npm run test:back` - Tests backend
 - `npm run lint` - Lint completo
-- `npm run build` - Build produccion
-- `npm run db:migrate` - Migraciones BD
+- `npm run build` - Build de producción
+- `npm run db:migrate` - Migraciones de BD
 - `npm run db:seed` - Datos de prueba
 
 ## Estructura
 frontend/
   src/
     components/  - Componentes React
-    pages/       - Paginas/rutas
+    pages/       - Páginas y rutas
     hooks/       - Custom hooks
     api/         - Cliente API (fetch wrappers)
 backend/
   src/
     routes/      - Endpoints API
-    services/    - Logica de negocio
+    services/    - Lógica de negocio
     models/      - Modelos BD
-    middleware/  - Auth, logging, etc
+    middleware/  - Auth, logging, etc.
 shared/
   types/         - Types compartidos front/back
   constants/     - Constantes compartidas
@@ -53,27 +53,27 @@ infra/
 
 ## Convenciones
 - TypeScript estricto en front y back
-- camelCase funciones, PascalCase clases/componentes
+- camelCase para funciones; PascalCase para clases y componentes
 - API REST: /api/v1/resources (plural)
 - Commits: conventional commits (feat:, fix:, chore:)
-- PRs: titulo corto + descripcion con contexto
+- PRs: título corto + descripción con contexto
 
 ## Reglas
-- Frontend y backend son independientes (comunicacion solo via API)
+- Frontend y backend son independientes (comunicación solo vía API)
 - Shared types para contratos API (no duplicar tipos)
 - Variables de entorno en .env (nunca hardcoded)
-- Docker para desarrollo local (docker-compose up)
+- Docker para desarrollo local (`docker-compose up`)
 - Tests obligatorios para features nuevas
 
 ## Restricciones
-- No mezclar logica frontend/backend
+- No mezclar lógica frontend/backend
 - No modificar docker-compose.prod.yml
 - No instalar deps sin confirmar
 - Ejecutar tests antes de dar tarea por completa
 
 ## Respuestas
 - Concisas, sin explicaciones innecesarias
-- Especificar en que parte del stack se trabaja (front/back)
+- Especificar en qué parte del stack se trabaja (front/back)
 - No generar comentarios obvios
 ```
 
@@ -89,7 +89,7 @@ Crear en `.claude/rules/`:
 paths: ["frontend/**", "*.tsx", "*.jsx"]
 ---
 ```
-Reglas especificas de React, hooks, estilos.
+Reglas específicas de React, hooks y estilos.
 
 ### backend.md
 ```yaml
@@ -97,7 +97,7 @@ Reglas especificas de React, hooks, estilos.
 paths: ["backend/**"]
 ---
 ```
-Reglas de API, BD, servicios.
+Reglas de API, BD y servicios.
 
 ### testing.md
 ```yaml
@@ -113,4 +113,4 @@ Reglas de testing por framework.
 paths: ["infra/**", "docker/**", "Dockerfile*", ".github/**"]
 ---
 ```
-Reglas de Docker, CI/CD, infraestructura.
+Reglas de Docker, CI/CD e infraestructura.

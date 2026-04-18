@@ -1,4 +1,4 @@
-# Configuracion MCP: Filesystem
+# Configuración MCP: Filesystem
 
 ## Settings
 
@@ -19,8 +19,8 @@
 
 ## Directorios Permitidos
 
-El ultimo argumento define el directorio raiz accesible.
-Puedes permitir multiples directorios:
+El último argumento define el directorio raíz accesible.
+Puedes permitir múltiples directorios:
 
 ```json
 {
@@ -35,7 +35,7 @@ Puedes permitir multiples directorios:
 
 ## Herramientas Disponibles
 
-| Herramienta | Descripcion |
+| Herramienta | Descripción |
 |-------------|------------|
 | `read_file` | Leer contenido de un archivo |
 | `write_file` | Escribir contenido a un archivo |
@@ -47,7 +47,7 @@ Puedes permitir multiples directorios:
 
 ## Nota
 
-Para la mayoria de operaciones con archivos del proyecto actual,
+Para la mayoría de operaciones con archivos del proyecto actual,
 las herramientas built-in (Read, Write, Edit, Glob, Grep) son **mejores**
 y no tienen overhead de MCP.
 

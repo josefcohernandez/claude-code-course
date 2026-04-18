@@ -1,104 +1,104 @@
-# Modulo 12: Metodologias de Desarrollo con IA
+# Módulo 12: Metodologías de Desarrollo con IA
 
-## Descripcion General
+## Descripción general
 
-Este modulo presenta metodologias estructuradas para desarrollar software con Claude Code como copiloto. No se trata de "pedirle cosas a la IA", sino de aplicar procesos disciplinados que producen resultados predecibles y de calidad profesional. Cubrimos Spec-Driven Development, historias de usuario en formato Gherkin como input para Claude, TDD asistido por IA, y patrones avanzados de trabajo en paralelo.
+Este módulo presenta metodologías estructuradas para desarrollar software con Claude Code como copiloto. No se trata de "pedirle cosas a la IA", sino de aplicar procesos disciplinados que producen resultados predecibles y de calidad profesional. Cubrimos Spec-Driven Development, historias de usuario en formato Gherkin como entrada para Claude, TDD asistido por IA y patrones avanzados de trabajo en paralelo.
 
 **Tiempo estimado:** 2 horas
 
 ---
 
-## Objetivos de Aprendizaje
+## Objetivos de aprendizaje
 
-Al completar este modulo, seras capaz de:
+Al completar este módulo, serás capaz de:
 
-1. **Aplicar Spec-Driven Development** completo: entrevista → spec → implementacion → verificacion
-2. **Escribir historias de usuario en Gherkin** y usarlas como input directo para Claude
-3. **Practicar TDD asistido por IA**: Claude escribe tests primero, luego implementa
-4. **Usar el patron Writer/Reviewer** con sesiones separadas
-5. **Aplicar fan-out** para migraciones y cambios a escala
-6. **Usar git worktrees** para sesiones paralelas aisladas
-7. **Elegir la metodologia correcta** segun el tipo de tarea
+1. **Aplicar Spec-Driven Development** completo: entrevista → spec → implementación → verificación.
+2. **Escribir historias de usuario en Gherkin** y usarlas como entrada directa para Claude.
+3. **Practicar TDD asistido por IA**: Claude escribe tests primero y luego implementa.
+4. **Usar el patrón Writer/Reviewer** con sesiones separadas.
+5. **Aplicar fan-out** para migraciones y cambios a escala.
+6. **Usar git worktrees** para sesiones paralelas aisladas.
+7. **Elegir la metodología correcta** según el tipo de tarea.
 
 ---
 
-## Estructura del Modulo
+## Estructura del módulo
 
-### Teoria
+### Teoría
 
-| Archivo | Tema | Duracion |
+| Archivo | Tema | Duración |
 |---------|------|----------|
-| [01-spec-driven-development.md](teoria/01-spec-driven-development.md) | Spec-Driven Development: de la entrevista al codigo | 30 min |
-| [02-historias-usuario-gherkin.md](teoria/02-historias-usuario-gherkin.md) | Historias de usuario en Gherkin como input para Claude | 25 min |
+| [01-spec-driven-development.md](teoria/01-spec-driven-development.md) | Spec-Driven Development: de la entrevista al código | 30 min |
+| [02-historias-usuario-gherkin.md](teoria/02-historias-usuario-gherkin.md) | Historias de usuario en Gherkin como entrada para Claude | 25 min |
 | [03-tdd-con-ia.md](teoria/03-tdd-con-ia.md) | Test-Driven Development asistido por IA | 25 min |
-| [04-patrones-avanzados.md](teoria/04-patrones-avanzados.md) | Writer/Reviewer, visual-driven, fan-out, worktrees | 20 min |
+| [04-patrones-avanzados.md](teoria/04-patrones-avanzados.md) | Writer/Reviewer, visual-driven, fan-out y worktrees | 20 min |
 
-### Ejercicios Practicos
+### Ejercicios prácticos
 
-| Archivo | Ejercicio | Duracion |
+| Archivo | Ejercicio | Duración |
 |---------|-----------|----------|
-| [01-spec-desde-cero.md](ejercicios/01-spec-desde-cero.md) | Crear spec completa via entrevista con Claude | 20 min |
-| [02-implementar-user-stories.md](ejercicios/02-implementar-user-stories.md) | De historias Gherkin a codigo funcionando | 20 min |
+| [01-spec-desde-cero.md](ejercicios/01-spec-desde-cero.md) | Crear una spec completa vía entrevista con Claude | 20 min |
+| [02-implementar-user-stories.md](ejercicios/02-implementar-user-stories.md) | De historias Gherkin a código funcionando | 20 min |
 | [03-tdd-completo.md](ejercicios/03-tdd-completo.md) | Ciclo TDD completo con Claude | 20 min |
 
 ### Plantillas
 
-| Archivo | Descripcion |
+| Archivo | Descripción |
 |---------|-------------|
-| [plantilla-spec.md](plantillas/plantilla-spec.md) | Template de especificacion tecnica |
+| [plantilla-spec.md](plantillas/plantilla-spec.md) | Template de especificación técnica |
 | [plantilla-user-story-gherkin.md](plantillas/plantilla-user-story-gherkin.md) | Template de historia de usuario en Gherkin |
-| [plantilla-plan-implementacion.md](plantillas/plantilla-plan-implementacion.md) | Template de plan de implementacion |
+| [plantilla-plan-implementacion.md](plantillas/plantilla-plan-implementacion.md) | Template de plan de implementación |
 
 ---
 
-## Prerequisitos
+## Prerrequisitos
 
-- Haber completado los modulos 1 a 6 (especialmente M01 metodologia y M06 plan mode)
-- Modulo 9 (skills/agentes) recomendado para patrones avanzados
+- Haber completado los módulos 1 a 6 (especialmente M01, metodología, y M06, Plan Mode)
+- Módulo 9 (skills y agentes) recomendado para patrones avanzados
 - Familiaridad con conceptos de testing
 
 ---
 
-## Conceptos Clave
+## Conceptos clave
 
-| Concepto | Descripcion |
+| Concepto | Descripción |
 |----------|-------------|
-| **Spec-Driven Development** | Metodologia donde primero se crea una spec completa y despues se implementa |
-| **Entrevista con Claude** | Claude hace preguntas usando AskUserQuestion antes de implementar |
-| **Gherkin** | Formato Given/When/Then para describir comportamiento esperado |
-| **TDD con IA** | Claude escribe tests primero (red), luego implementa (green), luego refactoriza |
-| **Writer/Reviewer** | Dos sesiones separadas: una implementa, otra revisa con contexto limpio |
-| **Fan-out** | Distribuir trabajo en paralelo con `claude -p` sobre multiples archivos |
+| **Spec-Driven Development** | Metodología donde primero se crea una spec completa y después se implementa |
+| **Entrevista con Claude** | Claude hace preguntas usando `AskUserQuestion` antes de implementar |
+| **Gherkin** | Formato `Given / When / Then` para describir comportamiento esperado |
+| **TDD con IA** | Claude escribe tests primero (`red`), luego implementa (`green`) y después refactoriza |
+| **Writer/Reviewer** | Dos sesiones separadas: una implementa y otra revisa con contexto limpio |
+| **Fan-out** | Distribuir trabajo en paralelo con `claude -p` sobre múltiples archivos |
 | **Git worktrees** | Directorios de trabajo aislados del mismo repo para sesiones paralelas |
 
 ---
 
-## Flujo de Trabajo Recomendado
+## Flujo de trabajo recomendado
 
-```
-1. Teoria: Spec-Driven + Gherkin + TDD (80 min)
+```text
+1. Teoría: Spec-Driven + Gherkin + TDD (80 min)
    |
-2. Ejercicio 01: Crear spec via entrevista (20 min)
+2. Ejercicio 01: crear spec vía entrevista (20 min)
    |
-3. Ejercicio 02: Implementar user stories Gherkin (20 min)
+3. Ejercicio 02: implementar user stories Gherkin (20 min)
    |
-4. Ejercicio 03: Ciclo TDD completo (20 min)
+4. Ejercicio 03: ciclo TDD completo (20 min)
    |
-5. Aplicar en el Modulo 16 (Proyecto Final)
+5. Aplicar en el Módulo 16 (Proyecto Final)
 ```
 
 ---
 
-## Por que un modulo de metodologias
+## Por qué un módulo de metodologías
 
-Las herramientas cambian. Claude Code evolucionara, otros asistentes de IA apareceran. Pero las **metodologias** perduran. Un desarrollador que domine estas tecnicas sacara partido de cualquier herramienta de IA, hoy y en el futuro.
+Las herramientas cambian. Claude Code evolucionará y aparecerán otros asistentes de IA. Pero las **metodologías** perduran. Un desarrollador que domine estas técnicas sacará partido de cualquier herramienta de IA, hoy y en el futuro.
 
-La diferencia entre un desarrollador que "usa IA" y uno que **desarrolla con IA** es exactamente esto: tener un proceso disciplinado en vez de improvisar cada interaccion.
+La diferencia entre un desarrollador que "usa IA" y uno que **desarrolla con IA** está exactamente aquí: en tener un proceso disciplinado en lugar de improvisar cada interacción.
 
 ---
 
-## Recursos Adicionales
+## Recursos adicionales
 
-- [Best Practices - Documentacion oficial](https://code.claude.com/docs/en/best-practices)
-- [Common Workflows - Documentacion oficial](https://code.claude.com/docs/en/common-workflows)
+- [Best Practices - Documentación oficial](https://code.claude.com/docs/en/best-practices)
+- [Common Workflows - Documentación oficial](https://code.claude.com/docs/en/common-workflows)
 - [Cucumber - Referencia Gherkin](https://cucumber.io/docs/gherkin/reference/)

@@ -4,17 +4,17 @@
 
 - Todos los endpoints devuelven JSON
 - Los errores tienen formato: `{ "error": "mensaje descriptivo" }`
-- Las respuestas de listado incluyen paginacion:
+- Las respuestas de listado incluyen paginación:
   ```json
   { "data": [...], "total": 100, "pagina": 1, "limite": 20, "totalPaginas": 5 }
   ```
 
-## Codigos HTTP
+## Códigos HTTP
 
-- 200: Exito (GET, PUT, PATCH)
+- 200: Éxito (GET, PUT, PATCH)
 - 201: Recurso creado (POST)
 - 204: Sin contenido (DELETE exitoso)
-- 400: Error de validacion / request malformado
+- 400: Error de validación / request malformado
 - 401: No autenticado
 - 403: No autorizado (autenticado pero sin permiso)
 - 404: Recurso no encontrado
@@ -25,7 +25,7 @@
 
 - Usar kebab-case para rutas: `/api/user-profiles`
 - Plural para colecciones: `/api/tareas` (no `/api/tarea`)
-- Anidar solo 1 nivel: `/api/usuarios/:id/tareas` (no mas profundo)
+- Anidar solo 1 nivel: `/api/usuarios/:id/tareas` (no más profundo)
 - Versionado en la ruta: `/api/v1/...`
 
 ## Timestamps
@@ -34,8 +34,8 @@
 - Almacenar siempre en UTC
 - Incluir `creado_en` y `actualizado_en` en todos los recursos
 
-## Autenticacion
+## Autenticación
 
 - Token JWT en header: `Authorization: Bearer <token>`
 - Nunca enviar credenciales en query params
-- Tokens con expiracion (maximo 24h para access token)
+- Tokens con expiración (máximo 24h para access token)

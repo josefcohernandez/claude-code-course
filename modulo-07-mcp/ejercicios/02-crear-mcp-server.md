@@ -6,7 +6,7 @@ Crear un servidor MCP simple con Node.js que exponga herramientas personalizadas
 
 ---
 
-## Preparacion
+## Preparación
 
 ```bash
 mkdir -p ~/mi-mcp-server && cd ~/mi-mcp-server
@@ -14,11 +14,11 @@ npm init -y
 npm install @modelcontextprotocol/sdk
 ```
 
-Edita `package.json` para anadir `"type": "module"`.
+Edita `package.json` para añadir `"type": "module"`.
 
 ---
 
-## Paso 1: Servidor Basico (15 min)
+## Paso 1: Servidor Basíco (15 min)
 
 Crea `server.js`:
 
@@ -185,9 +185,9 @@ claude
 
 ---
 
-## Paso 4: Anadir una Herramienta (10 min)
+## Paso 4: Añadir una Herramienta (10 min)
 
-Anade una herramienta mas a tu servidor. Sugerencias:
+Añade una herramienta más a tu servidor. Sugerencias:
 
 - `calcular_iva`: Calcula IVA de un importe
 - `validar_email`: Verifica formato de email
@@ -203,4 +203,4 @@ Reinicia Claude Code para que detecte la nueva herramienta.
 - [ ] Configurado en Claude Code
 - [ ] /mcp muestra el servidor
 - [ ] 3 herramientas probadas exitosamente
-- [ ] 1 herramienta adicional anadida
+- [ ] 1 herramienta adicional añadida

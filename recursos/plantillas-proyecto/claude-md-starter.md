@@ -1,6 +1,6 @@
 # [Nombre del Proyecto]
 
-[Descripcion en 1-2 lineas de que hace este proyecto]
+[Descripción en 1-2 líneas de qué hace este proyecto]
 
 ## Stack
 
@@ -25,28 +25,28 @@
 [ej: make build / npm run build / go build -o bin/app]
 ```
 
-## Convenciones de codigo
+## Convenciones de código
 
 - [ej: Variables y funciones en snake_case / camelCase]
 - [ej: Nombres de archivos en kebab-case]
-- [ej: Comentarios y commits en espanol / ingles]
+- [ej: Comentarios y commits en español / inglés]
 - [ej: Siempre usar async/await, nunca callbacks]
-- [ej: Manejo de errores con try/except, nunca silenciar]
+- [ej: Manejo de errores con try/except, nunca silenciarlos]
 
 ## Patrones a seguir
 
 - [ej: Arquitectura por capas: rutas → controladores → servicios → modelos]
-- [ej: Validar inputs en el controlador, logica en el servicio]
-- [ej: Un archivo de test por cada archivo de codigo fuente]
+- [ej: Validar inputs en el controlador, lógica en el servicio]
+- [ej: Un archivo de test por cada archivo de código fuente]
 
 ## Patrones a evitar
 
 - [ej: No usar `any` en TypeScript / No usar `var` en JS]
-- [ej: No hacer queries SQL directas, usar el ORM]
-- [ej: No commitear .env ni secretos]
+- [ej: No hacer queries SQL directas; usar el ORM]
+- [ej: No commitear `.env` ni secretos]
 
 ## Estructura del proyecto
 
 ```
-[Pegar aqui la estructura de directorios principal]
+[Pegar aquí la estructura de directorios principal]
 ```

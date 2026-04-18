@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Disenar e implementar una configuracion de permisos para un equipo de 4 personas
+Disenar e implementar una configuración de permisos para un equipo de 4 personas
 con diferentes roles.
 
 ---
@@ -12,14 +12,14 @@ con diferentes roles.
 Tu equipo tiene 4 miembros:
 - **Ana**: Backend developer (Python/FastAPI)
 - **Carlos**: Frontend developer (React/TypeScript)
-- **Diana**: DevOps (Docker, CI/CD, Terraform)
+- **Díana**: DevOps (Docker, CI/CD, Terraform)
 - **Eduardo**: QA (Tests automatizados, Playwright)
 
-Proyecto: Aplicacion fullstack en monorepo.
+Proyecto: Aplicación fullstack en monorepo.
 
 ---
 
-## Parte 1: Configuracion Compartida (10 min)
+## Parte 1: Configuración Compartida (10 min)
 
 Crea `.claude/settings.json` (proyecto, compartido por todos):
 
@@ -49,7 +49,7 @@ Crea `.claude/settings.json` (proyecto, compartido por todos):
 
 ---
 
-## Parte 2: Configuraciones por Rol (15 min)
+## Parte 2: Configuraciónes por Rol (15 min)
 
 Cada miembro crea su `.claude/settings.local.json`:
 
@@ -101,7 +101,7 @@ Cada miembro crea su `.claude/settings.local.json`:
 }
 ```
 
-### Diana (DevOps)
+### Díana (DevOps)
 
 ```json
 {
@@ -154,7 +154,7 @@ Cada miembro crea su `.claude/settings.local.json`:
 Para cada rol, verifica que:
 
 1. Los comandos allow funcionan sin preguntar
-2. Los comandos deny estan bloqueados
+2. Los comandos deny están bloqueados
 3. El resto pide confirmacion (ask)
 
 ```bash
@@ -162,15 +162,15 @@ Para cada rol, verifica que:
 cp ana-settings.json .claude/settings.local.json
 claude
 > /permissions
-> "Ejecuta pytest tests/"      # Deberia funcionar
-> "Modifica src/frontend/App.tsx"  # Deberia estar bloqueado
+> "Ejecuta pytest tests/"      # Debería funcionar
+> "Modifica src/frontend/App.tsx"  # Debería estar bloqueado
 ```
 
 ---
 
-## Parte 4: Documento de Politica (5 min)
+## Parte 4: Documento de Política (5 min)
 
-Crea un documento que explique la politica de permisos:
+Crea un documento que explique la política de permisos:
 
 | Rol | Puede editar | Puede ejecutar | Bloqueado |
 |-----|-------------|---------------|-----------|
@@ -187,4 +187,4 @@ Crea un documento que explique la politica de permisos:
 - [ ] 4 settings.local.json creados (uno por rol)
 - [ ] Verificado allow funciona para cada rol
 - [ ] Verificado deny bloquea para cada rol
-- [ ] Documento de politica creado
+- [ ] Documento de política creado

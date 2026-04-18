@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Implementar hooks que protejan archivos sensibles, auditen operaciones
+Implementar hooks que protejan archivos sensibles y auditen operaciones
 y notifiquen al terminar.
 
 ---
@@ -13,7 +13,7 @@ Crea `scripts/hook-block-protected.sh`:
 
 ```bash
 #!/bin/bash
-# Leer datos del evento via stdin (JSON)
+# Leer datos del evento vía stdin (JSON)
 INPUT=$(cat)
 FILEPATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
 
@@ -22,7 +22,7 @@ PROTECTED=("config/production" ".env" "secrets/" "credentials" ".pem" ".key")
 for pattern in "${PROTECTED[@]}"; do
     if echo "$FILEPATH" | grep -qi "$pattern"; then
         echo "BLOQUEADO: Archivo protegido: $FILEPATH" >&2
-        exit 2  # Exit 2 = bloquea la operacion
+        exit 2  # Exit 2 = bloquea la operación
     fi
 done
 exit 0
@@ -68,23 +68,23 @@ claude
 > "Crea un archivo .env con DATABASE_URL=..."
 ```
 
-Deberia ser **bloqueado** por el hook.
+Debería ser **bloqueado** por el hook.
 
 ```
 > "Crea un archivo src/app.js con un hello world"
 ```
 
-Deberia funcionar normalmente.
+Debería funcionar normalmente.
 
 ---
 
-## Parte 2: Hook de Auditoria (10 min)
+## Parte 2: Hook de Auditoría (10 min)
 
 Crea `scripts/hook-audit.sh`:
 
 ```bash
 #!/bin/bash
-# Leer datos del evento via stdin (JSON)
+# Leer datos del evento vía stdin (JSON)
 INPUT=$(cat)
 TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name // empty')
 FILEPATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
@@ -100,7 +100,7 @@ echo "$(date +%H:%M:%S) | ${TOOL_NAME:-unknown} | ${FILEPATH:-N/A}" >> "$LOG_FIL
 chmod +x scripts/hook-audit.sh
 ```
 
-Anade al settings.json:
+Añade al settings.json:
 
 ```json
 {
@@ -132,7 +132,7 @@ cat ~/.claude/audit/$(date +%Y-%m-%d).log
 
 ## Parte 3: Hook de Notificacion (5 min)
 
-Anade al settings.json:
+Añade al settings.json:
 
 ```json
 {
@@ -152,7 +152,7 @@ Anade al settings.json:
 }
 ```
 
-O con notificacion de sistema (Linux):
+O con notificación de sistema (Linux):
 
 ```json
 {
@@ -169,7 +169,7 @@ O con notificacion de sistema (Linux):
 
 ## Parte 4: Testing de Hooks (10 min)
 
-Prueba cada hook aislado. Dado que los hooks reciben datos via stdin (JSON), se simulan con un pipe:
+Prueba cada hook aislado. Dado que los hooks reciben datos vía stdin (JSON), se simulan con un pipe:
 
 ```bash
 # Test 1: Archivo protegido (debe bloquear con exit 2)
@@ -180,7 +180,7 @@ echo "Exit: $?"  # Debe ser 2
 echo '{"tool_name":"Write","tool_input":{"file_path":"src/app.js"}}' | ./scripts/hook-block-protected.sh
 echo "Exit: $?"  # Debe ser 0
 
-# Test 3: Auditoria
+# Test 3: Auditoría
 echo '{"tool_name":"Write","tool_input":{"file_path":"src/test.js"}}' | ./scripts/hook-audit.sh
 cat ~/.claude/audit/$(date +%Y-%m-%d).log
 ```
@@ -189,9 +189,9 @@ cat ~/.claude/audit/$(date +%Y-%m-%d).log
 
 ## Criterios de Completitud
 
-- [ ] Hook de proteccion creado y funcionando
+- [ ] Hook de protección creado y funcionando
 - [ ] Archivo .env bloqueado (exit 2)
 - [ ] Archivo normal permitido (exit 0)
-- [ ] Hook de auditoria creado y log generandose
-- [ ] Hook de notificacion configurado
-- [ ] Hooks testeados aisladamente con JSON via stdin
+- [ ] Hook de auditoría creado y log generándose
+- [ ] Hook de notificación configurado
+- [ ] Hooks testeados aisladamente con JSON vía stdin

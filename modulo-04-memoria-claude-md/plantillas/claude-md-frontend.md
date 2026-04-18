@@ -1,14 +1,14 @@
 # Plantilla CLAUDE.md - Proyecto Frontend
 
-> Copia este archivo como `CLAUDE.md` en la raiz de tu proyecto frontend
-> y adaptalo a tu stack especifico.
+> Copia este archivo como `CLAUDE.md` en la raíz de tu proyecto frontend
+> y adáptalo a tu stack específico.
 
 ---
 
 ```markdown
 # [Nombre del Proyecto]
 
-SPA de [descripcion breve] con React y TypeScript.
+SPA de [descripción breve] con React y TypeScript.
 
 ## Stack
 - Framework: React 19 + TypeScript 5
@@ -22,14 +22,14 @@ SPA de [descripcion breve] con React y TypeScript.
 ## Comandos
 - `npm run dev` - Dev server (http://localhost:5173)
 - `npm test` - Tests con Vitest
-- `npm run build` - Build produccion
+- `npm run build` - Build de producción
 - `npm run lint` - ESLint + Prettier check
 - `npm run lint:fix` - Auto-fix lint issues
 
 ## Estructura
 src/
   components/   - Componentes reutilizables
-  pages/        - Paginas/rutas principales
+  pages/        - Páginas y rutas principales
   hooks/        - Custom hooks
   stores/       - Zustand stores
   utils/        - Utilidades
@@ -38,10 +38,10 @@ src/
 
 ## Convenciones
 - Componentes: PascalCase (UserProfile.tsx)
-- Hooks: camelCase con prefix use (useAuth.ts)
+- Hooks: camelCase con el prefijo use (useAuth.ts)
 - Utils: camelCase (formatDate.ts)
 - Types: PascalCase con suffix (UserType, OrderResponse)
-- Imports absolutos con @/ prefix
+- Imports absolutos con el prefijo @/
 - Un componente por archivo
 - Test junto al componente: Component.test.tsx
 
@@ -49,18 +49,18 @@ src/
 - Solo componentes funcionales con hooks
 - TypeScript estricto: no usar `any`
 - No usar useEffect para data fetching (usar React Query o SWR)
-- CSS con Tailwind, no archivos CSS separados (salvo globals)
-- Componentes < 150 lineas, extraer si crece
+- CSS con Tailwind; no usar archivos CSS separados (salvo globals)
+- Componentes < 150 líneas; extraer si crecen
 - Props con interface, no type alias
 
 ## Restricciones
 - No modificar vite.config.ts sin confirmar
 - No instalar dependencias sin confirmar
-- No usar console.log en produccion
+- No usar `console.log` en producción
 - Ejecutar tests antes de dar tarea por completa
 
 ## Respuestas
 - Concisas, sin explicaciones innecesarias
-- Mostrar solo codigo que cambia
+- Mostrar solo código que cambia
 - No generar comentarios obvios
 ```

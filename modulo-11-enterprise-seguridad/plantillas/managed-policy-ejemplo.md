@@ -7,7 +7,7 @@
 >
 > Este archivo requiere permisos de administrador y los usuarios NO pueden sobreescribirlo.
 
-## Politica Restrictiva (Produccion/Regulado)
+## Política Restrictiva (Produccion/Regulado)
 
 ```json
 {
@@ -47,7 +47,7 @@
 }
 ```
 
-## Politica Moderada (Desarrollo Corporativo)
+## Política Moderada (Desarrollo Corporativo)
 
 ```json
 {
@@ -103,16 +103,16 @@ sudo chown root:root "$MANAGED_DIR/managed-settings.json"
 
 ### Opcion 3: MDM (macOS)
 
-Distribuir via perfil de configuracion MDM.
+Distribuir via perfil de configuración MDM.
 
-## Verificacion
+## Verificación
 
-Los desarrolladores pueden ver la politica activa pero no modificarla:
+Los desarrolladores pueden ver la política activa pero no modificarla:
 
 ```bash
 claude
 > /permissions    # Muestra permisos incluyendo managed
-> /config         # Muestra configuracion completa
+> /config         # Muestra configuración completa
 ```
 
 Los deny de managed **siempre ganan** sobre cualquier otro nivel.

@@ -1,115 +1,112 @@
-# Modulo 09: Subagentes, Skills y Agent Teams
+# Módulo 09: Subagentes, Skills y Agent Teams
 
-## Orquestacion Avanzada de Agentes en Claude Code
+## Orquestación avanzada de agentes en Claude Code
 
 > **Tiempo estimado:** 3 horas
 > **Nivel:** Avanzado
-> **Prerequisitos:** Modulos 01-08 completados, familiaridad con Claude Code CLI
+> **Prerrequisitos:** Módulos 01-08 completados, familiaridad con Claude Code CLI
 
 ---
 
-## Descripcion General
+## Descripción general
 
-Este es el modulo mas avanzado del curso sobre **orquestacion de agentes**. Aqui aprenderemos a escalar el trabajo con Claude Code mas alla de una unica sesion interactiva, utilizando tres mecanismos fundamentales:
+Este es el módulo más avanzado del curso sobre **orquestación de agentes**. Aquí aprenderemos a escalar el trabajo con Claude Code más allá de una única sesión interactiva, utilizando tres mecanismos fundamentales:
 
-1. **Subagentes** — Asistentes especializados que operan en su propia ventana de contexto
-2. **Skills** — Capacidades reutilizables definidas en archivos SKILL.md
-3. **Agent Teams** — Equipos de agentes que colaboran en tareas paralelas
+1. **Subagentes**: asistentes especializados que operan en su propia ventana de contexto
+2. **Skills**: capacidades reutilizables definidas en archivos `SKILL.md`
+3. **Agent Teams**: equipos de agentes que colaboran en tareas paralelas
 
-### Por que es importante este modulo
+### Por qué es importante este módulo
 
-En proyectos reales, una unica sesion de Claude Code tiene limitaciones:
+En proyectos reales, una única sesión de Claude Code tiene limitaciones:
 
-- La **ventana de contexto se llena** al leer muchos archivos
-- Las tareas **secuenciales son lentas** cuando podrian paralelizarse
-- Los **workflows repetitivos** requieren reinstrucciones constantes
-- Los **equipos grandes** necesitan multiples flujos de trabajo simultaneos
+- La **ventana de contexto se llena** al leer muchos archivos.
+- Las tareas **secuenciales son lentas** cuando podrían paralelizarse.
+- Los **workflows repetitivos** requieren reinstrucciones constantes.
+- Los **equipos grandes** necesitan múltiples flujos de trabajo simultáneos.
 
-Este modulo te ensena a superar todas estas limitaciones.
+Este módulo te enseña a superar todas estas limitaciones.
 
 ---
 
-## Estructura del Modulo
+## Estructura del módulo
 
-### Teoria
+### Teoría
 
-| Archivo | Tema | Duracion |
+| Archivo | Tema | Duración |
 |---------|------|----------|
 | [01-subagentes.md](teoria/01-subagentes.md) | Subagentes en profundidad | 45 min |
-| [02-skills.md](teoria/02-skills.md) | Sistema de Skills | 30 min |
+| [02-skills.md](teoria/02-skills.md) | Sistema de skills | 30 min |
 | [03-agent-teams.md](teoria/03-agent-teams.md) | Agent Teams (experimental) | 35 min |
 | [04-aislamiento-worktree-y-comunicacion.md](teoria/04-aislamiento-worktree-y-comunicacion.md) | Worktree isolation, SendMessage, background agents y task management | 30 min |
 
-### Ejercicios Practicos
+### Ejercicios prácticos
 
-| Archivo | Tema | Duracion |
+| Archivo | Tema | Duración |
 |---------|------|----------|
 | [01-subagentes-practica.md](ejercicios/01-subagentes-practica.md) | Uso efectivo de subagentes | 15 min |
 | [02-crear-skill.md](ejercicios/02-crear-skill.md) | Crear un skill personalizado | 15 min |
 | [03-agent-teams.md](ejercicios/03-agent-teams.md) | Configurar un Agent Team | 15 min |
 
-### Recursos de Ejemplo
+### Recursos de ejemplo
 
 | Directorio | Contenido |
 |------------|-----------|
-| [agentes/](agentes/) | Definiciones de agentes personalizados (.md) |
-| [skills/](skills/) | Archivos SKILL.md de ejemplo |
+| [agentes/](agentes/) | Definiciones de agentes personalizados (`.md`) |
+| [skills/](skills/) | Archivos `SKILL.md` de ejemplo |
 
 ---
 
-## Mapa Conceptual
+## Mapa conceptual
 
-```
+```text
                     +---------------------------+
-                    |      Tu (Desarrollador)   |
+                    |      Tú (desarrollador)   |
                     +-------------+-------------+
                                   |
                     +-------------v-------------+
-                    |   Claude Code (Principal)  |
+                    |  Claude Code (principal)  |
                     +---+--------+----------+---+
                         |        |          |
               +---------+   +----+----+   +-+----------+
               |             |         |   |            |
         +-----v-----+ +----v----+ +--v---v----+ +-----v-----+
-        | Subagente  | | Skill   | | Subagente | | Teammate  |
-        | Explore    | | Deploy  | | General   | | (Team)    |
-        | (busqueda) | | (tarea) | | (complejo)| | (paralelo)|
-        +------------+ +---------+ +-----------+ +-----------+
+        | Subagente | | Skill   | | Subagente | | Teammate  |
+        | Explore   | | Deploy  | | General   | | (team)    |
+        | (búsqueda)| | (tarea) | | (complejo)| | (paralelo)|
+        +-----------+ +---------+ +-----------+ +-----------+
 ```
 
 ---
 
-## Conceptos Clave que Aprenderas
+## Conceptos clave que aprenderás
 
-- **Aislamiento de contexto**: como los subagentes mantienen limpia la ventana principal
-- **Especializacion**: diferentes tipos de subagentes para diferentes tareas
-- **Reutilizacion**: skills como workflows empaquetados e invocables
-- **Paralelismo**: Agent Teams para trabajo verdaderamente concurrente
-- **Optimizacion de costos**: elegir el modelo correcto para cada subagente
-- **Coordinacion**: como los agentes se comunican entre si
+- **Aislamiento de contexto**: cómo los subagentes mantienen limpia la ventana principal.
+- **Especialización**: diferentes tipos de subagentes para diferentes tareas.
+- **Reutilización**: skills como workflows empaquetados e invocables.
+- **Paralelismo**: Agent Teams para trabajo verdaderamente concurrente.
+- **Optimización de costes**: elegir el modelo correcto para cada subagente.
+- **Coordinación**: cómo los agentes se comunican entre sí.
 
 ---
 
-## Requisitos Tecnicos
+## Requisitos técnicos
 
 - Claude Code CLI instalado y configurado
-- Terminal con soporte para tmux (recomendado para Agent Teams)
-- Un proyecto de codigo fuente para las practicas (cualquier lenguaje)
-- Cuenta con acceso a la API de Anthropic (los Agent Teams consumen mas tokens)
+- Terminal con soporte para `tmux` (recomendado para Agent Teams)
+- Un proyecto de código fuente para las prácticas (cualquier lenguaje)
+- Cuenta con acceso a la API de Anthropic (los Agent Teams consumen más tokens)
 
 ---
 
-## Advertencia sobre Costos
+## Advertencia sobre costes
 
-> **IMPORTANTE:** Las funcionalidades de Agent Teams son experimentales y pueden
-> consumir significativamente mas tokens que una sesion estandar (hasta ~7x mas).
-> Recomendamos monitorizar los costos activamente durante los ejercicios y
-> utilizar modelos mas economicos (Sonnet, Haiku) para los teammates cuando sea posible.
+> **IMPORTANTE:** Las funcionalidades de Agent Teams son experimentales y pueden consumir significativamente más tokens que una sesión estándar (hasta ~7 veces más). Recomendamos monitorizar los costes activamente durante los ejercicios y utilizar modelos más económicos (Sonnet y Haiku) para los teammates cuando sea posible.
 
 ---
 
-## Navegacion del Curso
+## Navegación del curso
 
 | Anterior | Siguiente |
 |----------|-----------|
-| [Modulo 08: Hooks](../modulo-08-hooks/README.md) | [Modulo 10: Automatizacion CI/CD](../modulo-10-automatizacion-cicd/README.md) |
+| [Módulo 08: Hooks](../modulo-08-hooks/README.md) | [Módulo 10: Automatización y CI/CD](../modulo-10-automatizacion-cicd/README.md) |

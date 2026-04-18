@@ -1,4 +1,4 @@
-# Plan de Implementacion: [Nombre del Proyecto]
+# Plan de Implementación: [Nombre del Proyecto]
 
 ## Resumen
 
@@ -11,7 +11,7 @@
 
 ---
 
-## Fase 1: [Setup y configuracion] (~XX min)
+## Fase 1: [Setup y configuración] (~XX min)
 
 ### Objetivo
 [Que se logra al completar esta fase]
@@ -22,7 +22,7 @@
 - [ ] Configurar .claude/settings.json
 - [ ] Setup de base de datos
 
-### Verificacion
+### Verificación
 ```bash
 # Comando(s) para verificar que la fase esta completa
 [ej: make dev → servidor arranca sin errores]
@@ -39,20 +39,20 @@ Sonnet (setup mecanico)
 [Que se logra al completar esta fase]
 
 ### Tareas
-- [ ] Definir modelos/esquemas
+- [ ] Definir modelos/esquemás
 - [ ] Crear migraciones
 - [ ] Tests unitarios de modelos
 
 ### Features Gherkin asociadas
 - `features/[nombre].feature` - Escenarios: [listar]
 
-### Verificacion
+### Verificación
 ```bash
 [ej: pytest tests/unit/test_models.py → todos pasan]
 ```
 
 ### Modelo recomendado
-Sonnet (implementacion directa)
+Sonnet (implementación directa)
 
 ### Notas
 - /clear antes de empezar esta fase
@@ -67,9 +67,9 @@ Sonnet (implementacion directa)
 
 ### Tareas
 - [ ] Generar tests desde Gherkin (Red)
-- [ ] Implementar logica de negocio (Green)
+- [ ] Implementar lógica de negocio (Green)
 - [ ] Refactorizar (Refactor)
-- [ ] Tests de integracion
+- [ ] Tests de integración
 
 ### Features Gherkin asociadas
 - `features/[nombre].feature` - Todos los escenarios
@@ -77,13 +77,13 @@ Sonnet (implementacion directa)
 ### Dependencias
 - Fase 2 completada (modelos disponibles)
 
-### Verificacion
+### Verificación
 ```bash
 [ej: pytest tests/ → todos pasan, cobertura > 80%]
 ```
 
 ### Modelo recomendado
-Sonnet para implementacion, Opus para edge cases complejos
+Sonnet para implementación, Opus para edge cases complejos
 
 ---
 
@@ -93,13 +93,13 @@ Sonnet para implementacion, Opus para edge cases complejos
 Verificar calidad, seguridad y completitud
 
 ### Tareas
-- [ ] Verificacion cruzada SPEC.md vs implementacion
-- [ ] Review de seguridad (sesion Writer/Reviewer)
+- [ ] Verificación cruzada SPEC.md vs implementación
+- [ ] Review de seguridad (sesión Writer/Reviewer)
 - [ ] Cobertura de tests >= [objetivo]%
 - [ ] Generar documentacion API
 - [ ] README con instrucciones de setup
 
-### Verificacion
+### Verificación
 ```bash
 pytest --cov=src --cov-report=term-missing
 # Todos los tests pasan, cobertura >= objetivo
@@ -107,14 +107,14 @@ pytest --cov=src --cov-report=term-missing
 
 ---
 
-## Sesiones de Claude Code
+## Sesiónes de Claude Code
 
-| Sesion | Fase(s) | Modelo | /clear |
+| Sesión | Fase(s) | Modelo | /clear |
 |--------|---------|--------|--------|
 | 1 | Fase 1 | Sonnet | Al iniciar |
 | 2 | Fase 2 | Sonnet | Al iniciar |
 | 3 | Fase 3 | Sonnet + Opus | Al iniciar |
-| N | Review | Sonnet (sesion nueva) | Sesion separada (Reviewer) |
+| N | Review | Sonnet (sesión nueva) | Sesión separada (Reviewer) |
 
 ---
 

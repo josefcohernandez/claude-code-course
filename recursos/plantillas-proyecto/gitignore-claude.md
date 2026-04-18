@@ -1,6 +1,6 @@
-# Lineas de .gitignore para proyectos con Claude Code
+# Líneas de `.gitignore` para proyectos con Claude Code
 
-Anade estas lineas a tu `.gitignore` segun corresponda.
+Añade estas líneas a tu `.gitignore` según corresponda.
 
 ## Siempre incluir
 
@@ -10,12 +10,12 @@ Anade estas lineas a tu `.gitignore` segun corresponda.
 .env.local
 .env.*.local
 
-# Configuracion local de Claude Code (preferencias personales, no del equipo)
+# Configuración local de Claude Code (preferencias personales, no del equipo)
 .claude/settings.local.json
 CLAUDE.local.md
 ```
 
-## Segun el stack
+## Según el stack
 
 ### Node.js
 ```gitignore
@@ -63,9 +63,9 @@ build/
 tmp/
 ```
 
-## Lo que SI debe estar en git (NO ignorar)
+## Lo que SÍ debe estar en git (NO ignorar)
 
-```
+```gitignore
 # Estos archivos son para el equipo:
 CLAUDE.md                    # Memoria del proyecto
 .claude/settings.json        # Permisos del equipo

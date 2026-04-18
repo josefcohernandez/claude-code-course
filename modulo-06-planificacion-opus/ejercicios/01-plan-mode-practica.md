@@ -14,7 +14,7 @@ Vas a disenar una API REST para un **sistema de reservas de salas de reunion**:
 - Salas con nombre, capacidad, equipamiento (proyector, pizarra, videoconferencia)
 - Reservas con sala, fecha, hora inicio/fin, organizador, asistentes
 - Conflictos: no se puede reservar una sala ya ocupada
-- Busqueda: salas disponibles en un rango horario
+- Búsqueda: salas disponibles en un rango horario
 
 ---
 
@@ -33,7 +33,7 @@ claude --model opus
 > - CRUD de salas (nombre, capacidad, equipamiento)
 > - CRUD de reservas (sala, fecha, hora inicio/fin, organizador)
 > - Deteccion de conflictos de horario
-> - Busqueda de salas disponibles por rango horario
+> - Búsqueda de salas disponibles por rango horario
 > - Autenticacion JWT
 >
 > Stack: Python + FastAPI + PostgreSQL + SQLAlchemy

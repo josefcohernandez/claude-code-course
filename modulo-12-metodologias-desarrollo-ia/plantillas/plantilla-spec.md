@@ -1,4 +1,4 @@
-# [Nombre del Proyecto] - Especificacion Tecnica
+# [Nombre del Proyecto] - Especificación Técnica
 
 ## Contexto
 
@@ -8,18 +8,18 @@
 
 ## Fuera de Alcance (v1)
 
-Lo que explicitamente NO incluimos en esta version:
+Lo que explícitamente NO incluimos en esta versión:
 - [Exclusion 1]
 - [Exclusion 2]
 - [Exclusion 3]
 
 ---
 
-## Requisitos Funcionales
+## Requisitos Funciónales
 
 ### RF-01: [Nombre del requisito]
-**Descripcion:** [Que debe hacer]
-**Verificacion:** [Como saber que funciona correctamente]
+**Descripción:** [Qué debe hacer]
+**Verificación:** [Como saber que funciona correctamente]
 **Ejemplo:**
 ```
 Input: ...
@@ -31,17 +31,17 @@ Output esperado: ...
 
 ---
 
-## Requisitos No Funcionales
+## Requisitos No Funciónales
 
-| Requisito | Criterio | Verificacion |
+| Requisito | Criterio | Verificación |
 |-----------|----------|--------------|
 | Rendimiento | API responde en < 200ms (p95) | Load test con k6 |
-| Seguridad | Passwords hasheados con bcrypt | Test de integracion |
+| Seguridad | Passwords hasheados con bcrypt | Test de integración |
 | Disponibilidad | 99.9% uptime | Monitoring |
 
 ---
 
-## Diseno Tecnico
+## Diseño Técnico
 
 ### Stack
 - Lenguaje: [ej: Python 3.12]
@@ -51,22 +51,22 @@ Output esperado: ...
 
 ### Arquitectura
 ```
-[Diagrama ASCII de la arquitectura]
+[Díagrama ASCII de la arquitectura]
 ```
 
 ### Modelo de Datos
 
 #### Tabla: [nombre]
-| Campo | Tipo | Restricciones | Descripcion |
+| Campo | Tipo | Restricciones | Descripción |
 |-------|------|--------------|-------------|
-| id | UUID | PK, auto | Identificador unico |
+| id | UUID | PK, auto | Identificador único |
 | ... | ... | ... | ... |
 
 ### Endpoints de API
 
 #### [METHOD] /ruta
-**Descripcion:** [Que hace]
-**Autenticacion:** [Si/No, tipo]
+**Descripción:** [Qué hace]
+**Autenticación:** [Si/No, tipo]
 
 Request:
 ```json
@@ -85,7 +85,7 @@ Response (200):
 Response (400):
 ```json
 {
-  "error": "Descripcion del error"
+  "error": "Descripción del error"
 }
 ```
 
@@ -93,7 +93,7 @@ Response (400):
 
 ## Edge Cases y Manejo de Errores
 
-| Escenario | Comportamiento esperado | Codigo HTTP |
+| Escenario | Comportamiento esperado | Código HTTP |
 |-----------|------------------------|-------------|
 | [Escenario 1] | [Respuesta] | [400/404/etc] |
 
@@ -103,13 +103,13 @@ Response (400):
 
 | Tipo | Cobertura | Herramienta |
 |------|-----------|-------------|
-| Unitarios | Logica de negocio, validaciones | pytest |
-| Integracion | Endpoints API completos | pytest + httpx |
-| Seguridad | OWASP Top 10 | Revision manual + tests |
+| Unitarios | Lógica de negocio, validaciónes | pytest |
+| Integración | Endpoints API completos | pytest + httpx |
+| Seguridad | OWASP Top 10 | Revisión manual + tests |
 
 ---
 
-## Fases de Implementacion
+## Fases de Implementación
 
 ### Fase 1: [Nombre] (estimacion)
 - [ ] [Tarea 1]

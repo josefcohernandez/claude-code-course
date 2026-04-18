@@ -7,7 +7,7 @@ siguiendo el flujo: describir problema → investigar → corregir → verificar
 
 ---
 
-## Preparacion: Crear el Proyecto con Bug
+## Preparación: Crear el Proyecto con Bug
 
 Crea un mini-proyecto con un bug intencionado:
 
@@ -29,16 +29,16 @@ def multiply(a, b):
     return a * b
 
 def divide(a, b):
-    return a / b  # Bug: no maneja division por cero
+    return a / b  # Bug: no maneja división por cero
 
 def calculate_average(numbers):
     total = 0
     for n in numbers:
         total = total + n
-    return total / len(numbers)  # Bug: no maneja lista vacia
+    return total / len(numbers)  # Bug: no maneja lista vacía
 
 def parse_number(text):
-    return int(text)  # Bug: no maneja decimales ni texto invalido
+    return int(text)  # Bug: no maneja decimales ni texto inválido
 ```
 
 Crea `src/test_calculator.py`:
@@ -89,7 +89,7 @@ git add -A && git commit -m "Initial project with bugs"
 
 ---
 
-## Parte 1: Diagnostico (5 min)
+## Parte 1: Diagnóstico (5 min)
 
 Inicia Claude Code y describe el problema:
 
@@ -98,31 +98,31 @@ claude
 ```
 
 ```
-Los tests de calculator.py estan fallando.
-Ejecuta los tests y diagnostica que bugs hay.
+Los tests de calculator.py están fallando.
+Ejecuta los tests y diagnostica qué bugs hay.
 ```
 
-**Observa**: Claude leera los archivos, ejecutara los tests y te dira que falla.
+**Observa**: Claude leerá los archivos, ejecutará los tests y te dirá qué falla.
 
 ---
 
-## Parte 2: Correccion (10 min)
+## Parte 2: Corrección (10 min)
 
 Pide a Claude que corrija los bugs:
 
 ```
 Corrige los 3 bugs que encontraste:
-1. divide() debe manejar division por cero
-2. calculate_average() debe manejar lista vacia
-3. parse_number() debe manejar decimales y texto invalido
-Manten la API existente compatible.
+1. divide() debe manejar división por cero
+2. calculate_average() debe manejar lista vacía
+3. parse_number() debe manejar decimales y texto inválido
+Mantén la API existente compatible.
 ```
 
 **Revisa** los cambios que Claude propone antes de aceptarlos.
 
 ---
 
-## Parte 3: Verificacion (5 min)
+## Parte 3: Verificación (5 min)
 
 ```
 Ejecuta los tests de nuevo para verificar que todos pasan.
@@ -139,8 +139,8 @@ El test X sigue fallando. Revisa y corrige.
 ## Parte 4: Mejora (10 min - opcional)
 
 ```
-Anade 3 tests adicionales para edge cases que no estan cubiertos.
-Despues ejecuta todos los tests.
+Añade 3 tests adicionales para edge cases que no están cubiertos.
+Después ejecuta todos los tests.
 ```
 
 ---
@@ -148,16 +148,16 @@ Despues ejecuta todos los tests.
 ## Criterios de Completitud
 
 - [ ] Proyecto creado con los 3 bugs
-- [ ] Claude diagnostico los 3 bugs correctamente
+- [ ] Claude diagnosticó los 3 bugs correctamente
 - [ ] Los 3 bugs corregidos
 - [ ] Todos los tests pasan
-- [ ] (Bonus) Tests adicionales anadidos
+- [ ] (Bonus) Tests adicionales añadidos
 
 ---
 
-## Reflexion
+## Reflexión
 
-1. Claude encontro los bugs mas rapido que tu?
+1. Claude encontró los bugs más rápido que tú?
 2. Las correcciones fueron correctas a la primera?
 3. Revisaste los cambios antes de aceptarlos?
-4. Cuantos tokens consumio este bugfix? (`/cost`)
+4. Cuántos tokens consumió este bugfix? (`/cost`)

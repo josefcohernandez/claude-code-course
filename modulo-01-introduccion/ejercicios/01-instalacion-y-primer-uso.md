@@ -1,20 +1,20 @@
-# Ejercicio 01: Instalacion y Primer Uso
+# Ejercicio 01: Instalación y Primer Uso
 
 ## Objetivo
 
-Instalar Claude Code, verificar su funcionamiento y ejecutar tu primera sesion interactiva.
+Instalar Claude Code, verificar su funcionamiento y ejecutar tu primera sesión interactiva.
 
 ---
 
-## Parte 1: Instalacion (5 min)
+## Parte 1: Instalación (5 min)
 
-### Paso 1: Verificar prerequisitos
+### Paso 1: Verificar prerrequisitos
 
 ```bash
 git --version     # Necesario en todas las plataformas
 ```
 
-En Windows, asegurate de tener [Git for Windows](https://git-scm.com/downloads/win) instalado.
+En Windows, asegúrate de tener [Git for Windows](https://git-scm.com/downloads/win) instalado.
 
 > [!NOTE]
 > Node.js ya no es necesario. El instalador nativo de Claude Code es autocontenido.
@@ -52,38 +52,38 @@ claude --version
 claude doctor
 ```
 
-**Checkpoint**: `claude --version` muestra la version instalada y `claude doctor` no reporta errores criticos.
+**Checkpoint**: `claude --version` muestra la versión instalada y `claude doctor` no reporta errores críticos.
 
 ---
 
-## Parte 2: Autenticacion (5 min)
+## Parte 2: Autenticación (5 min)
 
 ```bash
 claude
 ```
 
-En el primer uso, Claude Code abre automaticamente el navegador para que te autentiques con tu cuenta de Anthropic (Pro, Max, Teams o Enterprise). Sigue las instrucciones en pantalla.
+En el primer uso, Claude Code abre automáticamente el navegador para que te autentiques con tu cuenta de Anthropic (Pro, Max, Teams o Enterprise). Sigue las instrucciones en pantalla.
 
-Una vez autenticado, veras el prompt interactivo de Claude Code.
+Una vez autenticado, verás el prompt interactivo de Claude Code.
 
 > [!IMPORTANT]
-> El plan gratuito de Claude.ai no incluye acceso a Claude Code. Necesitas una suscripcion de pago o una cuenta Console.
+> El plan gratuito de Claude.ai no incluye acceso a Claude Code. Necesitas una suscripción de pago o una cuenta Console.
 
 ---
 
 ## Parte 3: Primer Uso - Modo One-Shot (10 min)
 
-Sal de la sesion interactiva (`/exit`) y ejecuta estos comandos:
+Sal de la sesión interactiva (`/exit`) y ejecuta estos comandos:
 
 ```bash
 # Pregunta simple
-claude -p "Que es una API REST? Responde en 2 frases."
+claude -p "¿Qué es una API REST? Responde en 2 frases."
 
-# Generar codigo
-claude -p "Genera una funcion Python que calcule el factorial de un numero"
+# Generar código
+claude -p "Genera una función Python que calcule el factorial de un número"
 
 # Analizar un archivo (si tienes uno)
-claude -p "Explica que hace este archivo" < algun-archivo.py
+claude -p "Explica qué hace este archivo" < algun-archivo.py
 ```
 
 **Observa**:
@@ -93,7 +93,7 @@ claude -p "Explica que hace este archivo" < algun-archivo.py
 
 ---
 
-## Parte 4: Primera Sesion Interactiva (15 min)
+## Parte 4: Primera Sesión Interactiva (15 min)
 
 ```bash
 # Crear proyecto de prueba
@@ -105,11 +105,11 @@ echo "# Mi Primer Proyecto" > README.md
 claude
 ```
 
-Dentro de la sesion interactiva, prueba:
+Dentro de la sesión interactiva, prueba:
 
 1. **Inicializar el proyecto**: `/init`
 2. **Ver ayuda**: `/help`
-3. **Preguntar sobre el proyecto**: "Que archivos hay en este proyecto?"
+3. **Preguntar sobre el proyecto**: "¿Qué archivos hay en este proyecto?"
 4. **Crear un archivo**: "Crea un archivo `hello.py` con un hola mundo"
 5. **Ver costes**: `/cost`
 6. **Limpiar**: `/clear`
@@ -119,16 +119,16 @@ Dentro de la sesion interactiva, prueba:
 
 ## Parte 5: Explorar Slash Commands (10 min)
 
-En una sesion interactiva, prueba estos comandos:
+En una sesión interactiva, prueba estos comandos:
 
-| Comando | Que hace |
-|---------|---------|
+| Comando | Qué hace |
+|---------|----------|
 | `/help` | Lista de comandos disponibles |
-| `/model` | Ver/cambiar modelo |
+| `/model` | Ver o cambiar modelo |
 | `/cost` | Ver consumo de tokens |
 | `/clear` | Limpiar contexto |
-| `/compact` | Compactar conversacion |
-| `/doctor` | Diagnostico |
+| `/compact` | Compactar conversación |
+| `/doctor` | Diagnóstico |
 | `/permissions` | Ver permisos actuales |
 | `/init` | Crear CLAUDE.md |
 
@@ -136,19 +136,19 @@ En una sesion interactiva, prueba estos comandos:
 
 ## Criterios de Completitud
 
-- [ ] Claude Code instalado con el instalador nativo y version verificada
-- [ ] Autenticacion configurada (primer login en navegador completado)
+- [ ] Claude Code instalado con el instalador nativo y versión verificada
+- [ ] Autenticación configurada (primer login en navegador completado)
 - [ ] `claude doctor` sin errores
 - [ ] Ejecutada al menos una consulta one-shot
-- [ ] Sesion interactiva completada
+- [ ] Sesión interactiva completada
 - [ ] Al menos 5 slash commands probados
 - [ ] `/cost` revisado para entender el consumo
 
 ---
 
-## Reflexion
+## Reflexión
 
 Responde mentalmente:
-1. Cuanto tardo la instalacion completa?
-2. Que diferencia hay entre modo one-shot y sesion interactiva?
-3. Cuantos tokens consumiste en esta sesion de prueba?
+1. ¿Cuánto tardó la instalación completa?
+2. ¿Qué diferencia hay entre modo one-shot y sesión interactiva?
+3. ¿Cuántos tokens consumiste en esta sesión de prueba?

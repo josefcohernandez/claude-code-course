@@ -43,6 +43,8 @@ para la tarea en curso.
 - [ref-bugs-linear.md](ref-bugs-linear.md) — Bugs del pipeline se trackean en Linear (proyecto INGEST)
 ```
 
+Puedes ver una versión completa y reutilizable de este ejemplo en [../ejemplos/memoria-tipada/MEMORY.md](../ejemplos/memoria-tipada/MEMORY.md), junto con los ficheros tipados a los que hace referencia.
+
 **Regla crítica**: No escribas contenido directamente en `MEMORY.md`. Si el índice crece
 hasta superar 200 líneas, las memorias al final dejan de cargarse en el contexto inicial.
 

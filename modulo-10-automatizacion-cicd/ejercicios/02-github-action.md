@@ -1,10 +1,10 @@
-# Ejercicio 02: Configurar GitHub Action para Revision de PRs
+# Ejercicio 02: Configurar GitHub Action para Revisión de PRs
 
 ## Objetivo
 
-Configurar un workflow de GitHub Actions que use `claude-code-action@v1` para revisar automaticamente Pull Requests y responder a menciones de `@claude` en comentarios.
+Configurar un workflow de GitHub Actions que use `claude-code-action@v1` para revisar automáticamente Pull Requests y responder a menciones de `@claude` en comentarios.
 
-**Duracion estimada:** 15 minutos
+**Duración estimada:** 15 minutos
 
 ---
 
@@ -27,7 +27,7 @@ Si no tienes un repositorio, crea uno nuevo:
 mkdir github-claude-demo && cd github-claude-demo
 git init
 
-# Crear estructura basica
+# Crear estructura básica
 mkdir -p src tests
 
 cat > src/calculator.py << 'EOF'
@@ -79,7 +79,7 @@ gh secret set ANTHROPIC_API_KEY
 
 ---
 
-## Parte 2: Crear el Workflow de Revision
+## Parte 2: Crear el Workflow de Revisión
 
 ### Paso 1: Crear el archivo del workflow
 
@@ -119,19 +119,19 @@ jobs:
           claude_args: |
             --model claude-sonnet-4-6
             --max-turns 5
-            --append-system-prompt "Eres un revisor de codigo experimentado. Al revisar:
+            --append-system-prompt "Eres un revisor de código experimentado. Al revisar:
 
             ## Reglas
             1. Revisa seguridad, rendimiento y legibilidad
-            2. Se constructivo: sugiere soluciones, no solo senala problemas
-            3. Prioriza: critico > importante > sugerencia
-            4. Responde siempre en espanol
-            5. Usa ejemplos de codigo cuando sugieras cambios
+            2. Sé constructivo: sugiere soluciones, no solo señala problemas
+            3. Prioriza: crítico > importante > sugerencia
+            4. Responde siempre en español
+            5. Usa ejemplos de código cuando sugieras cambios
 
             ## Formato
-            Organiza tu revision en secciones:
-            - **Problemas Criticos** (deben corregirse antes de merge)
-            - **Mejoras Importantes** (deberian corregirse)
+            Organiza tu revisión en secciones:
+            - **Problemas Críticos** (deben corregirse antes de merge)
+            - **Mejoras Importantes** (deberían corregirse)
             - **Sugerencias** (nice to have)
             - **Aspectos Positivos** (que se hizo bien)"
 ```
@@ -153,7 +153,7 @@ git push origin main
 ```bash
 git checkout -b feature/improve-calculator
 
-# Hacer cambios con problemas intencionales para la revision
+# Hacer cambios con problemas intencionales para la revisión
 cat > src/calculator.py << 'EOF'
 import os  # import no utilizado
 
@@ -164,7 +164,7 @@ class Calculator:
         return a + b
 
     def divide(self, a, b):
-        # Falta manejo de division por cero
+        # Falta manejo de división por cero
         return a / b
 
     def multiply(self, a, b):
@@ -174,7 +174,7 @@ class Calculator:
         return a - b
 
     def power(self, base, exp):
-        # Implementacion con recursion sin caso limite
+        # Implementación con recursión sin caso límite
         result = base
         for i in range(exp):
             result = result * base
@@ -191,7 +191,7 @@ class Calculator:
         # Falta f.close() o usar context manager
 EOF
 
-# Anadir tests basicos
+# Añadir tests básicos
 cat > tests/test_calculator.py << 'EOF'
 from src.calculator import Calculator
 
@@ -217,26 +217,26 @@ git push origin feature/improve-calculator
 gh pr create \
     --title "feat: mejoras en la calculadora" \
     --body "## Cambios
-- Funcion power() para calcular potencias
-- Funcion parse_input() para parsear entrada del usuario
-- Funcion log_operation() para logging de operaciones
+- Función power() para calcular potencias
+- Función parse_input() para parsear entrada del usuario
+- Función log_operation() para logging de operaciones
 
 ## Testing
-- Tests basicos anadidos" \
+- Tests básicos añadidos" \
     --base main \
     --head feature/improve-calculator
 ```
 
-### Paso 3: Esperar la revision de Claude
+### Paso 3: Esperar la revisión de Claude
 
-1. Ve a la pestana **Actions** del repositorio para ver el workflow en ejecucion
+1. Ve a la pestaña **Actions** del repositorio para ver el workflow en ejecución
 2. Espera a que complete (normalmente 1-2 minutos)
-3. Ve al Pull Request - Claude habra dejado un comentario con su revision
+3. Ve al Pull Request - Claude habrá dejado un comentario con su revisión
 
-**Claude deberia detectar:**
+**Claude debería detectar:**
 - El secret hardcodeado (`API_KEY`)
 - El import no utilizado (`os`)
-- La falta de manejo de division por cero
+- La falta de manejo de división por cero
 - El uso peligroso de `eval()`
 - El file handle no cerrado en `log_operation`
 - El bug en `power()` (resultado incorrecto)
@@ -251,27 +251,27 @@ gh pr create \
 Ve al Pull Request y escribe un comentario:
 
 ```
-@claude Puedes sugerir como implementar correctamente la funcion power()
-y anadir manejo de errores para division por cero?
+@claude Puedes sugerir como implementar correctamente la función power()
+y añadir manejo de errores para división por cero?
 ```
 
 ### Paso 2: Esperar la respuesta
 
-Claude respondera directamente en el PR con sugerencias de codigo.
+Claude responderá directamente en el PR con sugerencias de código.
 
-### Prueba mas interacciones
+### Prueba más interacciones
 
 ```
 @claude Genera tests unitarios completos para todas las funciones
 
-@claude Hay algun problema de seguridad que no hayas mencionado?
+@claude Hay algún problema de seguridad que no hayas mencionado?
 
 @claude Reescribe log_operation usando un context manager
 ```
 
 ---
 
-## Parte 5: Tareas de Personalizacion
+## Parte 5: Tareas de Personalización
 
 Modifica el workflow para cumplir estos requisitos adicionales:
 
@@ -296,7 +296,7 @@ on:
 
 - [ ] Crea un segundo workflow `.github/workflows/claude-security.yml`
 - [ ] Que se ejecute solo en PRs con la etiqueta `security-review`
-- [ ] Con instrucciones especificas para revision de seguridad (OWASP Top 10)
+- [ ] Con instrucciones específicas para revisión de seguridad (OWASP Top 10)
 
 **Pista:**
 
@@ -307,34 +307,34 @@ jobs:
     # ...
 ```
 
-### Tarea 3: Anadir revision diferenciada
+### Tarea 3: Añadir revisión diferenciada
 
-- [ ] Modifica las instrucciones en `claude_md` para que la revision sea diferente segun el tipo de archivo:
+- [ ] Modifica las instrucciones en `claude_md` para que la revisión sea diferente según el tipo de archivo:
   - Python: enfocarse en type hints y PEP 8
   - TypeScript: enfocarse en tipado estricto y null safety
   - SQL: enfocarse en injection y rendimiento de queries
 
 ---
 
-## Verificacion
+## Verificación
 
-Al completar este ejercicio, deberias tener:
+Al completar este ejercicio, deberías tener:
 
-1. Un workflow funcional que revisa PRs automaticamente
+1. Un workflow funcional que revisa PRs automáticamente
 2. Soporte para menciones `@claude` en comentarios
-3. Al menos un PR revisado por Claude con feedback util
-4. Personalizaciones aplicadas segun las tareas
+3. Al menos un PR revisado por Claude con feedback útil
+4. Personalizaciones aplicadas según las tareas
 
 ---
 
-## Criterios de Evaluacion
+## Criterios de Evaluación
 
 | Criterio | Puntos |
 |----------|--------|
 | El workflow se ejecuta correctamente en un PR nuevo | 3 |
-| Claude detecta los problemas principales del codigo | 2 |
+| Claude detecta los problemas principales del código | 2 |
 | Las menciones `@claude` funcionan correctamente | 2 |
-| Las personalizaciones estan implementadas | 3 |
+| Las personalizaciones están implementadas | 3 |
 | **Total** | **10** |
 
 ---
@@ -358,7 +358,7 @@ rm -rf /tmp/github-claude-demo
 | Problema | Solucion |
 |----------|----------|
 | El workflow no se ejecuta | Verifica que el archivo esta en `.github/workflows/` y que la sintaxis YAML es correcta |
-| Error de autenticacion | Verifica que el secreto `ANTHROPIC_API_KEY` esta configurado correctamente |
+| Error de autenticación | Verifica que el secreto `ANTHROPIC_API_KEY` esta configurado correctamente |
 | Claude no responde a menciones | Asegurate de que `issue_comment` esta en los triggers y los permisos incluyen `issues: write` |
-| La revision tarda mucho | Reduce `max_turns` o cambia a un modelo mas rapido |
-| Error de permisos | Verifica la seccion `permissions` del workflow |
+| La revisión tarda mucho | Reduce `max_turns` o cambia a un modelo más rápido |
+| Error de permisos | Verifica la sección `permissions` del workflow |

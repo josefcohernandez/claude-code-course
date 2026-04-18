@@ -2,11 +2,11 @@
 
 ## Objetivo
 
-Configurar hooks que auto-formateen codigo y ejecuten tests automaticamente.
+Configurar hooks que auto-formateen código y ejecuten tests automáticamente.
 
 ---
 
-## Preparacion
+## Preparación
 
 ```bash
 mkdir -p ~/hooks-exercise && cd ~/hooks-exercise
@@ -72,10 +72,10 @@ Crea `.prettierrc`:
 
 ```bash
 claude
-> "Modifica src/example.js: anade una funcion multiply(a, b)"
+> "Modifica src/example.js: añade una función multiply(a, b)"
 ```
 
-Despues de que Claude edite, verifica que Prettier formateo el archivo.
+Después de que Claude edite, verifica que Prettier formateó el archivo.
 
 ---
 
@@ -99,7 +99,7 @@ test('subtract', () => {
 npm install --save-dev jest
 ```
 
-Anade al `package.json`: `"scripts": { "test": "jest" }`
+Añade al `package.json`: `"scripts": { "test": "jest" }`
 
 Actualiza `.claude/settings.json`:
 
@@ -134,10 +134,10 @@ Actualiza `.claude/settings.json`:
 
 ```bash
 claude
-> "Anade una funcion divide(a, b) a src/example.js que maneje division por cero"
+> "Añade una función divide(a, b) a src/example.js que maneje división por cero"
 ```
 
-Despues de editar, el hook ejecuta los tests.
+Después de editar, el hook ejecuta los tests.
 
 ---
 
@@ -153,7 +153,7 @@ claude
 ## Criterios de Completitud
 
 - [ ] Hook Prettier configurado y funcionando
-- [ ] Archivos se auto-formatean despues de Write/Edit
+- [ ] Los archivos se autoformatean después de Write/Edit
 - [ ] Hook de tests configurado
-- [ ] Tests se ejecutan despues de editar src/
+- [ ] Los tests se ejecutan después de editar `src/`
 - [ ] /hooks muestra hooks correctos

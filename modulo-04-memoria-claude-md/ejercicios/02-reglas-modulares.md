@@ -115,21 +115,21 @@ claude
 > "Quiero crear un nuevo componente React en src/frontend/UserProfile.tsx"
 ```
 
-Deberia seguir las reglas de `frontend.md`.
+Debería seguir las reglas de `frontend.md`.
 
 ```
 > /clear
 > "Crea un nuevo endpoint en src/api/users.py"
 ```
 
-Deberia seguir las reglas de `backend.md`.
+Debería seguir las reglas de `backend.md`.
 
 ```
 > /clear
 > "Crea un test para el endpoint de users"
 ```
 
-Deberia seguir las reglas de `testing.md`.
+Debería seguir las reglas de `testing.md`.
 
 ---
 
