@@ -35,6 +35,20 @@ un 60-80% inferior al coste nominal calculado sin caché.
 
 > **Flag `--exclude-dynamic-system-prompt-sections` (v2.1.98):** En modo print (`claude --print`), este flag excluye las secciones dinámicas del system prompt (como el contenido de CLAUDE.md o reglas contextuales). Esto mejora la tasa de cache hits en escenarios donde múltiples usuarios comparten la misma configuración base, ya que la porción estática del prompt se mantiene idéntica entre invocaciones.
 
+> **Variables `ENABLE_PROMPT_CACHING_1H` y `FORCE_PROMPT_CACHING_5M` (v2.1.108):** Por defecto, el prompt cache tiene un TTL (tiempo de vida) de 5 minutos. Con `ENABLE_PROMPT_CACHING_1H=1` puedes ampliar ese TTL a 1 hora, lo que permite reutilizar el caché en sesiones con pausas largas o flujos de trabajo intermitentes sin incurrir en el coste del primer turno "en frío". Está disponible en API key, Bedrock, Vertex y Foundry. Si necesitas revertir a 5 minutos cuando `ENABLE_PROMPT_CACHING_1H` está activo, usa `FORCE_PROMPT_CACHING_5M=1`.
+>
+> ```bash
+> # Activar TTL de 1 hora (útil en flujos de trabajo con pausas)
+> export ENABLE_PROMPT_CACHING_1H=1
+> claude
+>
+> # Revertir al TTL estándar de 5 minutos (útil para pruebas o para deshabilitar la hora)
+> export FORCE_PROMPT_CACHING_5M=1
+> claude
+> ```
+>
+> Usa `ENABLE_PROMPT_CACHING_1H` cuando trabajes en sesiones de revisión de código o planificación donde tardas más de 5 minutos entre mensajes. Evita usarlo en pipelines automatizados de corta duración, donde el TTL extendido no aporta beneficio pero sí puede aumentar el uso de recursos en el servidor.
+
 ---
 
 ## Coste por modelo
@@ -280,6 +294,9 @@ en un bucle o la tarea es más grande de lo estimado.
 - El prompt caching reduce automáticamente el coste de los tokens fijos en un 90%.
   No requiere configuración, pero se beneficia de sesiones estables donde el
   CLAUDE.md y las herramientas no cambian entre turnos.
+- Con `ENABLE_PROMPT_CACHING_1H=1` el TTL del caché se amplía de 5 minutos a 1
+  hora, lo que mantiene el arranque en caliente en sesiones con pausas largas.
+  `FORCE_PROMPT_CACHING_5M=1` revierte al TTL estándar cuando sea necesario.
 - Elegir el modelo correcto es la decisión de mayor impacto económico. Haiku para
   exploración, Sonnet para implementación, Opus para arquitectura y seguridad crítica.
 - `--max-budget-usd` y `--max-turns` son los controles de gasto más directos en

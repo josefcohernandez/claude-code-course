@@ -231,6 +231,20 @@ Con `additionalDirectories` en `.claude/settings.json` del directorio `frontend/
 
 ---
 
+## `prUrlTemplate`: badge de code-review personalizado (v2.1.119)
+
+Cuando Claude Code termina de analizar un Pull Request, añade un badge en el footer del PR con un enlace al informe de revisión. Por defecto, este enlace apunta a `claude.ai`. Con la clave `prUrlTemplate` puedes redirigir ese badge a una instancia propia de GitHub Enterprise o a cualquier otra URL interna:
+
+```json
+{
+  "prUrlTemplate": "https://github.enterprise.example.com/claude-review?pr={prUrl}"
+}
+```
+
+El placeholder `{prUrl}` se sustituye automáticamente por la URL del PR. Esta opción es especialmente útil en entornos enterprise donde Claude Code está desplegado en infraestructura propia y no debe generar enlaces hacia dominios externos.
+
+---
+
 ## Validación de valores en settings.json
 
 Desde v2.1.89, Claude Code valida los valores de ciertas claves de configuración al arrancar. En particular, `cleanupPeriodDays: 0` ahora produce un **error de validación** y Claude Code no arranca. El valor mínimo es `1`. Esto previene la desactivación accidental de la limpieza automática de sesiones.
@@ -257,6 +271,21 @@ Resultado: Write(src/config/*) está DENIED
 
 **deny SIEMPRE gana** independientemente del nivel.
 Si cualquier nivel dice deny, la acción se bloquea.
+
+---
+
+## El comando `/config` y su persistencia (v2.1.119)
+
+El comando interactivo `/config` permite consultar y cambiar ajustes de la sesión activa (tema de color, modo de editor, nivel de verbosidad, etc.). Desde v2.1.119, **todos los cambios realizados con `/config` se guardan automáticamente en `~/.claude/settings.json`** con nivel de precedencia "override", de forma que persisten entre sesiones.
+
+```bash
+# Dentro de una sesión interactiva
+/config                        # Muestra la configuración actual y permite editarla
+/config theme dark             # Cambia el tema; se guarda en ~/.claude/settings.json
+/config verboseOutput true     # Activa el output detallado; persiste tras cerrar
+```
+
+Este comportamiento significa que no es necesario editar `~/.claude/settings.json` a mano para ajustes de interfaz: `/config` es la vía oficial y siempre mantiene el fichero sincronizado.
 
 ---
 

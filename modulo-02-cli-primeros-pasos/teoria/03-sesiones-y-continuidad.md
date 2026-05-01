@@ -63,6 +63,18 @@ claude --resume abc123def
 > **Importante**: Resume carga todo el historial previo en el contexto.
 > Si la sesión anterior era larga, puedes perder espacio de contexto.
 
+### Picker de sesiones (v2.1.108)
+
+Cuando ejecutas `claude -r` (o `/resume` desde el modo interactivo) sin indicar un ID, Claude Code muestra un selector interactivo de sesiones. A partir de la v2.1.108, este selector:
+
+- Muestra por defecto solo las sesiones del **directorio actual**, lo que reduce el ruido cuando trabajas con varios proyectos.
+- Permite ver **todas** las sesiones de todos los proyectos pulsando `Ctrl+A` dentro del selector.
+
+```bash
+claude -r        # Abre el selector; muestra sesiones del directorio actual
+                 # Pulsa Ctrl+A para ver sesiones de otros proyectos
+```
+
 ---
 
 ## Los 3 Modos de Ejecución
@@ -138,6 +150,49 @@ claude -p "genera código largo" --output-format stream-json
 En la extensión de VSCode, Claude Code genera automáticamente un **título descriptivo** para cada sesión basándose en el contenido de la conversación. Esto facilita identificar sesiones pasadas al hacer resume sin necesidad de recordar IDs o fechas.
 
 Los títulos se generan al vuelo y se actualizan conforme avanza la conversación. Por ejemplo, una sesión que comienza con "arregla el bug de login" puede titularse automáticamente como "Fix: autenticación con caracteres especiales".
+
+---
+
+## Resumen de Sesión: `/recap` y Away Summary
+
+> **Novedad v2.1.108**
+
+### Resumen automático al volver de una ausencia larga
+
+Cuando vuelves a una sesión activa tras una ausencia prolongada, Claude Code genera automáticamente un **resumen de contexto** ("away summary") que recuerda en qué punto se quedó el trabajo: qué tarea se estaba realizando, qué archivos se modificaron y cuál era el siguiente paso previsto.
+
+Este resumen aparece en pantalla al retomar la sesión sin que tengas que pedirlo. Reduce la fricción de "¿dónde estaba yo?" que aparece cuando se trabaja en varias sesiones a lo largo del día.
+
+**Configuración y opt-out:**
+
+El resumen automático está activado por defecto. Para desactivarlo, establece la variable de entorno antes de iniciar Claude Code:
+
+```bash
+CLAUDE_CODE_ENABLE_AWAY_SUMMARY=0 claude
+```
+
+También puedes configurarlo de forma persistente en tu shell:
+
+```bash
+# En ~/.bashrc o ~/.zshrc
+export CLAUDE_CODE_ENABLE_AWAY_SUMMARY=0
+```
+
+Para ajustar el umbral y otras opciones del away summary, usa `/config` desde el modo interactivo.
+
+### Resumen manual con `/recap`
+
+Puedes solicitar un resumen en cualquier momento con el comando `/recap`:
+
+```
+> /recap
+```
+
+Claude genera entonces un resumen estructurado de la sesión actual: trabajo completado, decisiones tomadas y estado actual del proyecto. Es útil para:
+
+- Compartir el estado de una tarea con un compañero de equipo.
+- Generar un punto de control antes de un `/clear`.
+- Entender rápidamente qué hizo Claude en una sesión larga.
 
 ---
 

@@ -1,42 +1,55 @@
-# 02 - Opus 4.6 y Razonamiento Adaptativo
+# 02 - Opus 4.7 y Razonamiento Adaptativo
 
-## Qué es Opus 4.6
+## Qué es Opus 4.7
 
-Opus 4.6 es el modelo más capaz de Anthropic. Su característica principal
-es el **razonamiento adaptativo**: ajusta automáticamente la profundidad
-de su razonamiento según la complejidad de la tarea.
+Opus 4.7 es el modelo más capaz de Anthropic (disponible desde v2.1.111). Mantiene
+la ventana de **1M tokens de contexto** e introduce el nivel de esfuerzo `xhigh`
+para razonamiento de máxima profundidad. Disponible para suscriptores de los planes
+**Max** de claude.ai.
+
+Opus 4.6 sigue disponible para usuarios de API key, Bedrock y Vertex.
 
 ---
 
 ## Razonamiento Adaptativo
 
-### 4 Niveles de Esfuerzo
+### 5 Niveles de Esfuerzo
 
-| Nivel | Cuándo | Ejemplo |
-|-------|--------|---------|
-| **Bajo (low)** | Tareas simples, respuestas directas | "¿Qué hace git status?" |
-| **Medio (medium)** | Tareas con algo de complejidad | "Refactoriza esta función a async" |
-| **Alto (high)** | Problemas complejos, multi-archivo **(default)** | "Diseña sistema de permisos RBAC" |
-| **Máximo (max)** | Razonamiento sin límites (**solo Opus 4.6**) | "Analiza y resuelve esta condición de carrera en el sistema distribuido" |
+| Nivel | Cuándo | Disponibilidad |
+|-------|--------|----------------|
+| **Bajo (low)** | Tareas simples, respuestas directas | Todos los modelos |
+| **Medio (medium)** | Tareas con algo de complejidad | Todos los modelos |
+| **Alto (high)** | Problemas complejos, multi-archivo **(default Pro/Max desde v2.1.117)** | Todos los modelos |
+| **Extra alto (xhigh)** | Thinking de máxima profundidad entre `high` y `max` | **Solo Opus 4.7** |
+| **Máximo (max)** | Razonamiento sin límites | **Solo Opus 4.6 y 4.7** |
 
-Opus decide automáticamente cuánto "pensar" basándose en la complejidad. Desde v2.1.94, el nivel por defecto es **high** para usuarios de API key, Bedrock, Vertex, Team y Enterprise.
+Opus decide automáticamente cuánto "pensar" basándose en la complejidad.
+
+> **Novedad v2.1.117:** Para Opus 4.6 y Sonnet 4.6 en planes **Pro y Max**, el nivel
+> de esfuerzo por defecto sube de `medium` a **`high`**. Para usuarios de API key,
+> Bedrock, Vertex, Team y Enterprise el default ya era `high` desde v2.1.94.
 
 > **Tip:** Para activar razonamiento profundo en un solo turno sin cambiar la configuración de la sesión, incluye la keyword **"ultrathink"** en tu prompt.
 
 ### Adaptive Thinking (reemplaza Extended Thinking)
 
-> **Cambio v3.0:** En Opus 4.6, **adaptive thinking** es el nuevo comportamiento por defecto: el modelo decide automáticamente cuándo y cuánto razonar. Los parámetros `thinking: {type: "enabled"}` y `budget_tokens` siguen siendo funcionales pero ya no son necesarios. Para revertir al comportamiento anterior, configura `CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING=1`.
+> **Cambio v3.0:** En Opus 4.6 y 4.7, **adaptive thinking** es el nuevo comportamiento por defecto: el modelo decide automáticamente cuándo y cuánto razonar. Los parámetros `thinking: {type: "enabled"}` y `budget_tokens` siguen siendo funcionales pero ya no son necesarios. Para revertir al comportamiento anterior, configura `CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING=1`.
 
 Con adaptive thinking, no necesitas activar ni desactivar el razonamiento profundo manualmente. Opus ajusta dinámicamente la profundidad de su razonamiento basándose en la complejidad detectada.
 
-Si necesitas forzar razonamiento extendido, puedes usar:
+Si necesitas forzar un nivel de razonamiento concreto, puedes usar:
 
 | Método | Cómo |
 |--------|------|
 | Atajo de teclado | `Alt+T` (toggle) |
-| Slash command | `/effort high` o `/effort max` (max solo para Opus) |
-| Flag CLI | `--effort high` o `--effort max` |
+| Slash command interactivo | `/effort` (sin argumentos abre slider con flechas + Enter) |
+| Slash command directo | `/effort high`, `/effort xhigh`, `/effort max` |
+| Flag CLI | `--effort high`, `--effort xhigh`, `--effort max` |
 | Keyword por turno | Incluir "ultrathink" en el prompt |
+
+> **Novedad v2.1.111:** `/effort` sin argumentos abre un **slider interactivo**:
+> navega con las flechas del teclado y confirma con Enter. Es útil cuando no recuerdas
+> los nombres exactos de los niveles o quieres ver las opciones disponibles para tu modelo.
 
 Extended thinking sigue siendo útil para:
 - Debugging de problemas complejos

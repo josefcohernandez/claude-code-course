@@ -42,19 +42,20 @@ Sí → ejecuta  |  No → bloquea y notifica al usuario
 
 ## Disponibilidad y requisitos de modelo
 
-Auto Mode esta disponible actualmente como **research preview** en el plan **Team** de Claude.ai. Se esta desplegando progresivamente hacia los planes **Enterprise** y la **API** de Anthropic.
+Auto Mode está disponible en los planes **Team**, **Max** y en despliegue hacia **Enterprise** y la **API** de Anthropic. Desde v2.1.111, el plan **Max con Opus 4.7** también tiene acceso completo.
 
-**Requisito de modelo**: Auto Mode requiere **Claude Sonnet 4.6** o **Claude Opus 4.6** como minimo. Modelos anteriores no soportan el clasificador de seguridad necesario para este modo.
+**Requisito de modelo**: Auto Mode requiere **Claude Sonnet 4.6**, **Claude Opus 4.6** o **Claude Opus 4.7** como mínimo. Modelos anteriores no soportan el clasificador de seguridad necesario para este modo.
 
 | Plan | Auto Mode disponible |
 |------|---------------------|
 | Free | No |
 | Pro | No |
-| Team | Si (research preview) |
+| Max | Sí (con Sonnet 4.6, Opus 4.6 u Opus 4.7) |
+| Team | Sí |
 | Enterprise | En despliegue |
 | API | En despliegue |
 
-Al ser research preview, las capacidades y el comportamiento del clasificador pueden variar entre versiones. Consulta la documentacion oficial de Anthropic para el estado actual.
+Las capacidades y el comportamiento del clasificador pueden variar entre versiones. Consulta la documentación oficial de Anthropic para el estado actual.
 
 ---
 
@@ -70,12 +71,11 @@ Auto Mode se activa desde la configuración de la organización en Claude.ai. Lo
 # Iniciar una sesion con Auto Mode activo
 claude --permission-mode auto
 
-# Forma alternativa
-claude --enable-auto-mode
-
 # Equivalente en modo no interactivo (pipeline o CI controlado)
 claude -p "refactoriza el modulo de pagos eliminando codigo duplicado" --permission-mode auto
 ```
+
+> El flag `--enable-auto-mode` que aparecía en versiones anteriores ha quedado obsoleto desde v2.1.111. Auto Mode está disponible directamente mediante `--permission-mode auto` sin necesidad de ningún flag adicional de habilitación.
 
 ### Activacion en settings.json
 
