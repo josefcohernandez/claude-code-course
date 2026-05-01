@@ -311,6 +311,7 @@ Cada teammate puede ver el estado de las tareas de los demás y saber cuándo un
 
 ## Resumen
 
+- `CLAUDE_CODE_FORK_SUBAGENT=1` habilita aislamiento en worktree para todos los subagentes de la sesión; desde v2.1.121 también funciona en sesiones no-interactivas (`--print`, SDK)
 - `isolation: "worktree"` crea una copia aislada del repo para que el subagente trabaje sin afectar el principal; los cambios se descartan automáticamente si el agente no produce resultados útiles
 - `SendMessage` permite comunicación dirigida a agentes con nombre, preservando su contexto completo en lugar de empezar desde cero
 - Los background agents con `run_in_background: true` trabajan de forma autónoma y notifican automáticamente al terminar, sin necesidad de polling
