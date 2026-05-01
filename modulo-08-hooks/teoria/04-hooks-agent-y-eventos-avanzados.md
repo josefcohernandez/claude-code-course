@@ -37,6 +37,8 @@ Además de los hooks `command` (que ejecutan un script shell) y `prompt` (que en
 |------|---------------|-------|
 | `command` | Validaciones rápidas, scripts shell, formateo | Bajo (solo CPU local) |
 | `prompt` | Añadir contexto al modelo sin acción autónoma | Medio (tokens de entrada) |
+| `http` | Notificar a un endpoint web externo sin lógica local | Bajo (latencia de red) |
+| `mcp_tool` | Invocar una herramienta de un servidor MCP ya configurado | Bajo-medio (depende del servidor) |
 | `agent` | Análisis complejos, acciones que requieren herramientas | Alto (llama al modelo + consume tokens) |
 
 ### Casos de uso típicos para hooks agent

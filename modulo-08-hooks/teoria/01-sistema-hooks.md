@@ -113,6 +113,64 @@ Envía una petición POST a un endpoint:
 
 Ejecuta un agente personalizado.
 
+### 5. MCP Tool
+
+> **Novedad v3.7 (v2.1.118)**
+
+Invoca directamente una herramienta de un servidor MCP, sin necesidad de escribir un script shell intermediario. Es la forma más directa de integrar hooks con servidores MCP ya configurados en el proyecto.
+
+```json
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "mcp_tool",
+            "server": "nombre-servidor",
+            "tool": "nombre-herramienta",
+            "input": { "param": "valor" }
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+Campos obligatorios del tipo `mcp_tool`:
+
+| Campo | Descripción |
+|-------|-------------|
+| `server` | Nombre del servidor MCP tal como aparece en la configuración |
+| `tool` | Nombre de la herramienta a invocar en ese servidor |
+| `input` | Objeto con los parámetros de entrada que requiere la herramienta |
+
+Ejemplo de uso real: notificar a un servidor MCP de métricas cada vez que Claude escribe un fichero de código:
+
+```json
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write(src/**/*.ts)",
+        "hooks": [
+          {
+            "type": "mcp_tool",
+            "server": "metrics-server",
+            "tool": "record_file_write",
+            "input": { "project": "mi-proyecto", "language": "typescript" }
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+> **Cuándo usar `mcp_tool` vs `command`:** Usa `mcp_tool` cuando ya tienes un servidor MCP configurado que expone la funcionalidad que necesitas (notificaciones, métricas, base de datos). Usa `command` para lógica de shell local sin dependencia de un servidor MCP.
+
 ---
 
 ## Matchers
@@ -252,6 +310,36 @@ CWD=$(echo "$INPUT" | jq -r '.cwd // empty')
 ```
 
 > **Importante:** Los datos llegan por stdin como JSON, **no** como variables de entorno. Usar `jq` para extraer los campos necesarios.
+
+### Campo `duration_ms` en PostToolUse y PostToolUseFailure
+
+> **Novedad v3.7 (v2.1.119)**
+
+Los hooks de los eventos `PostToolUse` y `PostToolUseFailure` reciben ahora el campo `duration_ms` en el JSON de entrada: el tiempo en milisegundos que tardó en ejecutarse la herramienta. Este campo es útil para detectar herramientas lentas o construir métricas de rendimiento.
+
+```bash
+#!/bin/bash
+# Ejemplo: registrar en log las herramientas que tardan más de 2 segundos
+INPUT=$(cat)
+TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name // empty')
+DURATION=$(echo "$INPUT" | jq -r '.duration_ms // 0')
+
+if [ "$DURATION" -gt 2000 ]; then
+  echo "$(date -Iseconds) | LENTO | ${TOOL_NAME} | ${DURATION}ms" >> ~/.claude/perf.log
+fi
+exit 0
+```
+
+Campos de input actualizados para `PostToolUse` y `PostToolUseFailure`:
+
+| Campo | Descripción |
+|-------|-------------|
+| `tool_name` | Nombre de la herramienta ejecutada |
+| `tool_input` | Parámetros de entrada de la herramienta |
+| `tool_response` | Respuesta devuelta por la herramienta |
+| `duration_ms` | Tiempo de ejecución de la herramienta en milisegundos |
+| `session_id` | Identificador de la sesión activa |
+| `cwd` | Directorio de trabajo en el momento del evento |
 
 Variables de entorno disponibles (del sistema, no del evento):
 
