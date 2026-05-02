@@ -4,7 +4,7 @@
 
 Claude Code no solo trabaja con texto y código: es un LLM multimodal capaz de "ver" imágenes, leer PDFs y procesar Jupyter notebooks completos (celdas, outputs y visualizaciones incluidas). Este módulo explora estas capacidades y presenta el patrón Visual-Driven Development, donde el flujo comienza con un mockup o screenshot y termina con código funcional.
 
-**Tiempo estimado:** 1 hora y 50 minutos
+**Tiempo estimado:** 2 horas y 20 minutos
 
 **Nivel:** Avanzado (Bloque 3)
 
@@ -20,6 +20,8 @@ Al completar este módulo, serás capaz de:
 4. **Aplicar Visual-Driven Development**: pasar de mockup o screenshot a código funcional.
 5. **Identificar las limitaciones** de cada capacidad multimodal y cuándo no usarlas.
 6. **Combinar multimodalidad con el patrón Writer/Reviewer** del M12 para verificación visual.
+7. **Configurar Channels** para recibir eventos de Telegram, Discord u otros servicios externos en la sesión activa.
+8. **Activar Chrome Integration** para debuggear consola y DOM, testear formularios y extraer datos desde el navegador.
 
 ---
 
@@ -34,9 +36,9 @@ Al completar este módulo, serás capaz de:
 
 ## Duración estimada
 
-**1 hora y 50 minutos** distribuidos así:
+**2 horas y 20 minutos** distribuidos así:
 
-- Teoría: 80 minutos (5 ficheros, ~16 min cada uno)
+- Teoría: 110 minutos (7 ficheros, ~16 min cada uno)
 - Ejercicios: 30 minutos
 
 ---
@@ -52,6 +54,8 @@ Al completar este módulo, serás capaz de:
 | [03-jupyter-notebooks.md](teoria/03-jupyter-notebooks.md) | Notebooks `.ipynb`: leer, editar y mejorar con Claude | 15 min |
 | [04-visual-driven-development.md](teoria/04-visual-driven-development.md) | Visual-Driven Development: de mockup a código | 15 min |
 | [05-voice-y-computer-use.md](teoria/05-voice-y-computer-use.md) | `/voice`, push-to-talk y Remote Control con Computer Use | 15 min |
+| [06-channels.md](teoria/06-channels.md) | Channels: recibir eventos de Telegram, Discord e iMessages en la sesión activa | 16 min |
+| [07-chrome-integration.md](teoria/07-chrome-integration.md) | Chrome Integration: debugging de consola y DOM, test de formularios, extracción de datos | 16 min |
 
 ### Ejercicios prácticos
 
@@ -76,6 +80,11 @@ Al completar este módulo, serás capaz de:
 | **push-to-talk** | Mecanismo de activación por tecla mantenida; configurable vía `keybindings.json` |
 | **Remote Control** | Conecta `claude.ai/code` o la app móvil con una sesión de Claude Code que corre en local |
 | **Computer Use** | Capacidad de **Claude Cowork** (no Claude Code) para interactuar con el escritorio: ratón, teclado, navegador y UI. Disponible como research preview, solo en macOS |
+| **Channels** | Servidores MCP en modo push: fuentes externas (Telegram, Discord, iMessages) envían eventos a la sesión activa de Claude Code para que los procese y actúe |
+| **Sender allowlist** | Lista de usuarios o grupos cuyas mensajes un Channel procesa; los demás se ignoran silenciosamente |
+| **Chrome Integration** | Extensión "Claude in Chrome" que da acceso en tiempo real a la consola, el DOM, el estado de red y las interacciones del navegador desde Claude Code |
+| **`--chrome` / `/chrome`** | Flag y slash command para activar Chrome Integration al iniciar o durante una sesión en curso |
+| **`--channels`** | Flag para activar todos los Channels instalados al iniciar Claude Code; admite un nombre de canal como argumento para activar solo uno |
 
 ---
 
@@ -88,7 +97,11 @@ Al completar este módulo, serás capaz de:
    |
 3. Teoría: /voice y Computer Use (15 min)
    |
-4. Ejercicio: análisis visual (30 min)
+4. Teoría: Channels (16 min)
+   |
+5. Teoría: Chrome Integration (16 min)
+   |
+6. Ejercicio: análisis visual (30 min)
    - Parte 1: analizar screenshot de UI
    - Parte 2: documentar diagrama de arquitectura
    - Parte 3: extraer spec de un PDF

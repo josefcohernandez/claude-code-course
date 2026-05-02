@@ -164,10 +164,46 @@ Disponible para todos los IDEs de JetBrains (IntelliJ, PyCharm, WebStorm, GoLand
 
 ### 4. Aplicación de escritorio
 
-Aplicación nativa para **macOS** y **Windows** que proporciona:
-- Interfaz gráfica dedicada
-- Gestión de múltiples sesiones
-- Fácil acceso sin necesidad de terminal
+Aplicación nativa para **macOS** y **Windows** que desde el rediseño de abril de 2026 ofrece un entorno de desarrollo visual completo. Va mucho más allá de ser una envoltura gráfica del CLI: incorpora herramientas que aceleran los flujos de trabajo más comunes.
+
+#### Gestión de sesiones paralelas
+
+La barra lateral izquierda muestra todas las sesiones activas simultáneamente. Puedes tener en paralelo, por ejemplo, una sesión arreglando un bug, otra generando tests y una tercera explorando un módulo nuevo, y cambiar entre ellas con un clic sin perder el contexto de ninguna.
+
+#### Layout de paneles personalizable
+
+Los paneles de la interfaz (conversación, diff, preview, terminal) se pueden reorganizar mediante drag-and-drop para adaptarlos a tu flujo de trabajo o a la tarea en curso. El layout se persiste entre sesiones.
+
+#### Revisión de diffs con comentarios inline
+
+Cuando Claude Code modifica archivos, la app Desktop muestra una vista de diff similar a la de GitHub. Puedes añadir comentarios línea a línea directamente sobre el diff para indicar ajustes, rechazar cambios concretos o pedir explicaciones sobre una línea específica, todo sin salir de la aplicación.
+
+#### Preview integrada de la aplicación
+
+La app Desktop incluye un servidor de desarrollo embebido. Para proyectos web, puedes ver la preview del resultado en un panel dentro del propio cliente Desktop, sin necesitar abrir un navegador aparte. El preview se actualiza en tiempo real conforme Claude Code realiza cambios.
+
+#### Monitorización de PRs con auto-merge
+
+Desde el panel de integración con GitHub/GitLab, puedes hacer seguimiento de pull requests activas. Cuando todos los checks de CI pasan, la app puede realizar el merge automáticamente según las condiciones que hayas configurado (aprobaciones necesarias, checks obligatorios, etcétera).
+
+#### Tareas programadas desde el cliente
+
+La app Desktop permite programar tareas recurrentes directamente desde la interfaz sin necesidad de configurarlas en la nube. Por ejemplo: "todos los lunes a las 9:00, ejecuta el análisis de deuda técnica en el proyecto X y envía el resumen al canal de Slack". Esto es distinto a las Routines de la nube, que se gestionan desde claude.ai.
+
+#### Sesiones SSH a máquinas remotas
+
+Puedes conectarte a servidores remotos o VMs directamente desde la app Desktop mediante SSH. Una vez conectado, Claude Code opera en el entorno remoto con las mismas capacidades que en local: lee archivos, ejecuta comandos y hace cambios en la máquina remota. Útil para depurar en staging o trabajar en entornos de desarrollo remoto.
+
+#### Handoff CLI → Desktop con `/desktop`
+
+Si empezaste una sesión en el CLI de terminal y quieres continuar con la interfaz visual de la app Desktop, el comando `/desktop` realiza el traspaso sin perder el contexto:
+
+```bash
+# Dentro de una sesión CLI activa
+/desktop
+```
+
+Claude Code abre la app Desktop (o la pone en primer plano si ya está abierta) y carga exactamente la sesión en curso, con todo su historial y estado. El CLI queda desconectado de esa sesión. Esto es especialmente útil cuando una tarea que empezó siendo simple se vuelve lo suficientemente compleja como para aprovechar la revisión de diffs visual o la preview integrada.
 
 ### 5. Web: claude.ai/code
 

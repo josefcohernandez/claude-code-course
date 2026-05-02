@@ -2,9 +2,9 @@
 
 ## Descripción general
 
-Este módulo cubre cómo integrar Claude Code en pipelines de automatización, sistemas de integración continua (CI) y despliegue continuo (CD). Aprenderemos a usar Claude Code en modo no interactivo, a configurar GitHub Actions con la acción oficial `claude-code-action@v1`, a crear workflows avanzados (revisión por rutas, tareas programadas y triaje de issues) y a crear scripts de automatización que potencien los flujos de trabajo de tu equipo.
+Este módulo cubre cómo integrar Claude Code en pipelines de automatización, sistemas de integración continua (CI) y despliegue continuo (CD). Aprenderemos a usar Claude Code en modo no interactivo, a configurar GitHub Actions con la acción oficial `claude-code-action@v1`, a crear workflows avanzados (revisión por rutas, tareas programadas y triaje de issues), a crear scripts de automatización que potencien los flujos de trabajo de tu equipo, y a aprovechar los servicios cloud de Anthropic (Routines, Code Review managed service, integraciones Slack y web) para automatizar sin infraestructura propia.
 
-**Tiempo estimado:** 2 horas y 20 minutos
+**Tiempo estimado:** 3 horas y 20 minutos
 
 ---
 
@@ -22,6 +22,9 @@ Al completar este módulo, serás capaz de:
 8. **Integrar Claude Code** en pipelines de CI/CD existentes (Jenkins, GitLab CI, etc.).
 9. **Controlar costes y límites** con `--max-turns` y `--max-budget-usd`.
 10. **Generar salida estructurada** con `--output-format json` y `--json-schema`.
+11. **Crear y configurar Routines** cloud con triggers de schedule, API HTTP y GitHub events.
+12. **Activar el Code Review managed service** y personalizar el comportamiento con `REVIEW.md`.
+13. **Invocar Claude Code desde Slack** con `@Claude` y desde la interfaz web de claude.ai.
 
 ---
 
@@ -36,6 +39,9 @@ Al completar este módulo, serás capaz de:
 | [03-scripts-y-automatizacion.md](teoria/03-scripts-y-automatizacion.md) | Scripts y patrones de automatización | 20 min |
 | [04-github-actions-avanzado.md](teoria/04-github-actions-avanzado.md) | Workflows avanzados: cron, rutas, triaje y multi-job | 20 min |
 | [05-cron-y-tareas-programadas.md](teoria/05-cron-y-tareas-programadas.md) | `CronCreate`, `/loop` y scheduling externo | 20 min |
+| [06-routines-cloud.md](teoria/06-routines-cloud.md) | Routines: automatización cloud sin sesión local | 20 min |
+| [07-code-review-managed.md](teoria/07-code-review-managed.md) | Code Review managed service: revisión de PRs sin CI propio | 20 min |
+| [08-integraciones-slack-y-web.md](teoria/08-integraciones-slack-y-web.md) | Claude Code en Slack y en la web | 20 min |
 
 ### Ejercicios prácticos
 
@@ -91,6 +97,13 @@ Al completar este módulo, serás capaz de:
 | **`CronCreate`** | Herramienta nativa para programar tareas recurrentes desde la sesión de Claude Code |
 | **`/loop`** | Skill para ejecutar un comando periódicamente durante una sesión activa |
 | **`claude ultrareview`** | Subcomando CLI (v2.1.120+) para ejecutar `/ultrareview` de forma no-interactiva en CI/scripts |
+| **Routines** | Sistema de automatización cloud de Anthropic: tareas programadas sin sesión local activa |
+| **API trigger** | Endpoint HTTP `/fire` de una Routine para dispararla desde scripts externos |
+| **GitHub events trigger** | Trigger de Routine que reacciona a eventos de PR, release o issue en GitHub |
+| **Code Review managed** | Servicio gestionado de revisión de PRs activado con `@claude review`; solo planes Team/Enterprise |
+| **`REVIEW.md`** | Fichero en la raíz del repo que personaliza el foco y el idioma del managed service |
+| **Findings** | Hallazgos del managed service: `Important`, `Nit` y `Pre-existing` |
+| **`@Claude` en Slack** | Integración que permite invocar Claude Code desde un canal de Slack |
 
 ---
 
@@ -101,11 +114,13 @@ Al completar este módulo, serás capaz de:
    |
 2. Ejercicios 01 y 02: scripts básicos + workflow básico (30 min)
    |
-3. Estudiar la teoría avanzada: workflows especializados (20 min)
+3. Estudiar la teoría avanzada: workflows especializados + cron (40 min)
    |
 4. Ejercicio 03: workflows avanzados (20 min)
    |
-5. Adaptar los workflows de ejemplo a tu proyecto real
+5. Estudiar servicios cloud: Routines, Code Review managed, Slack/web (60 min)
+   |
+6. Adaptar los workflows de ejemplo a tu proyecto real
 ```
 
 ---
