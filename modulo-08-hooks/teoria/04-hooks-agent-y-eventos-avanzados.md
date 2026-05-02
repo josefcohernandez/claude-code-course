@@ -37,6 +37,8 @@ Además de los hooks `command` (que ejecutan un script shell) y `prompt` (que en
 |------|---------------|-------|
 | `command` | Validaciones rápidas, scripts shell, formateo | Bajo (solo CPU local) |
 | `prompt` | Añadir contexto al modelo sin acción autónoma | Medio (tokens de entrada) |
+| `http` | Integraciones con webhooks externos | Bajo (petición HTTP) |
+| `mcp_tool` | Invocar herramientas MCP directamente sin script intermediario | Bajo (llamada directa al servidor MCP) |
 | `agent` | Análisis complejos, acciones que requieren herramientas | Alto (llama al modelo + consume tokens) |
 
 ### Casos de uso típicos para hooks agent
@@ -407,6 +409,41 @@ En este ejemplo, cada vez que el skill escribe un fichero, se ejecuta automátic
 - Los hooks globales (en `settings.json`) se activan en **todas las sesiones**
 - Si ambos aplican a la misma herramienta, **se ejecutan ambos** (no se cancelan)
 
+### Hooks de frontmatter cuando el agente corre como principal (v2.1.116)
+
+> **Novedad v2.1.116**
+
+Hasta esta versión, los hooks definidos en el frontmatter de un agente solo se activaban cuando ese agente era **invocado como subagente** (desde otro agente o desde un hook de tipo `agent`). Desde v2.1.116, los mismos hooks también se activan cuando el agente se lanza **como agente principal** mediante el flag `--agent`:
+
+```bash
+claude --agent .claude/agents/mi-agente.md
+```
+
+Esto permite que un agente tenga sus propios hooks de ciclo de vida independientemente de cómo se invoque, sin necesidad de duplicarlos en `settings.json`.
+
+**Ejemplo:** Un agente de revisión de código con hooks propios de formateo:
+
+```markdown
+---
+name: revisor-typescript
+description: Revisa y corrige código TypeScript siguiendo los estándares del proyecto
+hooks:
+  PostToolUse:
+    - matcher: Write(*.ts)
+      hooks:
+        - type: command
+          command: npx tsc --noEmit $FILEPATH 2>&1 | head -10
+---
+
+# Agente: Revisor TypeScript
+
+Revisa el código TypeScript que se te proporcione...
+```
+
+Con v2.1.116, los hooks de este agente se activan tanto cuando:
+- Otro agente lo invoca como subagente
+- Se lanza directamente con `claude --agent .claude/agents/revisor-typescript.md`
+
 ---
 
 ## Hooks async para operaciones largas
@@ -690,6 +727,7 @@ El comportamiento es automático y no requiere configuración. El fichero tempor
 - Los eventos avanzados (`SessionStart`, `SessionEnd`, `UserPromptSubmit`, `PermissionRequest`, `PostToolUseFailure`, `StopFailure`, `SubagentStart`, `TeammateIdle`, `TaskCompleted`, `Notification`) cubren todo el ciclo de vida de la sesión
 - Los **nuevos eventos v3.0** (`PostCompact`, `CwdChanged`, `FileChanged`, `InstructionsLoaded`, `ConfigChange`, `WorktreeCreate`, `WorktreeRemove`, `Elicitation`, `ElicitationResult`) amplían la cobertura a compactación, filesystem, configuración, worktrees y MCP Elicitation
 - Los hooks pueden definirse en el frontmatter YAML de skills y subagentes, con alcance limitado a su ejecución
+- Desde **v2.1.116**, los hooks del frontmatter de un agente también se activan cuando ese agente se lanza como principal con `--agent`, no solo cuando se usa como subagente
 - El parámetro `"async": true` permite ejecutar hooks en background para operaciones largas sin bloquear la sesión
 - `"timeout"` limita el tiempo máximo de ejecución de un hook async
 - Solo **exit 2** bloquea operaciones; exit 1 u otros códigos no-zero no bloquean

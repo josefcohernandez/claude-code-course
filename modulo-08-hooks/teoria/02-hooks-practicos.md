@@ -287,14 +287,49 @@ Recibir una notificación cuando Claude termina una tarea larga:
 
 ---
 
+## Hook 8: Registro de escrituras via MCP Tool
+
+> **Novedad v2.1.118**
+
+En lugar de escribir un script de logging, es posible invocar directamente una herramienta MCP de filesystem para registrar cada escritura. Esto elimina el proceso intermediario y simplifica la configuración:
+
+```json
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "mcp_tool",
+            "tool": "filesystem/log_write",
+            "input": {
+              "path": "/tmp/claude-writes.log",
+              "content": "Fichero escrito: {{ timestamp }}"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+La diferencia respecto al tipo `command` es que no se lanza ningún proceso bash: el hook llama directamente a la herramienta MCP `filesystem/log_write` del servidor `filesystem`. La variable de plantilla `{{ timestamp }}` se sustituye automáticamente por la fecha y hora del evento.
+
+Este tipo de hook es especialmente útil cuando ya se usa un servidor MCP de filesystem (como el servidor oficial `@modelcontextprotocol/server-filesystem`) y se quiere centralizar el logging sin añadir scripts auxiliares.
+
+---
+
 ## Resumen de Hooks
 
-| # | Propósito | Evento | Matcher | Sync? |
-|---|----------|--------|---------|-------|
-| 1 | Auto-formateo | PostToolUse | Write/Edit(*.ts) | Si |
-| 2 | Linter | PostToolUse | Edit(*.ts) | Si |
-| 3 | Tests auto | PostToolUse | Edit(src/**) | Si |
-| 4 | Logging | PostToolUse | (todos) | No (async) |
-| 5 | Bloquear protegido | PreToolUse | Write/Edit | Si |
-| 6 | Contexto crítico | PreCompact | - | Si |
-| 7 | Notificación | Stop | - | No (async) |
+| # | Propósito | Evento | Matcher | Tipo | Sync? |
+|---|----------|--------|---------|------|-------|
+| 1 | Auto-formateo | PostToolUse | Write/Edit(*.ts) | command | Si |
+| 2 | Linter | PostToolUse | Edit(*.ts) | command | Si |
+| 3 | Tests auto | PostToolUse | Edit(src/**) | command | Si |
+| 4 | Logging | PostToolUse | (todos) | command | No (async) |
+| 5 | Bloquear protegido | PreToolUse | Write/Edit | command | Si |
+| 6 | Contexto crítico | PreCompact | - | prompt | Si |
+| 7 | Notificación | Stop | - | command | No (async) |
+| 8 | Registro via MCP | PostToolUse | Write | mcp_tool | Si |

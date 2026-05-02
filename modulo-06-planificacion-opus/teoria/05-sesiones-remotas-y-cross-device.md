@@ -170,6 +170,35 @@ Al conectar desde claude.ai/code o la app móvil, la sesión mantiene acceso com
 - Variables de entorno del proyecto
 - La conversación se sincroniza en tiempo real entre dispositivos
 
+### Push Notifications Tool (v2.1.110)
+
+Cuando tienes Remote Control conectado, Claude puede enviar **notificaciones push** a tu dispositivo móvil para avisarte de que una tarea larga ha terminado o requiere tu atención.
+
+Esto es especialmente útil en workflows donde lanzas una operación prolongada (migración de base de datos, refactoring de módulo entero, suite completa de tests) y no quieres estar mirando la pantalla continuamente.
+
+**Cómo funciona:**
+
+1. Conecta Remote Control desde claude.ai/code o la app móvil (`/remote-control` en el terminal)
+2. Claude puede invocar la Push Notifications Tool de forma automática cuando detecta que la tarea ha finalizado o que necesita una decisión tuya
+3. Recibes una notificación push en tu dispositivo
+
+**Ejemplo de flujo:**
+
+```bash
+# En tu terminal local
+/remote-control
+# Claude Code muestra código QR — conéctate desde la app móvil
+
+# Lanzas una tarea larga
+> "Ejecuta la suite de tests de integración completa y avísame cuando termines"
+
+# Puedes alejarte de la pantalla
+# Cuando los tests terminan, recibes una notificación push en el móvil
+# Abres la app y ves el resultado sin necesidad de volver al terminal
+```
+
+> **Requisito:** Remote Control debe estar activo y conectado a claude.ai/code. Sin conexión activa, la notificación no puede enviarse.
+
 ### Diferencias con `--remote`
 
 | | `--remote` | Remote Control |
@@ -177,6 +206,7 @@ Al conectar desde claude.ai/code o la app móvil, la sesión mantiene acceso com
 | Ejecución | VM en la nube | Tu máquina local |
 | Acceso a filesystem | Solo repo subido | Completo (es local) |
 | Caso de uso | Trabajo sin máquina | Control desde móvil/web |
+| Push Notifications | No disponible | Sí (v2.1.110) |
 | Disponibilidad | General | Research preview, macOS |
 
 ### Computer Use + Remote Control
@@ -201,6 +231,7 @@ y ejecuta los tests de ese módulo". Claude controla tu máquina local y lo hace
 - `--remote` crea una sesión en la nube de Anthropic accesible desde cualquier navegador
 - `--teleport` reanuda una sesión remota activa en tu terminal local con acceso al filesystem
 - **Remote Control** conecta apps externas (web/iOS/Android) a tu sesión local, manteniendo acceso completo al entorno
+- **Push Notifications Tool** (v2.1.110) permite a Claude avisar a tu móvil cuando una tarea larga termina o requiere atención; requiere Remote Control conectado
 - **Computer Use** permite a Claude controlar teclado, ratón y navegador de tu máquina, combinable con Remote Control
 - Las sesiones remotas permiten compartir trabajo, continuar desde otros dispositivos y ejecutar tareas largas sin supervisión
 - `--fallback-model` garantiza continuidad cuando el modelo principal no está disponible

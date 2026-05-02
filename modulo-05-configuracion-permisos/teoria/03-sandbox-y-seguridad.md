@@ -89,6 +89,7 @@ sudo apt install bubblewrap
 | `sandbox.enabled: true` | Activar sandbox |
 | `sandbox.filesystem.allowRead` | Lista de rutas adicionales de solo lectura accesibles dentro del sandbox (v2.1.77+) |
 | `sandbox.network.allowedDomains` | Lista de dominios permitidos para acceso a red dentro del sandbox |
+| `sandbox.network.deniedDomains` | Lista de dominios bloqueados explícitamente, con prioridad sobre `allowedDomains` (v2.1.113+) |
 
 ```json
 {
@@ -111,6 +112,27 @@ sudo apt install bubblewrap
 ```
 
 La clave `sandbox.filesystem.allowRead` permite que procesos dentro del sandbox lean rutas adicionales fuera del directorio del proyecto (por ejemplo, fuentes del sistema o configuraciones compartidas). Las rutas listadas se montan como de solo lectura.
+
+### Bloquear dominios específicos con `deniedDomains` (v2.1.113)
+
+`sandbox.network.deniedDomains` permite bloquear dominios concretos aunque `allowedDomains` los cubriría con un wildcard. La denegación tiene prioridad absoluta sobre la lista de permitidos.
+
+Caso de uso típico: permitir acceso a un dominio completo pero excluir subdominios internos o sensibles.
+
+```json
+{
+  "sandbox": {
+    "network": {
+      "allowedDomains": ["*.example.com"],
+      "deniedDomains": ["internal.example.com", "secrets.example.com"]
+    }
+  }
+}
+```
+
+En este ejemplo, todos los subdominios de `example.com` son accesibles excepto `internal.example.com` y `secrets.example.com`, que se bloquean independientemente de lo que indique `allowedDomains`.
+
+**Regla de precedencia**: `deniedDomains` siempre gana sobre `allowedDomains`, igual que la regla `deny` del sistema de permisos general (ver [02-sistema-permisos.md](02-sistema-permisos.md)).
 
 ### Variables de entorno adicionales
 
@@ -189,4 +211,5 @@ Incluso sin sandbox, puedes mejorar la seguridad con:
 | Permisos deny | Comandos específicos | Bajo |
 | Hooks PreToolUse | Validación dinámica | Medio |
 | Sandbox | Aislamiento completo | Bajo (activar en settings) |
+| `sandbox.network.deniedDomains` | Bloqueo selectivo de dominios de red | Bajo |
 | Managed policies | Control corporativo | Admin |

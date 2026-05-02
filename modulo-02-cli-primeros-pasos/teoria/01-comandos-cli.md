@@ -389,6 +389,34 @@ claude -p \
   "Genera tests unitarios para todos los servicios en src/services/"
 ```
 
+### 3.6b Variables de Entorno Relevantes
+
+Algunas configuraciones de comportamiento se controlan mediante variables de entorno en lugar de flags. Las más útiles para el trabajo diario:
+
+| Variable | Descripción | Valores |
+|----------|-------------|---------|
+| `CLAUDE_CODE_NO_FLICKER` | Desactiva el parpadeo en la TUI. Equivalente a `/tui fullscreen` | `1` para activar |
+| `CLAUDE_CODE_ENABLE_AWAY_SUMMARY` | Controla el resumen automático al volver a una sesión inactiva | `0` para desactivar |
+| `CLAUDE_CODE_USE_POWERSHELL_TOOL` | Opt-in u opt-out explícito del PowerShell tool en Windows (el rollout es progresivo) | `1` para forzar activación, `0` para desactivar |
+
+**Ejemplos:**
+
+```bash
+# Desactivar parpadeo en terminales con problemas de renderizado
+export CLAUDE_CODE_NO_FLICKER=1
+claude
+
+# Forzar la activación del PowerShell tool en Windows (si aún no ha llegado por rollout)
+$env:CLAUDE_CODE_USE_POWERSHELL_TOOL = "1"
+claude
+
+# Desactivar el PowerShell tool aunque esté en rollout
+$env:CLAUDE_CODE_USE_POWERSHELL_TOOL = "0"
+claude
+```
+
+> **Nota sobre PowerShell tool (v2.1.111):** La herramienta PowerShell en Windows se despliega de forma progresiva. Si necesitas controlar explícitamente si está activa en tu instalación (en lugar de depender del rollout), usa `CLAUDE_CODE_USE_POWERSHELL_TOOL`.
+
 ### 3.7 Flags Avanzados
 
 Para casos de uso especializados y configuraciones avanzadas.

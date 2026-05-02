@@ -61,9 +61,10 @@ La variable de entorno `CLAUDE_CODE_EFFORT_LEVEL` controla cuánto razonamiento 
 | `low` | Respuesta rápida, razonamiento mínimo | Pocos | Todos los modelos |
 | `medium` | Balance entre velocidad y profundidad | Moderados | Todos los modelos |
 | `high` | Razonamiento profundo antes de responder **(default)** | Muchos | Todos los modelos |
-| `max` | Máximo razonamiento posible, sin límites | Máximos | **Solo Opus 4.6** |
+| `xhigh` | Razonamiento muy profundo, entre high y max | Muy altos | **Solo Opus 4.7** |
+| `max` | Máximo razonamiento posible, sin límites | Máximos | Opus 4.6 y 4.7 |
 
-> **Nota:** Desde v2.1.94, el nivel de esfuerzo por defecto es **high** para usuarios de API key, Bedrock, Vertex, Team y Enterprise. High proporciona razonamiento profundo adecuado para la mayoría de tareas de programación. Puedes reducirlo a `medium` o `low` para tareas simples donde priorices velocidad.
+> **Nota:** Desde v2.1.94, el nivel de esfuerzo por defecto es **high** para usuarios de API key, Bedrock, Vertex, Team y Enterprise. Desde v2.1.117, el default **high** también aplica a suscriptores **Pro y Max** cuando usan Opus 4.6/4.7 o Sonnet 4.6. Puedes reducirlo a `medium` o `low` para tareas simples donde priorices velocidad.
 
 ```bash
 # Configurar para la sesión actual
@@ -85,11 +86,16 @@ claude
 /effort low
 /effort medium
 /effort high
-/effort max          # Solo Opus 4.6
+/effort xhigh        # Solo Opus 4.7
+/effort max          # Opus 4.6 y 4.7
+
+# Usar /effort sin argumento abre un selector interactivo en la UI (v2.1.111)
+/effort
 
 # Flag CLI (al iniciar sesión)
 claude --effort high
-claude --effort max  # Solo Opus 4.6
+claude --effort xhigh  # Solo Opus 4.7
+claude --effort max    # Opus 4.6 y 4.7
 ```
 
 **Activar high effort para un solo turno con "ultrathink":**
@@ -173,9 +179,9 @@ claude --model claude-haiku-4-5-20251001
 - Fast Mode es una optimización de velocidad sobre Opus 4.6, no un cambio de modelo
 - Se activa con `/fast` en la sesión activa
 - Los modelos actuales son Opus 4.6 (1M tokens), Sonnet 4.6 y Haiku 4.5
-- `CLAUDE_CODE_EFFORT_LEVEL` (low/medium/high/max) controla la profundidad de razonamiento; el default es **high** (desde v2.1.94)
-- Usa `/effort` o `--effort` para cambiar el nivel durante o al iniciar una sesión
+- `CLAUDE_CODE_EFFORT_LEVEL` (low/medium/high/xhigh/max) controla la profundidad de razonamiento; el default es **high** (desde v2.1.94, extendido a Pro/Max en v2.1.117)
+- Usa `/effort` o `--effort` para cambiar el nivel durante o al iniciar una sesión; `/effort` sin argumento abre un selector interactivo (v2.1.111)
 - Incluye "ultrathink" en un prompt para activar high effort en un solo turno
-- El nivel `max` solo está disponible para Opus 4.6
+- El nivel `xhigh` es exclusivo de Opus 4.7; el nivel `max` está disponible en Opus 4.6 y 4.7
 - La tabla de decisión combina modelo + Fast Mode + esfuerzo según el tipo de tarea
-- Para tareas críticas: Opus, sin Fast Mode, esfuerzo high o max
+- Para tareas críticas: Opus, sin Fast Mode, esfuerzo high, xhigh o max

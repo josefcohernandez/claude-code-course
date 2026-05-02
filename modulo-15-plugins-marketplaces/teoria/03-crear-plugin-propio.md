@@ -322,6 +322,48 @@ claude plugin install deploy-safe@claude-plugins-official
 
 ---
 
+## Ciclo de Release con `claude plugin tag` (v2.1.118)
+
+El subcomando `claude plugin tag` crea un git tag de release para el plugin a partir de la versión declarada en el manifest. Forma parte del flujo de publicación de nuevas versiones.
+
+### Qué hace el comando
+
+1. Lee el campo `version` del manifest `.claude-plugin/plugin.json`
+2. Valida que la versión sigue el formato semver correcto
+3. Crea el git tag `v{version}` en el repositorio del plugin
+4. Muestra confirmación con el tag creado
+
+### Uso
+
+```bash
+# Dentro del directorio del plugin
+claude plugin tag
+
+# O especificando la ruta al directorio del plugin
+claude plugin tag --dir /ruta/al/plugin
+```
+
+### Flujo de publicación completo
+
+El ciclo habitual para publicar una nueva versión del plugin es:
+
+```bash
+# 1. Validar que el plugin es correcto antes de hacer el tag
+claude plugin validate
+
+# 2. Crear el git tag con la versión del manifest
+claude plugin tag
+
+# 3. Subir el tag al repositorio remoto para que el marketplace lo detecte
+git push origin --tags
+```
+
+Este flujo garantiza que el tag de release siempre corresponde a la versión declarada en el manifest, evitando inconsistencias entre el tag de git y el número de versión del plugin.
+
+> **Nota:** El paso de publicación a través del formulario web en platform.claude.com sigue siendo necesario para registrar el plugin en el marketplace. `claude plugin tag` automatiza únicamente la creación del tag en el repositorio git del plugin.
+
+---
+
 ## Versionado y Actualizaciones
 
 El versionado sigue semántica SemVer (`MAYOR.MENOR.PARCHE`):
@@ -363,4 +405,6 @@ claude plugin install deploy-safe@claude-plugins-official
 - Los skills se colocan en `skills/<nombre-skill>/SKILL.md`, los hooks en `hooks/hooks.json`, los agentes en `agents/`
 - Los servidores MCP se descubren automáticamente, no se declaran en el manifest
 - El ciclo de desarrollo local es: crear estructura -> probar con `claude --plugin-dir ./mi-plugin` -> iterar
-- La publicación se hace a través del formulario web en platform.claude.com (no existe comando CLI para publicar)
+- El ciclo de release es: `claude plugin validate` → `claude plugin tag` → `git push origin --tags`
+- `claude plugin tag` (v2.1.118) crea el git tag `v{version}` a partir del campo `version` del manifest, validando que sigue semver
+- La publicación en el marketplace se hace a través del formulario web en platform.claude.com (no existe comando CLI para publicar)

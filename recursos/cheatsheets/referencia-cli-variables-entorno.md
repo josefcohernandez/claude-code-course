@@ -152,6 +152,9 @@ claude
 | `ANTHROPIC_SMALL_FAST_MODEL` | nombre de modelo | Haiku | **[DEPRECATED]** Modelo usado para táreas rápidas y subagentes ligeros |
 | `MAX_THINKING_TOKENS` | número | — | Limita el número de tokens de razonamiento interno (extended thinking). Útil para controlar costes cuando el extended thinking está activo |
 | `DISABLE_PROMPT_CACHING` | `1` | — | Desactiva el prompt caching. Útil en regiónes de Bedrock donde el caching no está disponible |
+| `ENABLE_PROMPT_CACHING_1H` | `1` | — | Activa un TTL de caché de 1 hora para prompt caching. Disponible en API key directa, Amazon Bedrock, Google Vertex AI y Anthropic Foundry. Depreca `ENABLE_PROMPT_CACHING_1H_BEDROCK` (v2.1.108) |
+| `FORCE_PROMPT_CACHING_5M` | `1` | — | Fuerza el TTL de caché a 5 minutos. Útil para testing. No usar junto con `ENABLE_PROMPT_CACHING_1H` (v2.1.108) |
+| `ENABLE_PROMPT_CACHING_1H_BEDROCK` | `1` | — | **[DEPRECATED desde v2.1.108]** Activaba el TTL de caché de 1 hora exclusivamente en Bedrock. Migrar a `ENABLE_PROMPT_CACHING_1H`, que funciona en todos los proveedores. Sigue funcionando pero se recomienda migrar |
 
 ---
 
@@ -169,6 +172,7 @@ claude
 | `CLAUDE_CODE_SCRIPT_CAPS` | número | — | Limita el número máximo de invocaciones de script (Bash tool) por sesión. Útil como medida de seguridad para evitar bucles infinitos o uso excesivo de shell (v2.1.98) |
 | `TRACEPARENT` | string (auto) | — | Variable W3C inyectada automáticamente en subprocesos Bash cuando OTEL tracing está activo. Permite propagar el contexto de trazas distribuidas a herramientas externas invocadas por Claude (v2.1.98) |
 | `CLAUDE_STREAM_IDLE_TIMEOUT_MS` | número (ms) | `90000` (90s) | Timeout del watchdog de streaming idle. Controla cuanto tiempo espera Claude Code antes de considerar una conexion de streaming como inactiva y cancelarla |
+| `CLAUDE_CODE_USE_POWERSHELL_TOOL` | `1` / `0` | — | Opt-in u opt-out explícito del PowerShell tool en Windows (en rollout progresivo). Poner a `1` para forzar la activación, `0` para forzar la desactivación (v2.1.111) |
 
 ### Ejemplo: ajuste de timeouts para CI
 
@@ -227,6 +231,7 @@ export OTEL_SERVICE_NAME="claude-code-mi-equipo"
 | `OTEL_LOG_USER_PROMPTS` | `1` | — | Incluye los prompts del usuario en las trazas de OpenTelemetry. Por defecto desactivado por privacidad (v2.1.101) |
 | `OTEL_LOG_TOOL_DETAILS` | `1` | — | Alias simplificado de `CLAUDE_CODE_OTEL_LOG_TOOL_DETAILS`. Incluye parametros de herramientas en trazas OTEL (v2.1.101) |
 | `OTEL_LOG_TOOL_CONTENT` | `1` | — | Incluye el contenido completo de resultados de herramientas en trazas OTEL. Puede generar un volumen alto de datos (v2.1.101) |
+| `OTEL_LOG_RAW_API_BODIES` | `1` | — | Incluye los cuerpos completos de las peticiones y respuestas API en los logs de OpenTelemetry. Útil para debugging detallado pero aumenta significativamente el volumen de logs (v2.1.111) |
 
 ---
 
@@ -243,6 +248,7 @@ export OTEL_SERVICE_NAME="claude-code-mi-equipo"
 | Variable | Valores | Defecto | Descripción |
 |----------|---------|---------|-------------|
 | `CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION` | `true` / `false` | `true` | Activa o desactiva las sugerencias de prompts que aparecen en gris. Desactivar ahorra tokens cuando la cache está fría |
+| `CLAUDE_CODE_ENABLE_AWAY_SUMMARY` | `0` / `1` | `1` | Controla la feature de resumen automático (`/recap`). Activa por defecto. Poner a `0` para desactivar el resumen de sesión (v2.1.108) |
 
 ---
 
@@ -273,6 +279,8 @@ export OTEL_SERVICE_NAME="claude-code-mi-equipo"
 | `ENABLE_TOOL_SEARCH` | `auto:N` | — | Activa Tool Search al N% del contexto. Ejemplo: `auto:5` activa la búsqueda cuando el contexto supera el 5% de uso |
 | `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS` | `1` | — | Desactiva el uso de betas experimentales de la API |
 | `CLAUDE_CODE_SIMPLE` | `1` | — | Activa el modo simplificado de Claude Code |
+| `CLAUDE_CODE_FORK_SUBAGENT` | `1` | — | Habilita los subagentes bifurcados en builds externas (no-oficiales) de Claude Code. Solo relevante para distribuciones custom; en la distribución oficial este comportamiento se controla internamente (v2.1.117) |
+| `DISABLE_UPDATES` | `1` | — | Bloquea todas las rutas de actualización de Claude Code, incluyendo las actualizaciones automáticas y el comando `claude update` manual. Útil en entornos enterprise donde las actualizaciones se gestionan centralizadamente (v2.1.118) |
 
 ---
 

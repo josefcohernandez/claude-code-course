@@ -283,7 +283,18 @@ claude_tutorial/
 | 3.3 | 28 marzo 2026 | Claude Code 2.1.86 | Header X-Claude-Code-Session-Id, skill descriptions 250 chars, 18 correcciones verificadas |
 | 3.4 | 29 marzo 2026 | Claude Code 2.1.87 | Consolidación deuda técnica: `allowRead` sandbox, `${CLAUDE_PLUGIN_DATA}`, `effort` frontmatter |
 | 3.5 | 7 abril 2026 | Claude Code 2.1.92 | Hook PermissionDenied, defer en PreToolUse, MCP maxResultSizeChars, /powerup, forceRemoteSettingsRefresh, plugin bin/, 2 deprecaciones |
+| 3.7 | 24 abril 2026 | Claude Code 2.1.118 | /recap, /tui fullscreen, /focus separado, temas personalizados, xhigh effort, push notifications, auto mode sin flag, /less-permission-prompts, hooks mcp_tool, Skill tool→slash commands, ENABLE_PROMPT_CACHING_1H, plugin tag, /ultrareview, 6 env vars nuevas |
 | 3.6 | 14 abril 2026 | Claude Code 2.1.107 | Effort default high, wizard Vertex AI, Monitor tool, /team-onboarding, OS CA trust, monitors en plugins, PreCompact blocking, 8 env vars nuevas |
+
+### Novedades v3.7 (24 abril 2026)
+
+**Features cubiertas (v2.1.108-v2.1.118):** `/recap` + session recap configurable (M02), `/tui fullscreen` + `autoScrollEnabled` (M02), `/focus` separado + cambio `Ctrl+O` (M02), temas personalizados `/theme` + tema "Auto" (M02), push notifications con Remote Control (M06), nivel `xhigh` para Opus 4.7 (M06), `/effort` slider interactivo (M06), effort default `high` para Pro/Max (M06), Auto Mode sin `--enable-auto-mode` para Max+Opus4.7 (M05), `/less-permission-prompts` skill (M05), `sandbox.network.deniedDomains` (M05), bash read-only globs sin prompt (M05), `"$defaults"` en reglas autoMode (M05), hooks `type: "mcp_tool"` (M08), agent frontmatter `hooks:` en modo principal (M08/M09), modelo invoca slash commands via Skill tool (M09), `mcpServers` en frontmatter agente principal (M09), `CLAUDE_CODE_FORK_SUBAGENT` (M09), `ENABLE_PROMPT_CACHING_1H` + `FORCE_PROMPT_CACHING_5M` + deprecación `ENABLE_PROMPT_CACHING_1H_BEDROCK` (M03), `wslInheritsWindowsSettings` (M11), `blockedMarketplaces`/`strictKnownMarketplaces` enforcement (M11), OTEL `command_name`/`effort` (M11), `claude plugin tag` (M15)
+
+**Nuevas env vars:** `ENABLE_PROMPT_CACHING_1H`, `FORCE_PROMPT_CACHING_5M`, `CLAUDE_CODE_ENABLE_AWAY_SUMMARY`, `CLAUDE_CODE_FORK_SUBAGENT`, `OTEL_LOG_RAW_API_BODIES`, `DISABLE_UPDATES`, `CLAUDE_CODE_USE_POWERSHELL_TOOL`
+
+**Nuevos slash commands:** `/recap`, `/tui`, `/focus`, `/undo`, `/ultrareview`, `/less-permission-prompts`, `/usage`, `/color`
+
+**Vim:** visual mode `v` y visual-line mode `V`
 
 ### Novedades v3.6 (14 abril 2026)
 

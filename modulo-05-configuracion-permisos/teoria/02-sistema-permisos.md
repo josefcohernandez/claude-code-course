@@ -227,6 +227,37 @@ Ejemplo:
 
 ---
 
+## Comandos bash de solo lectura con globs (v2.1.111)
+
+Los comandos bash que son de solo lectura y usan patrones glob —como `ls src/**/*.ts`, `find . -name "*.json"` o `cat config/*.yaml`— ya no generan prompt de confirmación al usuario aunque la herramienta `Bash` esté catalogada como `ask`. Claude Code los reconoce como operaciones de exploración sin efecto secundario y los ejecuta directamente.
+
+Esto simplifica el workflow en tareas de análisis e inspección del proyecto sin necesidad de añadir reglas `allow` explícitas para cada variante de comando de lectura.
+
+```bash
+# Estos comandos ya no piden confirmación aunque Bash sea "ask":
+ls src/**/*.ts
+find . -name "*.json" -not -path "*/node_modules/*"
+cat config/*.yaml
+grep -r "TODO" src/**/*.ts
+```
+
+Las operaciones que escriben, modifican o ejecutan efectos secundarios siguen requiriendo confirmación o una regla `allow` explícita.
+
+---
+
+## Reducir prompts repetitivos con `/less-permission-prompts`
+
+Cuando el usuario aprueba los mismos comandos repetidamente en cada sesión, la skill `/less-permission-prompts` analiza los transcripts recientes y propone automáticamente qué añadir a la `allow` list de `.claude/settings.json`:
+
+```bash
+# En sesión interactiva
+/less-permission-prompts
+```
+
+Claude Code genera una propuesta de permisos basada en el historial de aprobaciones. El usuario la revisa y confirma antes de que se escriba en el fichero. Ver [05-auto-mode.md](05-auto-mode.md) para más detalles sobre esta skill.
+
+---
+
 ## Ver y Modificar Permisos
 
 ```bash

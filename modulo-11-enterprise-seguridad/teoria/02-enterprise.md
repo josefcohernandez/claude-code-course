@@ -59,6 +59,28 @@ C:\Program Files\ClaudeCode\managed-settings.json          # Windows
 | Variables de entorno | Variables forzadas para todas las sesiones | `"env": {"SANDBOX": "1"}` |
 | Servidores MCP | Servidores MCP obligatorios o bloqueados | Ver sección MCP gestionado |
 
+### Herencia de políticas Windows en WSL: `wslInheritsWindowsSettings` (v2.1.118)
+
+En entornos Windows con WSL (Windows Subsystem for Linux), los administradores de IT pueden mantener una **única fuente de verdad** para las políticas gestionadas usando la clave `wslInheritsWindowsSettings`:
+
+```json
+{
+  "wslInheritsWindowsSettings": true
+}
+```
+
+Cuando esta clave está activa en el `managed-settings.json` de Windows (`C:\Program Files\ClaudeCode\managed-settings.json`), Claude Code ejecutándose dentro de WSL hereda automáticamente esa configuración gestionada. El resultado es que la política definida en Windows se aplica también a todas las sesiones de Claude Code dentro de WSL, sin necesidad de mantener un fichero de políticas separado en `/etc/claude-code/managed-settings.json` dentro de la distribución WSL.
+
+| Escenario | Sin `wslInheritsWindowsSettings` | Con `wslInheritsWindowsSettings` |
+|-----------|--------------------------------|----------------------------------|
+| Políticas en Windows | Se aplican solo a sesiones Windows | Se aplican también a sesiones WSL |
+| Políticas en WSL (`/etc/claude-code/`) | Independientes de Windows | Complementarias (se fusionan) |
+| Mantenimiento | Dos ficheros a sincronizar | Un único fichero fuente de verdad |
+
+> **Caso de uso**: Organizaciones donde los desarrolladores usan Claude Code tanto desde PowerShell/Windows Terminal como desde distribuciones WSL (Ubuntu, Debian). Con esta clave, el equipo de IT despliega las políticas una sola vez en el lado Windows y se aplican de forma consistente en ambos entornos.
+
+---
+
 ### Jerarquía de configuración
 
 Las políticas gestionadas tienen la **máxima prioridad**:
@@ -341,6 +363,39 @@ Aspectos que se pueden auditar:
 
 > **Novedad v3.2 (v2.1.85):** Para incluir los parámetros de las herramientas en los eventos `tool_result` de OpenTelemetry, activa la variable `CLAUDE_CODE_OTEL_LOG_TOOL_DETAILS=1`. Por defecto estos datos no se incluyen para evitar exponer información sensible en los logs de observabilidad.
 
+### Campos de trazabilidad en eventos OTEL (v2.1.117)
+
+Desde v2.1.117, los eventos de OpenTelemetry incluyen campos adicionales que mejoran la trazabilidad de las sesiones:
+
+**Campos `command_name` y `command_source` en eventos `user_prompt`**
+
+Cuando un prompt se genera desde un slash command (por ejemplo, `/review` o un skill personalizado), el evento `user_prompt` incluye ahora los campos `command_name` y `command_source`. Esto permite saber exactamente qué slash command originó cada prompt, sin necesidad de parsear el contenido del propio prompt:
+
+```json
+{
+  "event": "user_prompt",
+  "command_name": "review",
+  "command_source": "project",
+  "tokens": 1240
+}
+```
+
+**Atributo `effort` en eventos de coste y API**
+
+El atributo `effort` (nivel de esfuerzo del modelo) se añade ahora a los eventos `cost.usage`, `token.usage`, `api_request` y `api_error`. Esto permite correlacionar el nivel de esfuerzo configurado con el coste real y el consumo de tokens, facilitando el análisis de la relación esfuerzo-coste en los dashboards de observabilidad.
+
+```json
+{
+  "event": "cost.usage",
+  "effort": "high",
+  "input_tokens": 12500,
+  "output_tokens": 3200,
+  "cost_usd": 0.0487
+}
+```
+
+---
+
 ### Variables OTEL ampliadas (v2.1.101)
 
 Desde v2.1.101 están disponibles tres nuevas variables de tracing que ofrecen control granular sobre el nivel de detalle en las trazas OpenTelemetry:
@@ -622,3 +677,7 @@ Auto Mode permite que Claude Code tome decisiones de permisos automáticamente u
 | `TRACEPARENT` W3C | Propagación de traza en subprocesos Bash | Todos (v2.1.98) |
 | OS CA certificate store | Confianza automática en CAs corporativas | Todos (v2.1.101) |
 | `CLAUDE_CODE_CERT_STORE=bundled` | Revertir a certificados bundled únicamente | Todos (v2.1.101) |
+| `wslInheritsWindowsSettings` | Herencia de políticas Windows en sesiones WSL | Enterprise (v2.1.118) |
+| `command_name`/`command_source` en OTEL | Trazabilidad de slash commands en eventos `user_prompt` | Todos (v2.1.117) |
+| Atributo `effort` en OTEL | Correlación esfuerzo-coste en eventos de uso y API | Todos (v2.1.117) |
+| `blockedMarketplaces`/`strictKnownMarketplaces` | Bloqueo efectivo en operaciones de instalación de plugins | Enterprise (v2.1.117) |

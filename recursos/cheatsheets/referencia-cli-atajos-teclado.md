@@ -34,7 +34,7 @@ Ejecuta `/terminal-setup` en Claude Code para configurar automáticamente los ke
 | `Ctrl+G` | Todas | Abre el prompt o una respuesta personalizada en el editor de texto por defecto | Modo interactivo |
 | `Ctrl+X Ctrl+E` | Todas | Abre el editor externo configurado en `$EDITOR` para redactar el prompt actual. Al guardar y cerrar, el contenido se inserta en el prompt | Prompt |
 | `Ctrl+L` | Todas | Limpia la pantalla del terminal (conserva el historial de conversación) | Modo interactivo |
-| `Ctrl+O` | Todas | Alterna el output verbose (muestra el uso detallado de herramientas y ejecución). En modo `NO_FLICKER` (v2.1.97), activa una focus view que muestra solo el prompt, resumen de herramientas y respuesta final | Modo interactivo |
+| `Ctrl+O` | Todas | Alterna entre transcripción normal y transcripción verbose (muestra el uso detallado de herramientas y ejecución). **Cambio en v2.1.110**: antes activaba la focus view; ahora esa función se activa con `/focus`. | Modo interactivo |
 | `Ctrl+R` | Todas | Búsqueda inversa en el historial de comandos (búsqueda interactiva) | Prompt |
 | `Ctrl+B` | Todas | Mueve comandos o agentes en ejecución al segundo plano. **Usuarios de tmux: pulsar dos veces** | Modo interactivo |
 | `Ctrl+T` | Todas | Muestra u oculta la lista de táreas en el área de estado del terminal | Modo interactivo |
@@ -223,6 +223,18 @@ Activa el modo de edición Vim con `/vim` o configuralo permanentemente en `/con
 | `<<` | Reduce la indentacion |
 | `J` | Une líneas |
 | `.` | Repite el último cambio |
+
+### Modos visuales (v2.1.118)
+
+Permiten seleccionar texto y aplicar operadores (`d`, `y`, `c`, etc.) sobre la selección. Ambos modos muestran feedback visual en la UI.
+
+| Comando | Acción | Desde modo |
+|---------|--------|-----------|
+| `v` | Activa el modo VISUAL (selección carácter a carácter) | NORMAL |
+| `V` | Activa el modo VISUAL LINE (selección línea a línea) | NORMAL |
+| `Esc` | Sale del modo visual y vuelve a NORMAL | VISUAL / VISUAL LINE |
+
+Una vez activa la selección, aplica operadores estándar de Vim: `d` para borrar, `y` para copiar, `c` para cambiar.
 
 ### Objetos de texto en modo NORMAL
 

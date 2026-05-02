@@ -300,9 +300,29 @@ Skill tool call:
   args: "--env=staging --version=2.1.0"
 ```
 
+### Slash Commands integrados del sistema vía Skill tool (v2.1.108)
+
+Desde la versión 2.1.108, el modelo puede **descubrir e invocar slash commands integrados del sistema** directamente a través de la herramienta `Skill`. Esto incluye comandos como `/init`, `/review`, `/security-review` y otros comandos built-in de Claude Code.
+
+**Significado práctico:** antes de esta versión, comandos como `/review` o `/security-review` solo podían ejecutarse si el usuario los invocaba explícitamente. Ahora Claude puede invocarlos de forma autónoma cuando detecta que son apropiados para la tarea en curso — por ejemplo, lanzar `/security-review` automáticamente al detectar cambios en código de autenticación, o ejecutar `/review` antes de crear un commit.
+
+```
+Skill tool call:
+  skill: "/security-review"
+  args: "src/auth/"
+```
+
+```
+Skill tool call:
+  skill: "/init"
+  args: ""
+```
+
+Esto amplía el concepto de skills más allá de los archivos `SKILL.md` de usuario: los comandos built-in del sistema son ahora también skills invocables por el modelo, unificando la forma en que Claude accede a capacidades predefinidas.
+
 ### Invocación Automática
 
-Si Claude detecta que tu petición coincide con la descripción de un skill existente, puede sugerirte usarlo o invocarlo automáticamente (dependiendo de la configuración de permisos).
+Si Claude detecta que tu petición coincide con la descripción de un skill existente (incluidos los comandos integrados del sistema), puede sugerirte usarlo o invocarlo automáticamente (dependiendo de la configuración de permisos).
 
 ---
 
@@ -509,4 +529,5 @@ Este skill se ejecuta en un subagente (`context: fork`) porque:
 | `effort` | Nivel de esfuerzo de razonamiento: `"low"`, `"medium"`, `"high"` |
 | `disable-model-invocation` | Si es `true`, devuelve el texto sin ejecutar |
 | Invocación | `/nombre-del-skill` o Skill tool |
+| Slash commands integrados | `/init`, `/review`, `/security-review` etc. invocables vía Skill tool (v2.1.108) |
 | vs CLAUDE.md | CLAUDE.md = siempre; Skills = bajo demanda |

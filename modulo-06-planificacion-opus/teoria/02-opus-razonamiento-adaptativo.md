@@ -1,8 +1,8 @@
-# 02 - Opus 4.6 y Razonamiento Adaptativo
+# 02 - Opus 4.7 y Razonamiento Adaptativo
 
-## Qué es Opus 4.6
+## Qué es Opus 4.7
 
-Opus 4.6 es el modelo más capaz de Anthropic. Su característica principal
+Opus 4.7 es el modelo más capaz de Anthropic. Su característica principal
 es el **razonamiento adaptativo**: ajusta automáticamente la profundidad
 de su razonamiento según la complejidad de la tarea.
 
@@ -10,16 +10,19 @@ de su razonamiento según la complejidad de la tarea.
 
 ## Razonamiento Adaptativo
 
-### 4 Niveles de Esfuerzo
+### 5 Niveles de Esfuerzo
 
 | Nivel | Cuándo | Ejemplo |
 |-------|--------|---------|
 | **Bajo (low)** | Tareas simples, respuestas directas | "¿Qué hace git status?" |
 | **Medio (medium)** | Tareas con algo de complejidad | "Refactoriza esta función a async" |
 | **Alto (high)** | Problemas complejos, multi-archivo **(default)** | "Diseña sistema de permisos RBAC" |
-| **Máximo (max)** | Razonamiento sin límites (**solo Opus 4.6**) | "Analiza y resuelve esta condición de carrera en el sistema distribuido" |
+| **Extra alto (xhigh)** | Razonamiento muy profundo (**solo Opus 4.7**) | "Analiza el impacto de rendimiento de este cambio en el sistema distribuido" |
+| **Máximo (max)** | Razonamiento sin límites | "Analiza y resuelve esta condición de carrera en el sistema distribuido" |
 
-Opus decide automáticamente cuánto "pensar" basándose en la complejidad. Desde v2.1.94, el nivel por defecto es **high** para usuarios de API key, Bedrock, Vertex, Team y Enterprise.
+Opus decide automáticamente cuánto "pensar" basándose en la complejidad. Desde v2.1.94, el nivel por defecto es **high** para usuarios de API key, Bedrock, Vertex, Team y Enterprise. Desde v2.1.117, el default **high** también aplica a suscriptores **Pro y Max** cuando usan Opus 4.6/4.7 o Sonnet 4.6.
+
+> El nivel `xhigh` es exclusivo de Opus 4.7 y se sitúa entre `high` y `max`. Ofrece razonamiento más profundo que `high` sin llegar al máximo absoluto de `max`, lo que lo hace útil cuando `high` no es suficiente pero el coste de `max` no está justificado.
 
 > **Tip:** Para activar razonamiento profundo en un solo turno sin cambiar la configuración de la sesión, incluye la keyword **"ultrathink"** en tu prompt.
 
@@ -34,8 +37,9 @@ Si necesitas forzar razonamiento extendido, puedes usar:
 | Método | Cómo |
 |--------|------|
 | Atajo de teclado | `Alt+T` (toggle) |
-| Slash command | `/effort high` o `/effort max` (max solo para Opus) |
-| Flag CLI | `--effort high` o `--effort max` |
+| Slash command | `/effort high`, `/effort xhigh` (Opus 4.7) o `/effort max` |
+| Slash command sin argumento | `/effort` abre un selector interactivo en la UI (v2.1.111) |
+| Flag CLI | `--effort high`, `--effort xhigh` (Opus 4.7) o `--effort max` |
 | Keyword por turno | Incluir "ultrathink" en el prompt |
 
 Extended thinking sigue siendo útil para:
@@ -53,8 +57,9 @@ Extended thinking sigue siendo útil para:
 | **Haiku 4.5** | $1/$5 | Commit messages, formateo, tareas triviales | Cualquier cosa que requiera razonamiento |
 | **Sonnet 4.6** | $3/$15 | Desarrollo diario, features, tests, refactoring | Decisiones arquitectónicas complejas |
 | **Opus 4.6** | $5/$25 | Planificación, debug complejo, arquitectura | Tareas rutinarias (~1.7x más caro que Sonnet) |
+| **Opus 4.7** | $5/$25 | Como Opus 4.6 + nivel `xhigh` disponible | Tareas rutinarias |
 
-> **Nota v3.0:** Opus 4.6 ahora soporta hasta **128K tokens de salida** (duplicado desde 64K). Sonnet 4.6 alcanza **1M de contexto** en beta con 64K tokens de salida.
+> **Nota:** Opus 4.6 soporta hasta **128K tokens de salida**. Sonnet 4.6 alcanza **1M de contexto** en beta con 64K tokens de salida. Opus 4.7 añade el nivel de esfuerzo `xhigh` que no está disponible en versiones anteriores.
 
 ### Árbol de Decisión
 
@@ -172,5 +177,8 @@ cobertura exhaustiva.
 90% del trabajo → Sonnet ($3/$15)
 Planificación   → Opus o opusplan
 Tareas triviales → Haiku ($1/$5)
-Debug complejo  → Opus con effort high/max o "ultrathink"
+Debug complejo  → Opus con effort high/xhigh/max o "ultrathink"
+xhigh           → Solo Opus 4.7, entre high y max
+/effort solo    → Abre selector interactivo en la UI (v2.1.111)
+Default high    → API key, Bedrock, Vertex, Team, Enterprise, Pro y Max (v2.1.117)
 ```

@@ -143,7 +143,7 @@ El stream emite varios tipos de eventos a lo largo de la ejecución:
 #### Evento de sistema (inicio)
 
 ```json
-{"type":"system","subtype":"init","session_id":"550e8400-e29b-41d4-a716-446655440000","model":"claude-sonnet-4-6","cwd":"/home/usuario/proyecto","tools":["Read","Edit","Bash","Glob","Grep"]}
+{"type":"system","subtype":"init","session_id":"550e8400-e29b-41d4-a716-446655440000","model":"claude-sonnet-4-6","cwd":"/home/usuario/proyecto","tools":["Read","Edit","Bash","Glob","Grep"],"plugin_errors":[]}
 ```
 
 | Campo | Descripción |
@@ -154,6 +154,7 @@ El stream emite varios tipos de eventos a lo largo de la ejecución:
 | `model` | Modelo usado |
 | `cwd` | Directorio de trabajo |
 | `tools` | Herramientas disponibles |
+| `plugin_errors` | Lista de errores de carga de plugins (v2.1.111). Array vacío si todos los plugins cargaron correctamente; contiene strings descriptivos de error si algún plugin falló al inicializar |
 
 #### Evento de asistente (respuesta en streaming)
 

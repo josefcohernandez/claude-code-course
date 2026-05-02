@@ -34,7 +34,7 @@
 | Flag | Alias | Tipo | Descripción | Ejemplo |
 |------|-------|------|-------------|---------|
 | `--model` | — | string | Modelo para la sesión. Acepta alias (`sonnet`, `opus`) o nombre completo | `claude --model claude-opus-4-6` |
-| `--effort` | — | string | Nivel de esfuerzo: `low`, `medium`, `high`, `max` (Opus 4.6 solo). No persiste en settings | `claude --effort high` |
+| `--effort` | — | string | Nivel de esfuerzo: `low`, `medium`, `high`, `xhigh` (solo Opus 4.7, v2.1.111), `max` (solo Opus 4.6). No persiste en settings | `claude --effort high` |
 | `--fallback-model` | — | string | **Solo print.** Modelo de fallback si el principal está sobrecargado | `claude -p --fallback-model sonnet "query"` |
 
 ### Herramientas y permisos
@@ -134,7 +134,7 @@
 | `--betas` | — | string[] | Cabeceras beta a incluir en las peticiones API (solo usuarios con API key) | `claude --betas interleaved-thinking` |
 | `--debug` | — | string | Activa modo debug con filtrado opcional de categorias (ej: `"api,hooks"` o `"!statsig,!file"`) | `claude --debug "api,mcp"` |
 | `--version` | `-v` | boolean | Muestra la versión instalada de Claude Code | `claude -v` |
-| `--enable-auto-mode` | — | boolean | Desbloquea Auto Mode en el ciclo de `Shift+Tab`. Requiere plan Team y Claude Sonnet 4.6 o Opus 4.6 | `claude --enable-auto-mode` |
+| `--enable-auto-mode` | — | boolean | Desbloquea Auto Mode en el ciclo de `Shift+Tab`. Requiere plan Team y Claude Sonnet 4.6 o Opus 4.6. **Legacy desde v2.1.111**: los usuarios del plan Max con Opus 4.7 tienen Auto Mode disponible directamente sin necesidad de este flag | `claude --enable-auto-mode` |
 | `--tmux` | — | string | Crea una sesión tmux para el worktree. Requiere `--worktree`. Usa paneles nativos de iTerm2 si está disponible; pasar `--tmux=classic` para tmux tradicional | `claude -w feature --tmux` |
 | `--dangerously-load-development-channels` | — | boolean | Habilita canales no incluidos en la allowlist aprobada para desarrollo local | `claude --dangerously-load-development-channels` |
 

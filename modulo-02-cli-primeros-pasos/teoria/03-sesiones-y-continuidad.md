@@ -151,6 +151,31 @@ Además, los **deep links** con el protocolo `claude-cli://` ahora abren directa
 
 ---
 
+## Resumen de Sesión al Volver (`/recap`)
+
+> **Novedad v2.1.108**
+
+Cuando vuelves a una sesión después de una pausa, Claude Code puede mostrar automáticamente un resumen del estado de la conversación: qué se estaba haciendo, qué decisiones se tomaron y en qué punto quedó el trabajo. Esto evita tener que releer el historial completo.
+
+El resumen se activa en cuanto reanudas una sesión que lleva tiempo inactiva. También puedes solicitarlo manualmente en cualquier momento con el comando `/recap`.
+
+**Configuración desde `/config`:**
+
+```
+> /config
+```
+
+Dentro de la configuración puedes activar o desactivar esta función. También puedes controlarla con una variable de entorno:
+
+```bash
+# Desactivar el resumen automático al volver
+export CLAUDE_CODE_ENABLE_AWAY_SUMMARY=0
+```
+
+Si trabajas en sesiones largas o cambias frecuentemente entre proyectos, mantener el resumen activado reduce el tiempo de orientación al retomar el trabajo.
+
+---
+
 ## PowerShell Tool para Windows
 
 > **Novedad v3.1 (v2.1.84, opt-in preview)**

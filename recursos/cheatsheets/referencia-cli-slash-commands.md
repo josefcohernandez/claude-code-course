@@ -28,7 +28,9 @@ Los slash commands se invocan escribiendo `/` seguido del nombre del comando en 
 |---------|----------|-------------|-------|
 | `/clear` | `/clear` | Limpia el historial de conversación y libera el contexto. **El hábito más importante para controlar costes** | Alias: `/reset`, `/new` |
 | `/compact` | `/compact [instrucciones]` | Compacta la conversación con instrucciones de foco opcionales. Claude resume el contexto anterior preservando lo indicado | Sin instrucciones compacta con criterio propio; con instrucciones preserva lo especificado |
-| `/resume` | `/resume [sesión]` | Reanuda una conversación por ID o nombre, o abre el selector de sesiones | Alias: `/continue` |
+| `/recap` | `/recap` | Muestra un resumen del estado de la conversación actual. Útil al retomar sesiones después de una pausa. Claude también genera este resumen automáticamente al detectar inactividad prolongada. Configurable en `/config`. Relacionado con `CLAUDE_CODE_ENABLE_AWAY_SUMMARY` | v2.1.108 |
+| `/resume` | `/resume [sesión]` | Reanuda una conversación por ID o nombre, o abre el selector de sesiones. El picker muestra por defecto las sesiones del directorio actual; `Ctrl+A` para mostrar todas. Ofrece resumir sesiones muy grandes antes de releerlas | Alias: `/continue`. Mejorado en v2.1.108 y v2.1.117 |
+| `/undo` | `/undo` | Deshace el último turno de conversación | Alias de `/rewind`. v2.1.108 |
 | `/rename` | `/rename [nombre]` | Renombra la sesión actual y muestra el nombre en la barra del prompt. Sin nombre, auto-genera uno a partir del historial | El nombre aparece en `/resume` y en el título del terminal |
 | `/rewind` | `/rewind` | Retrocede la conversación y/o el código a un punto anterior, o resume desde un mensaje seleccionado | Alias: `/checkpoint`. Ver [checkpointing](https://code.claude.com/docs/en/checkpointing) |
 | `/branch` | `/branch [nombre]` | Crea una rama de la conversación actual en este punto | Alias: `/fork` |
@@ -39,8 +41,10 @@ Los slash commands se invocan escribiendo `/` seguido del nombre del comando en 
 | Comando | Sintaxis | Descripción | Notas |
 |---------|----------|-------------|-------|
 | `/model` | `/model [modelo]` | Selecciona o cambia el modelo de IA. Con flechas izquierda/derecha, ajusta el nivel de esfuerzo para modelos que lo soportan. El cambio es inmediato | — |
-| `/effort` | `/effort [low\|medium\|high\|max]` | Establece el nivel de esfuerzo del modelo. `low`, `medium`, `high` persisten entre sesiones. `max` solo para la sesión actual (requiere Opus 4.6) | Sin argumento muestra el nivel actual |
+| `/effort` | `/effort [low\|medium\|high\|xhigh\|max]` | Establece el nivel de esfuerzo del modelo. `low`, `medium`, `high` persisten entre sesiones. `max` solo para la sesión actual (requiere Opus 4.6). Nuevo nivel `xhigh` disponible para Opus 4.7. Sin argumento abre un selector interactivo | Mejorado en v2.1.111 |
 | `/fast` | `/fast [on\|off]` | Activa o desactiva el modo rápido | — |
+| `/focus` | `/focus` | Alterna la vista de enfoque (focus view) que muestra solo el output relevante. Antes de v2.1.110, esta función era `Ctrl+O` | v2.1.110 |
+| `/tui fullscreen` | `/tui fullscreen` | Activa el modo fullscreen sin parpadeo. El modo fullscreen renderiza en la misma área de pantalla sin limpiar el terminal. Equivalente a la variable de entorno `CLAUDE_CODE_NO_FLICKER=1` | v2.1.110 |
 | `/powerup` | `/powerup` | Lecciones interactivas con demos animadas de features de Claude Code. Ideal para descubrir funcionalidades (v2.1.90) | — |
 | `/loop` | `/loop [intervalo] <prompt>` | Skill que ejecuta un prompt repetidamente en un intervalo (ej: `/loop 5m comprueba si el deploy ha terminado`). El intervalo por defecto es 10 minutos | Alias: `/proactive` (v2.1.105). Es una skill bundled, no un comando built-in |
 
@@ -51,9 +55,9 @@ Los slash commands se invocan escribiendo `/` seguido del nombre del comando en 
 | `/config` | `/config` | Abre la interfaz de Settings para ajustar tema, modelo, estilo de output, duración de turno y otras preferencias. Incluye toggle "Show turn duration" para mostrar cuánto tarda cada respuesta (v2.1.79+) | Alias: `/settings` |
 | `/status` | `/status` | Abre la interfaz de Settings (pestaña Status) mostrando versión, modelo, cuenta y conectividad | — |
 | `/context` | `/context` | Visualiza el uso actual del contexto como una cuadrícula de colores. Muestra sugerencias de optimización | — |
-| `/cost` | `/cost` | Muestra estadísticas de uso de tokens con desglose por modelo y cache-hit para usuarios de subscription (v2.1.92). Ver [guía de seguimiento de costes](https://code.claude.com/docs/en/costs) | — |
-| `/usage` | `/usage` | Muestra los límites del plan y el estado de los rate limits | — |
-| `/stats` | `/stats` | Visualiza el uso diario, historial de sesiones, rachas y preferencias de modelos | — |
+| `/cost` | `/cost` | Muestra estadísticas de uso de tokens con desglose por modelo y cache-hit para usuarios de subscription (v2.1.92). Ver [guía de seguimiento de costes](https://code.claude.com/docs/en/costs). A partir de v2.1.118, `/usage` es el comando principal que unifica `/cost` y `/stats` | Shortcut de `/usage` desde v2.1.118 |
+| `/usage` | `/usage` | Desde v2.1.118, unifica `/cost` y `/stats` en un solo comando: muestra el uso total de tokens, coste de la sesión actual y límites del plan. En versiones anteriores mostraba solo los límites del plan y el estado de los rate limits | Mejorado en v2.1.118 |
+| `/stats` | `/stats` | Visualiza el uso diario, historial de sesiones, rachas y preferencias de modelos. A partir de v2.1.118, `/usage` es el comando principal que los unifica | Shortcut de `/usage` desde v2.1.118 |
 | `/insights` | `/insights` | Genera un informe analizando tus sesiones de Claude Code: áreas del proyecto, patrones, puntos de fricción | — |
 
 ### Memoria y CLAUDE.md
@@ -69,6 +73,7 @@ Los slash commands se invocan escribiendo `/` seguido del nombre del comando en 
 |---------|----------|-------------|-------|
 | `/permissions` | `/permissions` | Ver o actualizar permisos. Muestra las herramientas permitidas y denegadas | Alias: `/allowed-tools` |
 | `/hooks` | `/hooks` | Ver configuraciones de hooks para eventos de herramientas | — |
+| `/less-permission-prompts` | `/less-permission-prompts` | Skill integrada que escanea los transcripts recientes y propone una allowlist de comandos para añadir a `.claude/settings.json`, reduciendo los prompts de permisos futuros | v2.1.111. Es una skill bundled, no un comando built-in |
 
 ### MCP (Model Context Protocol)
 
@@ -137,8 +142,8 @@ Los slash commands se invocan escribiendo `/` seguido del nombre del comando en 
 
 | Comando | Sintaxis | Descripción | Notas |
 |---------|----------|-------------|-------|
-| `/theme` | `/theme` | Cambia el tema de color. Incluye variantes claras y oscuras, temás para daltonismo, y temás ANSI | — |
-| `/color` | `/color [color\|default]` | Establece el color de la barra del prompt para la sesión actual: `red`, `blue`, `green`, `yellow`, `purple`, `orange`, `pink`, `cyan`. `default` para resetear | — |
+| `/theme` | `/theme [nombre]` | Cambia el tema de color o crea temas con nombre personalizados. Los temas se guardan en `~/.claude/themes/` como JSON. Incluye variantes claras y oscuras, temas para daltonismo, temas ANSI, y el tema "Auto (match terminal)" que sincroniza con el modo oscuro/claro del sistema | Mejorado en v2.1.118 |
+| `/color` | `/color [color\|default]` | Establece el color de acento de la barra del prompt para la sesión actual: `red`, `blue`, `green`, `yellow`, `purple`, `orange`, `pink`, `cyan`. `default` para resetear. Cuando Remote Control está conectado, sincroniza el color de acento con claude.ai/code para identificar visualmente qué sesión es cuál | Mejorado en v2.1.118 |
 
 ### Editor
 
@@ -183,6 +188,7 @@ Los slash commands se invocan escribiendo `/` seguido del nombre del comando en 
 |---------|----------|-------------|-------|
 | `/sandbox` | `/sandbox` | Activa/desactiva el modo sandbox | Solo en plataformás compatibles |
 | `/security-review` | `/security-review` | Analiza los cambios pendientes en el branch actual buscando vulnerabilidades. Revisa el git diff e identifica riesgos | — |
+| `/ultrareview` | `/ultrareview [PR#]` | Lanza un análisis integral del código del repositorio actual usando agentes paralelos. Admite número de PR de GitHub para revisar un pull request específico. Genera un informe detallado de calidad del código | v2.1.111 |
 | `/pr-comments` | `/pr-comments [PR]` | Obtiene y muestra comentarios de un pull request de GitHub. Detecta el PR del branch actual automáticamente | Requiere `gh` CLI |
 | `/extra-usage` | `/extra-usage` | Configura uso extra para seguir trabajando cuando se alcancen los rate limits | — |
 | `/passes` | `/passes` | Comparte una semana gratuita de Claude Code con amigos | Solo visible si la cuenta es elegible |
@@ -228,6 +234,8 @@ Claude Code incluye algunas skills de serie que aparecen en el menú `/`:
 | `/debug` | Inicia un flujo de depuración guiado |
 | `/claude-api` | Carga material de referencia del Claude API/SDK para construir aplicaciones con la API de Anthropic |
 | `/loop` | Ejecuta un prompt repetidamente en un intervalo (ej: `/loop 5m comprueba el deploy`) |
+| `/less-permission-prompts` | Escanea transcripts recientes y propone una allowlist de comandos para reducir prompts de permisos futuros (v2.1.111) |
+| `/ultrareview` | Análisis integral del repositorio o de un PR específico usando agentes paralelos. Admite `/ultrareview <PR#>` (v2.1.111) |
 
 ### Crear skills personalizadas
 

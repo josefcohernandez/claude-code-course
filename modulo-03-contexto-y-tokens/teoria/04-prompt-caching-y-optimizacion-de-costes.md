@@ -35,6 +35,51 @@ un 60-80% inferior al coste nominal calculado sin caché.
 
 > **Flag `--exclude-dynamic-system-prompt-sections` (v2.1.98):** En modo print (`claude --print`), este flag excluye las secciones dinámicas del system prompt (como el contenido de CLAUDE.md o reglas contextuales). Esto mejora la tasa de cache hits en escenarios donde múltiples usuarios comparten la misma configuración base, ya que la porción estática del prompt se mantiene idéntica entre invocaciones.
 
+### Configuración del TTL de caché (v2.1.108)
+
+Por defecto, el TTL (time-to-live) de la caché de prompts lo determina la API de Anthropic según el proveedor. Desde la versión v2.1.108, dos variables de entorno permiten controlar explícitamente ese TTL.
+
+#### `ENABLE_PROMPT_CACHING_1H` — TTL de 1 hora (universal)
+
+Activa un TTL de caché de 1 hora en lugar del TTL predeterminado. Es útil en sesiones de trabajo donde se prevén periodos de inactividad de hasta una hora pero se quiere mantener el beneficio del caché al retomar.
+
+```bash
+# Activar TTL de 1 hora antes de iniciar Claude Code
+export ENABLE_PROMPT_CACHING_1H=1
+claude
+```
+
+Esta variable funciona con todos los proveedores:
+
+| Proveedor | Compatible |
+|-----------|-----------|
+| API key directa (Anthropic) | Sí |
+| Amazon Bedrock | Sí |
+| Google Vertex AI | Sí |
+| Anthropic Foundry | Sí |
+
+> **Deprecación:** Esta variable reemplaza y depreca `ENABLE_PROMPT_CACHING_1H_BEDROCK`, que anteriormente solo funcionaba en Amazon Bedrock. La variable antigua sigue siendo funcional por compatibilidad, pero se debe usar `ENABLE_PROMPT_CACHING_1H` en todo código nuevo.
+
+```bash
+# Forma antigua (solo Bedrock, deprecada — no usar en código nuevo)
+export ENABLE_PROMPT_CACHING_1H_BEDROCK=1
+
+# Forma correcta (todos los proveedores)
+export ENABLE_PROMPT_CACHING_1H=1
+```
+
+#### `FORCE_PROMPT_CACHING_5M` — TTL de 5 minutos (forzado)
+
+Fuerza el TTL de caché a 5 minutos, independientemente del valor predeterminado del proveedor. El principal caso de uso es el **testing**: cuando necesitas verificar el comportamiento de caché en ciclos de prueba rápidos y el TTL predeterminado (o el de 1 hora) haría las pruebas demasiado lentas o costosas.
+
+```bash
+# Activar TTL de 5 minutos para pruebas
+export FORCE_PROMPT_CACHING_5M=1
+claude -p "Tarea de prueba para verificar métricas de caché" --output-format json | jq '.usage'
+```
+
+> **Nota:** `ENABLE_PROMPT_CACHING_1H` y `FORCE_PROMPT_CACHING_5M` no se deben usar simultáneamente. Si ambas están definidas, el comportamiento es indefinido; usa solo una a la vez según el caso de uso.
+
 ---
 
 ## Coste por modelo

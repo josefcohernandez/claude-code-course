@@ -37,6 +37,9 @@ Al iniciar, Claude Code:
 | `Ctrl+C` | Cancelar / Interrumpir |
 | `Alt+T` | Toggle Extended Thinking |
 | `Ctrl+L` | Limpiar pantalla (no contexto) |
+| `Ctrl+O` | Alternar entre transcripción normal y verbose |
+
+> **Cambio importante (v2.1.110):** `Ctrl+O` ya no activa la vista de enfoque (focus view). A partir de v2.1.110 alterna entre la transcripción normal y el modo verbose. Para activar la vista de enfoque usa el comando `/focus` (ver sección "Comandos de Modo" más abajo).
 
 ---
 
@@ -81,7 +84,16 @@ Los slash commands son acciones integradas que no consumen tokens de la API.
 | Comando | Descripción |
 |---------|------------|
 | `/plan` | Activar modo planificación |
+| `/focus` | Alternar la vista de enfoque (focus view) |
+| `/tui fullscreen` | Activar modo fullscreen sin parpadeo |
 | `Shift+Tab` | Alternar Plan/Normal (atajo) |
+
+### Comandos de Apariencia
+
+| Comando | Descripción |
+|---------|------------|
+| `/theme` | Cambiar o crear temas de color |
+| `/recap` | Mostrar resumen del estado de la sesión actual |
 
 ---
 
@@ -128,6 +140,69 @@ También puedes arrastrar archivos al terminal en la extensión de VS Code.
 7. "Ahora crea el endpoint GET..."  # Nueva tarea limpia
 8. /exit                           # Terminar
 ```
+
+---
+
+## Modo Fullscreen y Vista de Enfoque
+
+> **Novedad v2.1.110**
+
+### `/tui fullscreen`
+
+El subcomando `/tui fullscreen` activa un modo de pantalla completa sin efecto de parpadeo al renderizar la interfaz. Es equivalente a la variable de entorno `CLAUDE_CODE_NO_FLICKER=1`, pero se puede activar directamente desde el prompt sin reiniciar la sesión.
+
+```
+> /tui fullscreen
+```
+
+En modo fullscreen también puedes desactivar el auto-scroll automático que sigue la salida de Claude en tiempo real. Esto es útil cuando quieres revisar respuestas anteriores mientras Claude sigue trabajando. La opción se controla con `autoScrollEnabled` en `/config`.
+
+### `/focus`
+
+A partir de v2.1.110, `/focus` es un **comando slash independiente** que alterna la vista de enfoque. Esta vista oculta los elementos secundarios de la interfaz para centrarte en el contenido principal.
+
+```
+> /focus
+```
+
+Antes de v2.1.110, la vista de enfoque se activaba con `Ctrl+O`. Ese atajo ahora tiene un comportamiento diferente (alternar entre transcripción normal y verbose). Si tenías ese flujo en la memoria muscular, actualiza el hábito: usa `/focus` desde ahora.
+
+---
+
+## Temas Personalizados
+
+> **Novedad v2.1.118**
+
+Claude Code permite crear y cambiar temas de color con nombre mediante el comando `/theme`. Los temas son ficheros JSON almacenados en `~/.claude/themes/` y son editables directamente con cualquier editor de texto.
+
+### Cambiar de tema
+
+```
+> /theme
+```
+
+El comando abre un selector interactivo con los temas disponibles. También existe la opción **"Auto (match terminal)"** que sincroniza el tema de Claude Code con el modo oscuro o claro configurado en el terminal del sistema operativo.
+
+### Estructura de un tema
+
+Los ficheros de tema viven en `~/.claude/themes/` y siguen la convención `nombre-del-tema.json`:
+
+```json
+{
+  "name": "mi-tema",
+  "colors": {
+    "primary": "#61AFEF",
+    "secondary": "#98C379",
+    "background": "#282C34",
+    "text": "#ABB2BF",
+    "accent": "#E06C75"
+  }
+}
+```
+
+### Distribución de temas via plugins
+
+Los plugins pueden distribuir temas propios incluyendo una carpeta `themes/` en su paquete. Al instalar el plugin, sus temas quedan disponibles en el selector de `/theme`. Esto permite que los equipos compartan una apariencia consistente de la herramienta junto con las configuraciones del plugin.
 
 ---
 

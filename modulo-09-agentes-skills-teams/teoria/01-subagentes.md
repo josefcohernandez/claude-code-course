@@ -301,6 +301,51 @@ Eres un agente especializado en revisión de código. Tu trabajo es:
 - Considera el contexto del proyecto (no apliques reglas genéricas ciegamente)
 ```
 
+### Frontmatter extendido: mcpServers y hooks en el agente principal
+
+> **Novedad v2.1.116-v2.1.117**
+
+Los agentes personalizados pueden declarar en su frontmatter tanto `mcpServers` como `hooks`. Hasta estas versiones, estas declaraciones solo tenían efecto cuando el agente se ejecutaba como **subagente**. A partir de v2.1.116 (para `hooks`) y v2.1.117 (para `mcpServers`), también se aplican cuando el agente se lanza como **agente principal** con `--agent`.
+
+**`mcpServers`** (v2.1.117): lista de servidores MCP que se cargan automáticamente al iniciar el agente como principal. Antes, lanzar un agente con `--agent` ignoraba los `mcpServers` del frontmatter.
+
+**`hooks`** (v2.1.116): los hooks definidos en el frontmatter del agente se activan tanto en modo subagente como en modo principal.
+
+```markdown
+---
+name: backend-developer
+description: Agente especializado en desarrollo backend con acceso a filesystem y base de datos
+mcpServers:
+  - filesystem
+  - postgres
+hooks:
+  PostToolUse:
+    - matcher: Write
+      hooks:
+        - type: command
+          command: echo "Archivo escrito: verificar lint"
+---
+
+# Backend Developer
+
+Eres un desarrollador backend especializado en Node.js y PostgreSQL.
+Sigues las convenciones del proyecto y ejecutas tests tras cada cambio.
+```
+
+Con este frontmatter, ya sea que el agente corra como principal (`claude --agent backend-developer`) o como subagente delegado, tendrá acceso a los servidores MCP `filesystem` y `postgres`, y el hook `PostToolUse` se disparará al escribir ficheros.
+
+> **Relación con el Módulo 08:** el tipo `mcp_tool` para hooks en frontmatter se documenta en detalle en el [Módulo 08 - Hooks](../../modulo-08-hooks/teoria/).
+
+### Variable de entorno CLAUDE_CODE_FORK_SUBAGENT (v2.1.117)
+
+```bash
+export CLAUDE_CODE_FORK_SUBAGENT=1
+```
+
+Esta variable de entorno habilita la feature de **subagentes bifurcados** en builds externas (no-oficiales) de Claude Code. Es relevante para equipos que mantienen builds personalizadas o forks del cliente y quieren usar la funcionalidad de fork de subagentes sin esperar a que se incluya en la distribución oficial.
+
+En instalaciones estándar de Claude Code, esta variable no es necesaria; la feature ya está disponible. En builds personalizadas, establece `CLAUDE_CODE_FORK_SUBAGENT=1` en el entorno antes de lanzar Claude Code para activar el soporte.
+
 ### Lanzar Agentes Personalizados
 
 Hay varias formas de lanzar un agente personalizado:
@@ -401,6 +446,9 @@ Paso 3: Presentar el plan al usuario en el contexto principal
 | Modelo | haiku (barato), sonnet (equilibrado), opus (potente) |
 | Agentes custom | `.claude/agents/nombre.md` con frontmatter YAML |
 | `initialPrompt` | Prompt automático al lanzar un agente (v3.0) |
+| `mcpServers` en frontmatter | Servidores MCP cargados también cuando el agente es principal (v2.1.117) |
+| `hooks` en frontmatter | Hooks activos tanto en modo subagente como en modo principal (v2.1.116) |
+| `CLAUDE_CODE_FORK_SUBAGENT` | Habilita subagentes bifurcados en builds externas de Claude Code (v2.1.117) |
 | Paralelismo | Múltiples subagentes simultáneos para tareas independientes |
 
 > **Deprecaciones v3.0:**

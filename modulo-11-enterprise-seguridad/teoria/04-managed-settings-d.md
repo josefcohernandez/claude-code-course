@@ -209,9 +209,27 @@ Cada equipo gestiona su propio fichero. El equipo de compliance puede actualizar
 
 ## Bloqueo de Plugins por Política
 
-> **Novedad v3.2 (v2.1.85)**
+> **Novedad v3.2 (v2.1.85) — Ampliado en v2.1.117**
 
-Los plugins bloqueados por la política de la organización (definida en `managed-settings.json` o en fragmentos de `managed-settings.d/`) ahora **no pueden instalarse ni habilitarse**, y se ocultan completamente de las vistas del marketplace. Esto refuerza el control enterprise: si un administrador bloquea un plugin, los usuarios no pueden eludirlo.
+Los plugins bloqueados por la política de la organización (definida en `managed-settings.json` o en fragmentos de `managed-settings.d/`) **no pueden instalarse ni habilitarse**, y se ocultan completamente de las vistas del marketplace. Esto refuerza el control enterprise: si un administrador bloquea un plugin, los usuarios no pueden eludirlo.
+
+Desde v2.1.117, las opciones `blockedMarketplaces` y `strictKnownMarketplaces` se aplican de forma efectiva durante las **operaciones de instalación y gestión de plugins**, no solo al renderizar la vista del marketplace. Esto cierra la brecha por la que un usuario podría intentar instalar un plugin de un marketplace bloqueado por vías alternativas (por ejemplo, mediante la CLI o comandos directos).
+
+```json
+{
+  "blockedMarketplaces": ["marketplace-no-aprobado.example.com"],
+  "strictKnownMarketplaces": true
+}
+```
+
+| Opción | Efecto |
+|--------|--------|
+| `blockedMarketplaces` | Lista de marketplaces bloqueados. No se puede instalar ni gestionar plugins de estos orígenes. |
+| `strictKnownMarketplaces` | Cuando es `true`, solo se permiten marketplaces explícitamente aprobados/conocidos. Bloquea cualquier marketplace no incluido en la lista oficial. |
+
+> **Antes de v2.1.117**: Las restricciones solo se aplicaban al mostrar la interfaz del marketplace (ocultaban plugins en la vista). Un usuario avanzado podía intentar instalar un plugin de un marketplace bloqueado saltando la UI.
+>
+> **Desde v2.1.117**: Las restricciones se comprueban también en el momento de la operación de instalación o gestión, de modo que el bloqueo es efectivo independientemente de cómo se intente la instalación.
 
 ---
 
@@ -245,3 +263,4 @@ Este setting se define en las managed settings del sistema (no en las del proyec
 - Los arrays de permisos (`allow`, `deny`) se concatenan; las propiedades escalares usan el último valor
 - `managed-settings.json` se aplica antes que los fragmentos de `managed-settings.d/`
 - Ideal para organizaciones multi-equipo donde diferentes departamentos gestionan diferentes aspectos de la configuración
+- Desde v2.1.117, `blockedMarketplaces` y `strictKnownMarketplaces` se aplican en las operaciones de instalación de plugins, no solo en la visualización del marketplace

@@ -70,6 +70,7 @@ Al terminar este módulo serás capaz de:
 | `.claude-plugin/plugin.json` | Manifest del plugin: nombre, versión, autor y descripción. Los componentes se descubren automáticamente por estructura de directorios |
 | `/plugin` | Comando interactivo con pestañas (`Discover`, `Installed`, `Marketplaces`, `Errors`) para explorar y gestionar plugins |
 | `claude plugin install` | Comando CLI para instalar plugins: `claude plugin install <nombre>@<marketplace>` |
+| `claude plugin tag` | Crea un git tag `v{version}` para el plugin a partir de la versión del manifest (v2.1.118) |
 | `claude --plugin-dir` | Flag para cargar un plugin local durante desarrollo o testing |
 | Marketplace privado | Repositorio de plugins de una organización, configurable con `extraKnownMarketplaces` en settings |
 | `strictKnownMarketplaces` | Configuración enterprise que limita las instalaciones a marketplaces aprobados |
@@ -99,7 +100,8 @@ Al terminar este módulo serás capaz de:
         |
         v
 5. PUBLICAR (opcional)
-   Formulario web en platform.claude.com
+   claude plugin validate → claude plugin tag → git push origin --tags
+   Luego registrar en el formulario web en platform.claude.com
         |
         v
 6. En contexto enterprise:

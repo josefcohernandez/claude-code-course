@@ -109,9 +109,49 @@ Envía una petición POST a un endpoint:
 }
 ```
 
-### 4. Agent
+### 4. MCP Tool
+
+> **Novedad v2.1.118**
+
+Invoca directamente una herramienta MCP, sin necesidad de un script intermediario:
+
+```json
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "mcp_tool",
+            "tool": "filesystem/log_write",
+            "input": {
+              "path": "/tmp/writes.log",
+              "content": "Wrote file at {{ timestamp }}"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+El campo `tool` sigue el formato `<servidor>/<nombre-herramienta>`. El campo `input` es el objeto de entrada que recibirá la herramienta MCP, y admite la variable de plantilla `{{ timestamp }}` para incrustar la fecha y hora de ejecución.
+
+### 5. Agent
 
 Ejecuta un agente personalizado.
+
+### Resumen de tipos de hook
+
+| Tipo | Qué hace | Cuándo usarlo |
+|------|----------|---------------|
+| `command` | Ejecuta un script shell | Validaciones, formateo, logging |
+| `prompt` | Inyecta texto en el prompt de Claude | Añadir contexto sin acción autónoma |
+| `http` | Envía una petición POST | Integraciones con webhooks externos |
+| `mcp_tool` | Invoca una herramienta MCP directamente | Registrar eventos en servidores MCP |
+| `agent` | Lanza un subagente completo | Análisis complejos con acceso a herramientas |
 
 ---
 
