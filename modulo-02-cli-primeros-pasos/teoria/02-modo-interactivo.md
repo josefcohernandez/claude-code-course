@@ -37,9 +37,9 @@ Al iniciar, Claude Code:
 | `Ctrl+C` | Cancelar / Interrumpir |
 | `Alt+T` | Toggle Extended Thinking |
 | `Ctrl+L` | Limpiar pantalla (no contexto) |
-| `Ctrl+O` | Alternar entre transcripción normal y verbose |
+| `Ctrl+O` | Alternar entre vista normal y transcript detallado (verbose) |
 
-> **Cambio importante (v2.1.110):** `Ctrl+O` ya no activa la vista de enfoque (focus view). A partir de v2.1.110 alterna entre la transcripción normal y el modo verbose. Para activar la vista de enfoque usa el comando `/focus` (ver sección "Comandos de Modo" más abajo).
+> **Nota (v2.1.110):** `Ctrl+O` ya no activa la "focus view". A partir de esta versión, `Ctrl+O` alterna únicamente entre la vista normal y el transcript detallado de la conversación. La focus view se activa ahora con el comando `/focus`.
 
 ---
 
@@ -57,6 +57,9 @@ Los slash commands son acciones integradas que no consumen tokens de la API.
 | `/compact [instrucción]` | Resumir conversación. Opcionalmente con foco. |
 | `/exit` | Salir de la sesión |
 | `/resume` | Continuar sesión anterior |
+| `/rewind` | Deshacer el último turno de la conversación |
+| `/undo` | Alias de `/rewind` (v2.1.108) |
+| `/recap` | Generar un resumen del trabajo realizado en la sesión actual (v2.1.108) |
 | `/logout` | Cerrar sesión de Claude Code (desautentica el cliente) |
 
 ### Comandos de Información
@@ -64,7 +67,8 @@ Los slash commands son acciones integradas que no consumen tokens de la API.
 | Comando | Descripción |
 |---------|------------|
 | `/help` | Mostrar ayuda |
-| `/cost` | Ver el coste acumulado de la sesión: tokens consumidos y coste estimado en USD |
+| `/usage` | Ver el coste y estadísticas de la sesión: tokens consumidos, coste estimado en USD y más métricas (v2.1.118). Fusiona los anteriores `/cost` y `/stats` |
+| `/cost` | Atajo a la pestaña de coste dentro de `/usage` (sigue funcionando) |
 | `/model` | Ver o cambiar modelo actual |
 | `/doctor` | Diagnosticar problemas de configuración, conexión y permisos. Desde v2.1.105, muestra iconos de estado y ofrece la opción `f` para que Claude repare automáticamente los problemas detectados |
 | `/status` | Estado de la sesión |
@@ -79,13 +83,13 @@ Los slash commands son acciones integradas que no consumen tokens de la API.
 | `/config` | Ver configuración actual |
 | `/memory` | Gestionar memoria automática |
 
-### Comandos de Modo
+### Comandos de Modo y Visualización
 
 | Comando | Descripción |
 |---------|------------|
 | `/plan` | Activar modo planificación |
-| `/focus` | Alternar la vista de enfoque (focus view) |
-| `/tui fullscreen` | Activar modo fullscreen sin parpadeo |
+| `/focus` | Activar focus view: oculta elementos secundarios y centra la pantalla en la respuesta de Claude (v2.1.110) |
+| `/tui fullscreen` | Cambiar el modo de renderizado a pantalla completa sin parpadeo (flicker-free), en la misma sesión sin reiniciar (v2.1.110) |
 | `Shift+Tab` | Alternar Plan/Normal (atajo) |
 
 ### Comandos de Apariencia
@@ -94,6 +98,43 @@ Los slash commands son acciones integradas que no consumen tokens de la API.
 |---------|------------|
 | `/theme` | Cambiar o crear temas de color |
 | `/recap` | Mostrar resumen del estado de la sesión actual |
+
+---
+
+## Modo TUI Fullscreen
+
+El renderizado por defecto de Claude Code puede mostrar pequeños parpadeos (flickering) al actualizar el área de respuesta en terminales rápidas. A partir de la v2.1.110, Claude Code incluye un modo de renderizado alternativo **fullscreen** que elimina este problema.
+
+### Activación manual
+
+```bash
+/tui fullscreen
+```
+
+Ejecuta este comando en cualquier momento dentro de una sesión activa. El cambio es inmediato y no requiere reiniciar Claude Code ni abrir una sesión nueva.
+
+### Activación por defecto
+
+Para que todas las sesiones arranquen en fullscreen, añade la clave `tui` al fichero `.claude/settings.json` de tu proyecto o a `~/.claude/settings.json` para que aplique globalmente:
+
+```json
+{
+  "tui": "fullscreen"
+}
+```
+
+### Desactivar el auto-scroll en fullscreen
+
+En modo fullscreen, el área de respuesta hace scroll automático para seguir la salida de Claude. Si prefieres controlar el scroll manualmente (útil cuando quieres leer una sección sin que el texto siga avanzando), puedes desactivarlo:
+
+```json
+{
+  "tui": "fullscreen",
+  "autoScrollEnabled": false
+}
+```
+
+> **Cuándo usar fullscreen:** es especialmente útil en terminales con alta tasa de refresco (tmux, Kitty, Alacritty) donde el parpadeo del modo normal resulta molesto. En terminales estándar, ambos modos funcionan igual de bien.
 
 ---
 
@@ -135,7 +176,7 @@ También puedes arrastrar archivos al terminal en la extensión de VS Code.
 2. "Implementa endpoint POST /users"  # Dar instrucción
 3. [Claude propone y ejecuta]       # Observar
 4. "¿Los tests pasan?"              # Verificar
-5. /cost                           # Ver consumo
+5. /usage                          # Ver consumo y estadísticas
 6. /clear                          # Limpiar para nueva tarea
 7. "Ahora crea el endpoint GET..."  # Nueva tarea limpia
 8. /exit                           # Terminar
@@ -216,4 +257,4 @@ Los plugins pueden distribuir temas propios incluyendo una carpeta `themes/` en 
 | Claude ejecuta un comando | ~200-2,000 (comando + output) |
 | Claude edita un archivo | ~500-2,000 (old + new + contexto) |
 
-> **Tip**: Usa `/cost` frecuentemente para monitorizar el consumo.
+> **Tip**: Usa `/usage` frecuentemente para monitorizar el consumo de tokens y el coste estimado de la sesión.

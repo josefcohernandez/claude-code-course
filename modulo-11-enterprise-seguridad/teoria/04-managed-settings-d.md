@@ -255,6 +255,52 @@ Este setting se define en las managed settings del sistema (no en las del proyec
 
 ---
 
+## Herencia de managed settings de Windows en WSL: `wslInheritsWindowsSettings` (v2.1.118)
+
+En entornos Windows con WSL (Windows Subsystem for Linux), los equipos de IT habitualmente gestionan la configuración de Claude Code a través de las políticas de Windows (Group Policy / MDM). Desde v2.1.118, activar la policy key `wslInheritsWindowsSettings` hace que la instancia de Claude Code que se ejecuta **dentro de WSL** herede automáticamente las managed settings definidas en el lado Windows.
+
+```json
+{
+  "wslInheritsWindowsSettings": true
+}
+```
+
+Esta policy key se define en el fichero de managed settings del **lado Windows** (no en WSL):
+
+```
+C:\Program Files\ClaudeCode\managed-settings.json
+```
+
+### Cómo funciona
+
+Sin `wslInheritsWindowsSettings`, Claude Code en WSL y Claude Code en Windows son instancias independientes con configuraciones separadas:
+
+```
+Windows
+  C:\Program Files\ClaudeCode\managed-settings.json   →  Claude Code (Windows)
+  /etc/claude-code/managed-settings.json              →  Claude Code (WSL)   [independiente]
+```
+
+Con `wslInheritsWindowsSettings: true`, la instancia de WSL lee las políticas desde el lado Windows:
+
+```
+Windows
+  C:\Program Files\ClaudeCode\managed-settings.json   →  Claude Code (Windows)
+                                                       →  Claude Code (WSL)   [hereda]
+```
+
+### Ventaja operacional
+
+Los administradores IT que ya gestionan las políticas de Claude Code en Windows (via Group Policy u otras herramientas MDM) aplican automáticamente esas mismas políticas a WSL, sin necesidad de gestionar un segundo fichero en la ruta de Linux. Esto es especialmente útil en:
+
+- Organizaciones que distribuyen las políticas via GPO o Intune
+- Equipos de desarrollo que usan WSL pero cuyas máquinas están gestionadas por IT desde Windows
+- Entornos donde garantizar que las restricciones de seguridad aplican por igual en Windows y WSL
+
+> **Nota**: `wslInheritsWindowsSettings` no afecta a instalaciones de Linux nativas (no WSL). Solo tiene efecto cuando Claude Code se ejecuta dentro de un entorno WSL sobre Windows.
+
+---
+
 ## Puntos clave
 
 - `managed-settings.d/` permite distribuir políticas de Claude Code en fragmentos modulares
@@ -264,3 +310,4 @@ Este setting se define en las managed settings del sistema (no en las del proyec
 - `managed-settings.json` se aplica antes que los fragmentos de `managed-settings.d/`
 - Ideal para organizaciones multi-equipo donde diferentes departamentos gestionan diferentes aspectos de la configuración
 - Desde v2.1.117, `blockedMarketplaces` y `strictKnownMarketplaces` se aplican en las operaciones de instalación de plugins, no solo en la visualización del marketplace
+- `wslInheritsWindowsSettings: true` permite que Claude Code en WSL herede las políticas gestionadas desde el lado Windows, simplificando la gestión centralizada en entornos mixtos

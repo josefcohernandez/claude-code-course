@@ -42,20 +42,20 @@ Sí → ejecuta  |  No → bloquea y notifica al usuario
 
 ## Disponibilidad y requisitos de modelo
 
-Auto Mode está disponible directamente para suscriptores del plan **Max** de Claude.ai con **Claude Opus 4.7** (v2.1.111). No se requiere ningún flag experimental para activarlo.
+Auto Mode está disponible en los planes **Team**, **Max** y en despliegue hacia **Enterprise** y la **API** de Anthropic. Desde v2.1.111, el plan **Max con Opus 4.7** también tiene acceso completo.
 
-**Requisito de modelo**: Auto Mode requiere **Claude Sonnet 4.6** o **Claude Opus 4.7** como mínimo. Modelos anteriores no soportan el clasificador de seguridad necesario para este modo.
+**Requisito de modelo**: Auto Mode requiere **Claude Sonnet 4.6**, **Claude Opus 4.6** o **Claude Opus 4.7** como mínimo. Modelos anteriores no soportan el clasificador de seguridad necesario para este modo.
 
 | Plan | Auto Mode disponible |
 |------|---------------------|
 | Free | No |
 | Pro | No |
-| Max | Si |
-| Team | Si |
-| Enterprise | Si |
-| API | Si |
+| Max | Sí (con Sonnet 4.6, Opus 4.6 u Opus 4.7) |
+| Team | Sí |
+| Enterprise | En despliegue |
+| API | En despliegue |
 
-Consulta la documentacion oficial de Anthropic para el estado actualizado de disponibilidad por plan.
+Las capacidades y el comportamiento del clasificador pueden variar entre versiones. Consulta la documentación oficial de Anthropic para el estado actual.
 
 ---
 
@@ -75,7 +75,7 @@ claude --permission-mode auto
 claude -p "refactoriza el modulo de pagos eliminando codigo duplicado" --permission-mode auto
 ```
 
-> **Nota**: El flag `--enable-auto-mode` existía en versiones anteriores como flag experimental. Desde v2.1.111 ya no es necesario; usar `--permission-mode auto` es la forma canónica.
+> **Flag obsoleto desde v2.1.111**: El flag `--enable-auto-mode` que aparecía en documentación y ejemplos anteriores ha sido eliminado. No tiene efecto si se incluye. Auto Mode se activa exclusivamente con `--permission-mode auto`, igual que cualquier otro modo de permisos.
 
 ### Activacion en settings.json
 
@@ -118,23 +118,33 @@ El comportamiento del clasificador de seguridad se puede ajustar mediante las si
 ```
 
 - `autoMode.environment`: Describe el entorno de trabajo para que el clasificador ajuste su nivel de cautela.
-- `autoMode.allow`: Acciones que el clasificador debe permitir sin análisis adicional.
-- `autoMode.soft_deny`: Acciones que el clasificador debe tratar con cautela extra (puede bloquearlas o pedir confirmación).
+- `autoMode.allow`: Acciones que el clasificador debe permitir sin analisis adicional.
+- `autoMode.soft_deny`: Acciones que el clasificador debe tratar con cautela extra (puede bloquearlas o pedir confirmacion).
 
-#### El valor especial `"$defaults"` (v2.1.118)
+### `"$defaults"` en los arrays del clasificador (v2.1.118)
 
-En `autoMode.allow`, `autoMode.soft_deny` y `autoMode.environment` se puede usar el valor especial `"$defaults"` para incluir la lista incorporada de reglas predeterminadas junto con las personalizadas. Sin `"$defaults"`, la lista completa de defaults se reemplaza; con él, se extiende:
+Cuando defines una lista en `autoMode.allow`, `autoMode.soft_deny` o `autoMode.environment`, tu lista **reemplaza** completamente la lista built-in del clasificador. Si quieres **ampliar** la lista built-in en lugar de sustituirla, incluye el elemento especial `"$defaults"` en tu array:
 
 ```json
 {
   "autoMode": {
-    "allow": ["$defaults", "Bash(npm run test:*)"],
-    "soft_deny": ["$defaults", "Bash(git push --force*)"]
+    "allow": [
+      "$defaults",
+      "Edit(src/**)",
+      "Bash(npm test*)"
+    ],
+    "soft_deny": [
+      "$defaults",
+      "Bash(git push*)",
+      "Write(.env*)"
+    ]
   }
 }
 ```
 
-Esto evita tener que reescribir todas las reglas predeterminadas cuando solo se quiere añadir excepciones puntuales. Si se omite `"$defaults"`, el clasificador opera únicamente con las reglas listadas explícitamente.
+Con `"$defaults"` en la primera posición, el clasificador parte de sus reglas predeterminadas y añade las tuyas encima. Sin `"$defaults"`, solo aplica las reglas que tú defines y descarta las built-in.
+
+**Cuándo omitir `"$defaults"`**: Si tienes un entorno muy controlado donde sabes exactamente qué debe y no debe permitirse, omitir `"$defaults"` te da control total sobre el clasificador. Si no estás seguro, incluirlo es la opción más segura porque conserva la cobertura de seguridad por defecto.
 
 ### Desactivacion durante una sesion activa
 
@@ -166,46 +176,6 @@ ask   → SIN Auto Mode: pregunta al usuario
 ```
 
 Esta arquitectura significa que configurar bien los permisos del proyecto sigue siendo importante aunque uses Auto Mode: un `deny` bien colocado es más fiable que esperar a que el clasificador detecte un patrón de riesgo.
-
----
-
-## Reducir prompts de permisos con `/less-permission-prompts` (v2.1.111)
-
-La skill `/less-permission-prompts` analiza los transcripts de conversaciones recientes y propone automáticamente una allowlist de comandos para añadir a `.claude/settings.json`. El objetivo es reducir los prompts de confirmación de permisos sin necesidad de configurarlos manualmente.
-
-### Cómo usarla
-
-Durante una sesión interactiva, escribe el comando en el prompt de Claude Code:
-
-```bash
-/less-permission-prompts
-```
-
-Claude Code revisará los transcripts recientes, identificará los comandos que se aprobaron repetidamente y generará una propuesta de `allow` list. El usuario puede revisar la propuesta y aceptarla, modificarla o descartarla antes de que se escriba en el fichero de configuración.
-
-### Ejemplo de resultado típico
-
-Si en las últimas sesiones el usuario ha aprobado repetidamente comandos como `npm test`, `git diff` y `npx eslint`, la skill puede proponer:
-
-```json
-{
-  "permissions": {
-    "allow": [
-      "Bash(npm test*)",
-      "Bash(git diff*)",
-      "Bash(npx eslint*)"
-    ]
-  }
-}
-```
-
-### Cuándo usarla
-
-- Después de varios días trabajando con Claude Code en el mismo proyecto, cuando los prompts de permisos se vuelven repetitivos.
-- Antes de activar Auto Mode, para asegurarse de que las acciones habituales tienen reglas `allow` explícitas.
-- Al incorporar a un nuevo desarrollador: se puede ejecutar en su sesión inicial para pre-aprobar las operaciones del equipo.
-
-La skill no modifica `settings.json` sin confirmación explícita del usuario. Genera una propuesta; el usuario decide qué aceptar.
 
 ---
 

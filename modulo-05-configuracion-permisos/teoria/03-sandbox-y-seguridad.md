@@ -89,7 +89,7 @@ sudo apt install bubblewrap
 | `sandbox.enabled: true` | Activar sandbox |
 | `sandbox.filesystem.allowRead` | Lista de rutas adicionales de solo lectura accesibles dentro del sandbox (v2.1.77+) |
 | `sandbox.network.allowedDomains` | Lista de dominios permitidos para acceso a red dentro del sandbox |
-| `sandbox.network.deniedDomains` | Lista de dominios bloqueados explícitamente, con prioridad sobre `allowedDomains` (v2.1.113+) |
+| `sandbox.network.deniedDomains` | Lista de dominios bloqueados aunque `allowedDomains` los permitiría (v2.1.113+) |
 
 ```json
 {
@@ -113,26 +113,31 @@ sudo apt install bubblewrap
 
 La clave `sandbox.filesystem.allowRead` permite que procesos dentro del sandbox lean rutas adicionales fuera del directorio del proyecto (por ejemplo, fuentes del sistema o configuraciones compartidas). Las rutas listadas se montan como de solo lectura.
 
-### Bloquear dominios específicos con `deniedDomains` (v2.1.113)
+### `sandbox.network.deniedDomains`: bloqueo selectivo de dominios (v2.1.113)
 
-`sandbox.network.deniedDomains` permite bloquear dominios concretos aunque `allowedDomains` los cubriría con un wildcard. La denegación tiene prioridad absoluta sobre la lista de permitidos.
+`deniedDomains` actúa como una lista de exclusión que se aplica **después** de `allowedDomains`. Esto permite usar un wildcard amplio en `allowedDomains` y luego bloquear dominios específicos de forma explícita, sin tener que enumerar todos los dominios permitidos uno a uno.
 
-Caso de uso típico: permitir acceso a un dominio completo pero excluir subdominios internos o sensibles.
+El caso de uso más habitual es el acceso abierto a internet salvo dominios internos o sensibles:
 
 ```json
 {
   "sandbox": {
+    "enabled": true,
     "network": {
-      "allowedDomains": ["*.example.com"],
-      "deniedDomains": ["internal.example.com", "secrets.example.com"]
+      "allowedDomains": ["*"],
+      "deniedDomains": [
+        "internal.company.com",
+        "secrets.vault.internal",
+        "metadata.google.internal"
+      ]
     }
   }
 }
 ```
 
-En este ejemplo, todos los subdominios de `example.com` son accesibles excepto `internal.example.com` y `secrets.example.com`, que se bloquean independientemente de lo que indique `allowedDomains`.
+Con esta configuración, el sandbox puede acceder a cualquier dominio público pero tiene bloqueado el acceso a la red interna corporativa y al endpoint de metadatos de instancias de nube.
 
-**Regla de precedencia**: `deniedDomains` siempre gana sobre `allowedDomains`, igual que la regla `deny` del sistema de permisos general (ver [02-sistema-permisos.md](02-sistema-permisos.md)).
+**Orden de evaluación**: primero se comprueba `deniedDomains`; si el dominio coincide, se bloquea independientemente de lo que diga `allowedDomains`. La regla de denegación siempre gana, igual que en el sistema de permisos general.
 
 ### Variables de entorno adicionales
 
@@ -211,5 +216,4 @@ Incluso sin sandbox, puedes mejorar la seguridad con:
 | Permisos deny | Comandos específicos | Bajo |
 | Hooks PreToolUse | Validación dinámica | Medio |
 | Sandbox | Aislamiento completo | Bajo (activar en settings) |
-| `sandbox.network.deniedDomains` | Bloqueo selectivo de dominios de red | Bajo |
 | Managed policies | Control corporativo | Admin |

@@ -63,6 +63,18 @@ claude --resume abc123def
 > **Importante**: Resume carga todo el historial previo en el contexto.
 > Si la sesión anterior era larga, puedes perder espacio de contexto.
 
+### Picker de sesiones (v2.1.108)
+
+Cuando ejecutas `claude -r` (o `/resume` desde el modo interactivo) sin indicar un ID, Claude Code muestra un selector interactivo de sesiones. A partir de la v2.1.108, este selector:
+
+- Muestra por defecto solo las sesiones del **directorio actual**, lo que reduce el ruido cuando trabajas con varios proyectos.
+- Permite ver **todas** las sesiones de todos los proyectos pulsando `Ctrl+A` dentro del selector.
+
+```bash
+claude -r        # Abre el selector; muestra sesiones del directorio actual
+                 # Pulsa Ctrl+A para ver sesiones de otros proyectos
+```
+
 ---
 
 ## Los 3 Modos de Ejecución
@@ -141,6 +153,49 @@ Los títulos se generan al vuelo y se actualizan conforme avanza la conversació
 
 ---
 
+## Resumen de Sesión: `/recap` y Away Summary
+
+> **Novedad v2.1.108**
+
+### Resumen automático al volver de una ausencia larga
+
+Cuando vuelves a una sesión activa tras una ausencia prolongada, Claude Code genera automáticamente un **resumen de contexto** ("away summary") que recuerda en qué punto se quedó el trabajo: qué tarea se estaba realizando, qué archivos se modificaron y cuál era el siguiente paso previsto.
+
+Este resumen aparece en pantalla al retomar la sesión sin que tengas que pedirlo. Reduce la fricción de "¿dónde estaba yo?" que aparece cuando se trabaja en varias sesiones a lo largo del día.
+
+**Configuración y opt-out:**
+
+El resumen automático está activado por defecto. Para desactivarlo, establece la variable de entorno antes de iniciar Claude Code:
+
+```bash
+CLAUDE_CODE_ENABLE_AWAY_SUMMARY=0 claude
+```
+
+También puedes configurarlo de forma persistente en tu shell:
+
+```bash
+# En ~/.bashrc o ~/.zshrc
+export CLAUDE_CODE_ENABLE_AWAY_SUMMARY=0
+```
+
+Para ajustar el umbral y otras opciones del away summary, usa `/config` desde el modo interactivo.
+
+### Resumen manual con `/recap`
+
+Puedes solicitar un resumen en cualquier momento con el comando `/recap`:
+
+```
+> /recap
+```
+
+Claude genera entonces un resumen estructurado de la sesión actual: trabajo completado, decisiones tomadas y estado actual del proyecto. Es útil para:
+
+- Compartir el estado de una tarea con un compañero de equipo.
+- Generar un punto de control antes de un `/clear`.
+- Entender rápidamente qué hizo Claude en una sesión larga.
+
+---
+
 ## Idle-Return y Deep Links
 
 > **Novedad v3.1 (v2.1.84)**
@@ -176,19 +231,24 @@ Si trabajas en sesiones largas o cambias frecuentemente entre proyectos, mantene
 
 ---
 
-## PowerShell Tool para Windows
+## PowerShell como shell primario en Windows
 
-> **Novedad v3.1 (v2.1.84, opt-in preview)**
+> **Actualización v2.1.120 / v2.1.126**
 
-En Windows, Claude Code ahora ofrece una herramienta **PowerShell** como alternativa a Bash. Esto permite ejecutar comandos nativos de PowerShell sin necesidad de WSL:
+A partir de la v2.1.120, **PowerShell es el shell primario de Claude Code en Windows**. Git Bash ya no es un requisito previo para instalar o usar Claude Code en entornos Windows nativos. La v2.1.126 completó este soporte con correcciones adicionales de compatibilidad.
+
+Claude Code puede ejecutar comandos PowerShell directamente, sin necesidad de WSL ni Git Bash:
 
 ```powershell
 # Claude puede ejecutar comandos PowerShell nativos
 Get-ChildItem -Recurse -Filter "*.cs" | Select-Object FullName
 Get-Process | Where-Object { $_.CPU -gt 100 }
+Invoke-RestMethod -Uri "https://api.ejemplo.com/health"
 ```
 
-La herramienta PowerShell es un **opt-in preview**: no esta activada por defecto. Es especialmente util para equipos que trabajan con .NET, Azure o infraestructura Windows.
+Esto es especialmente relevante para equipos que trabajan con .NET, Azure o infraestructura Windows, ya que el entorno nativo del sistema operativo ya no requiere capas de compatibilidad adicionales.
+
+> **Nota para usuarios de WSL2:** si trabajas en WSL2, la experiencia no cambia. El shell sigue siendo Bash dentro del subsistema Linux. El cambio afecta exclusivamente a instalaciones nativas de Windows (PowerShell / CMD).
 
 ---
 
@@ -197,9 +257,10 @@ La herramienta PowerShell es un **opt-in preview**: no esta activada por defecto
 1. **Una tarea = una sesión** (o `/clear` entre tareas)
 2. **Resume solo para continuar** trabajo previo, no para "recordar"
 3. **One-shot para automatización**, interactivo para desarrollo
-4. **Monitoriza `/cost`** regularmente
+4. **Monitoriza `/usage`** regularmente para controlar tokens y coste
 5. **`/compact` si la sesión es larga** y necesitas seguir
 6. **`Esc` para cancelar** si Claude va por mal camino
+7. **`/recap` antes de un `/clear`** si quieres un registro del trabajo realizado
 
 ---
 

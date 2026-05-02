@@ -37,7 +37,7 @@ un 60-80% inferior al coste nominal calculado sin caché.
 
 ### Configuración del TTL de caché (v2.1.108)
 
-Por defecto, el TTL (time-to-live) de la caché de prompts lo determina la API de Anthropic según el proveedor. Desde la versión v2.1.108, dos variables de entorno permiten controlar explícitamente ese TTL.
+Por defecto, el TTL estándar del prompt cache es de 5 minutos y lo determina la API de Anthropic según el proveedor. Desde la versión v2.1.108, dos variables de entorno permiten controlar explícitamente ese TTL.
 
 #### `ENABLE_PROMPT_CACHING_1H` — TTL de 1 hora (universal)
 
@@ -325,6 +325,9 @@ en un bucle o la tarea es más grande de lo estimado.
 - El prompt caching reduce automáticamente el coste de los tokens fijos en un 90%.
   No requiere configuración, pero se beneficia de sesiones estables donde el
   CLAUDE.md y las herramientas no cambian entre turnos.
+- Con `ENABLE_PROMPT_CACHING_1H=1` el TTL del caché se amplía de 5 minutos a 1
+  hora, lo que mantiene el arranque en caliente en sesiones con pausas largas.
+  `FORCE_PROMPT_CACHING_5M=1` revierte al TTL estándar cuando sea necesario.
 - Elegir el modelo correcto es la decisión de mayor impacto económico. Haiku para
   exploración, Sonnet para implementación, Opus para arquitectura y seguridad crítica.
 - `--max-budget-usd` y `--max-turns` son los controles de gasto más directos en

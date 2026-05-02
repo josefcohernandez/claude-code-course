@@ -202,6 +202,8 @@ claude -r "feature-users"   # Busca por nombre
 claude -c --fork-session     # Crea una copia para experimentar
 ```
 
+> **Nota (v2.1.118):** Si en una sesión añadiste un directorio con `/add-dir`, los flags `--continue` y `--resume` ahora son capaces de encontrar esa sesión aunque el directorio actual no coincida exactamente con el directorio principal de la sesión. Esto facilita retomar sesiones en monorepos o proyectos con múltiples directorios de trabajo.
+
 ### 3.2 Flags de Modelo
 
 Permiten seleccionar qué modelo de Claude utilizar.
@@ -462,6 +464,26 @@ EOF
 
 claude --mcp-config ./mcp-servers.json
 ```
+
+### 3.8 Autenticación
+
+Claude Code se autentica mediante OAuth con tu cuenta de Anthropic. El flujo habitual abre el navegador y redirige a `localhost` al completar la autorización.
+
+**Entornos sin acceso a localhost (WSL2, SSH remoto, contenedores)**
+
+En estos entornos el callback de OAuth no puede alcanzar `localhost`. A partir de la v2.1.126, el CLI detecta esta situación y ofrece una alternativa: pega el código de autorización directamente en el terminal cuando se te pida.
+
+```bash
+# El CLI lanza el navegador (o muestra la URL para abrirla manualmente)
+claude auth login
+
+# Si el callback falla, el CLI muestra:
+# "No se pudo completar la autenticación automática.
+#  Pega aquí el código de autorización:"
+# → Copia el código de la URL de redirección y pégalo en el terminal
+```
+
+> **Tip para WSL2:** si el navegador no se abre automáticamente, copia la URL que muestra el CLI, ábrela en el navegador de Windows, y cuando la redirección falle pega el código que aparece en la barra de direcciones.
 
 ---
 

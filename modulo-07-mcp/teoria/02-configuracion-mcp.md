@@ -43,6 +43,31 @@ Los servidores se almacenan en archivos separados según el scope:
 | `command` | Ejecutable del servidor | `npx`, `node`, `python` |
 | `args` | Argumentos | `["-y", "@mcp/server-postgres"]` |
 | `env` | Variables de entorno | `{"DB_URL": "${DATABASE_URL}"}` |
+| `alwaysLoad` | Carga todas las herramientas inmediatamente | `true` |
+
+### `alwaysLoad: true` — Carga inmediata de herramientas (v2.1.121)
+
+Por defecto, cuando Tool Search está activo, las herramientas de un servidor se marcan como diferidas (deferred) y se cargan bajo demanda. Si configuras `alwaysLoad: true` en un servidor, **todas sus herramientas se cargan en contexto al inicio de la sesión**, sin pasar por el mecanismo de tool-search deferral.
+
+Cuándo usar esta opción:
+
+- El servidor tiene pocas herramientas (5 o menos) y se usan en casi todos los mensajes.
+- El coste de buscar la herramienta en cada mensaje es mayor que el overhead de tenerla siempre en contexto.
+- Quieres garantizar que Claude no tenga que hacer una búsqueda previa antes de invocar la herramienta.
+
+```json
+{
+  "mcpServers": {
+    "mi-servidor": {
+      "command": "node",
+      "args": ["server.js"],
+      "alwaysLoad": true
+    }
+  }
+}
+```
+
+> **Nota:** `alwaysLoad: true` es la excepción, no la regla. Para servidores con muchas herramientas o de uso ocasional, la configuración por defecto con Tool Search sigue siendo preferible para mantener el overhead de tokens bajo control. Consulta el fichero [`04-deferred-tools-y-tool-search.md`](04-deferred-tools-y-tool-search.md) para entender el impacto en tokens.
 
 ### Variables Dinámicas
 
@@ -110,6 +135,12 @@ claude
 
 Muestra: servidores conectados, herramientas disponibles, estado.
 
+### Servidores ocultos por duplicados (v2.1.122)
+
+Si un servidor configurado localmente tiene la misma URL que un conector de claude.ai, el conector de claude.ai quedaba oculto en versiones anteriores sin ninguna indicación. Desde v2.1.122, el comando `/mcp` muestra los conectores ocultos por duplicado con un indicador visual y un hint que explica cómo eliminar el servidor local duplicado para que el conector de claude.ai vuelva a estar activo.
+
+Esto es útil cuando un equipo usa conectores compartidos desde claude.ai y un miembro del equipo tiene configurado localmente el mismo servidor: el comando `/mcp` ahora avisa de la situación en lugar de silenciarla.
+
 ---
 
 ## Tool Search
@@ -174,6 +205,14 @@ claude --verbose
 1. Verificar que el servidor está en settings.json correcto
 2. Verificar `/mcp` en sesión interactiva
 3. Reiniciar Claude Code (a veces necesario tras cambiar config)
+
+### Reintentos automáticos en errores transitorios (v2.1.121)
+
+Cuando un servidor MCP falla al arrancar (error de red, proceso que tarda en inicializarse, dependencia no disponible en ese instante), Claude Code realiza **hasta 3 reintentos automáticos** antes de marcar el servidor como no disponible. El reintento tiene un intervalo de espera creciente entre intentos.
+
+Esto reduce los falsos negativos en entornos con servicios que tardan en estar listos, como contenedores Docker con tiempos de arranque variables o servidores que dependen de una base de datos que aún está inicializándose. No requiere configuración adicional: el comportamiento es automático desde v2.1.121.
+
+> Si el servidor sigue sin conectar tras los 3 reintentos, aparecerá en `/mcp` con estado de error. En ese caso, verifica los logs con `claude --verbose`.
 
 ### Timeout de conexión
 

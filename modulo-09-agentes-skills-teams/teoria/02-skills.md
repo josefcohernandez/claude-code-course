@@ -227,9 +227,13 @@ disable-model-invocation: true  # Solo devuelve el texto
 
 ---
 
-## La Variable $ARGUMENTS
+## Variables disponibles en Skills
 
-Los skills soportan una variable especial `$ARGUMENTS` que se sustituye con los argumentos que el usuario pasa al invocar el skill.
+Los skills soportan variables especiales que se sustituyen en tiempo de ejecución.
+
+### $ARGUMENTS
+
+Variable sustituida con los argumentos que el usuario pasa al invocar el skill.
 
 ### Ejemplo
 
@@ -270,6 +274,46 @@ Genera una nueva migración de base de datos con el nombre: add_email_to_users
 
 En el skill, `$ARGUMENTS` se sustituye por: `--env=staging --version=2.1.0 --skip-tests`
 
+### ${CLAUDE_EFFORT}
+
+> **Novedad v2.1.120**
+
+La variable `${CLAUDE_EFFORT}` contiene el nivel de esfuerzo de razonamiento activo en la sesión en el momento de ejecutar el skill. Los valores posibles son: `low`, `medium`, `high`, `xhigh` y `max`.
+
+Esto permite que el skill adapte su comportamiento según el nivel configurado por el usuario:
+
+```markdown
+---
+name: "Code Review"
+description: "Revisa el código de la rama actual con profundidad variable según el effort configurado."
+---
+
+# Code Review
+
+Nivel de esfuerzo actual: ${CLAUDE_EFFORT}
+
+## Instrucciones según el nivel de esfuerzo
+
+{% if ${CLAUDE_EFFORT} == "low" or ${CLAUDE_EFFORT} == "medium" %}
+Haz una revisión rápida: busca solo bugs críticos y problemas de seguridad evidentes.
+{% else %}
+Haz una revisión exhaustiva: analiza bugs, rendimiento, seguridad, legibilidad y cobertura de tests.
+{% endif %}
+
+## Ámbito
+Revisa los cambios en: $ARGUMENTS (o toda la rama si no se especifica ruta)
+```
+
+**Casos de uso habituales de `${CLAUDE_EFFORT}`:**
+
+| Situación | Comportamiento esperado |
+|-----------|------------------------|
+| `low` / `medium` | Respuestas rápidas, análisis superficial, menos iteraciones |
+| `high` | Análisis estándar con buena cobertura |
+| `xhigh` / `max` | Análisis exhaustivo, razonamiento profundo, más iteraciones |
+
+> **Relación con el campo `effort:` del frontmatter:** El campo `effort:` del frontmatter define el nivel de esfuerzo que el skill pide a Claude al ejecutarse (lo fija). La variable `${CLAUDE_EFFORT}` en cambio refleja el nivel que el usuario tiene configurado en ese momento, sin modificarlo. Úsalos de forma complementaria: `effort:` para fijar el nivel del skill, `${CLAUDE_EFFORT}` para adaptar las instrucciones al nivel ya activo.
+
 ---
 
 ## Cómo Invocar Skills
@@ -300,29 +344,37 @@ Skill tool call:
   args: "--env=staging --version=2.1.0"
 ```
 
-### Slash Commands integrados del sistema vía Skill tool (v2.1.108)
+#### Invocación de slash commands built-in via Skill tool
 
-Desde la versión 2.1.108, el modelo puede **descubrir e invocar slash commands integrados del sistema** directamente a través de la herramienta `Skill`. Esto incluye comandos como `/init`, `/review`, `/security-review` y otros comandos built-in de Claude Code.
+> **Novedad v2.1.108**
 
-**Significado práctico:** antes de esta versión, comandos como `/review` o `/security-review` solo podían ejecutarse si el usuario los invocaba explícitamente. Ahora Claude puede invocarlos de forma autónoma cuando detecta que son apropiados para la tarea en curso — por ejemplo, lanzar `/security-review` automáticamente al detectar cambios en código de autenticación, o ejecutar `/review` antes de crear un commit.
+El modelo puede descubrir e invocar comandos built-in de Claude Code a través del mismo mecanismo de Skill tool. Esto incluye comandos como `/init`, `/review` y `/security-review`.
 
-```
-Skill tool call:
-  skill: "/security-review"
-  args: "src/auth/"
-```
+En la práctica, esto significa que Claude puede decidir autónomamente ejecutar, por ejemplo, una revisión de seguridad (`/security-review`) o una revisión general de código (`/review`) sobre el trabajo que acaba de realizar, sin que el usuario lo pida explícitamente, cuando el contexto lo justifica.
+
+**Ejemplo de situación donde esto ocurre:**
 
 ```
-Skill tool call:
-  skill: "/init"
-  args: ""
+Usuario: "Implementa la autenticación JWT en src/auth/"
+
+Claude:
+  1. Implementa los cambios en los ficheros de auth
+  2. Detecta que ha modificado código de seguridad sensible
+  3. Invoca /security-review automáticamente via Skill tool
+     para verificar que la implementación no introduce vulnerabilidades
+  4. Presenta los resultados de la revisión junto con el código
 ```
 
-Esto amplía el concepto de skills más allá de los archivos `SKILL.md` de usuario: los comandos built-in del sistema son ahora también skills invocables por el modelo, unificando la forma en que Claude accede a capacidades predefinidas.
+Los comandos built-in disponibles para invocación automática incluyen:
+- `/init` — inicializa la configuración del proyecto
+- `/review` — revisa el código reciente
+- `/security-review` — revisión orientada a seguridad
+
+> **Nota:** Esta capacidad complementa los skills personalizados: el modelo tiene acceso tanto a los skills que defines en `.claude/skills/` como a los comandos built-in del sistema.
 
 ### Invocación Automática
 
-Si Claude detecta que tu petición coincide con la descripción de un skill existente (incluidos los comandos integrados del sistema), puede sugerirte usarlo o invocarlo automáticamente (dependiendo de la configuración de permisos).
+Si Claude detecta que tu petición coincide con la descripción de un skill existente, puede sugerirte usarlo o invocarlo automáticamente (dependiendo de la configuración de permisos).
 
 ---
 
@@ -525,9 +577,10 @@ Este skill se ejecuta en un subagente (`context: fork`) porque:
 | Prioridad | Enterprise > Personal > Proyecto |
 | Carga | Bajo demanda (no al inicio de cada sesión) |
 | `$ARGUMENTS` | Variable sustituida con los argumentos del usuario |
+| `${CLAUDE_EFFORT}` | Variable con el nivel de effort activo: `low`, `medium`, `high`, `xhigh`, `max` (v2.1.120) |
 | `context: fork` | Ejecuta en subagente (contexto aislado) |
-| `effort` | Nivel de esfuerzo de razonamiento: `"low"`, `"medium"`, `"high"` |
+| `effort` | Nivel de esfuerzo de razonamiento fijo del skill: `"low"`, `"medium"`, `"high"` |
 | `disable-model-invocation` | Si es `true`, devuelve el texto sin ejecutar |
 | Invocación | `/nombre-del-skill` o Skill tool |
-| Slash commands integrados | `/init`, `/review`, `/security-review` etc. invocables vía Skill tool (v2.1.108) |
+| Comandos built-in via Skill tool | `/init`, `/review`, `/security-review` invocables automáticamente por el modelo (v2.1.108) |
 | vs CLAUDE.md | CLAUDE.md = siempre; Skills = bajo demanda |

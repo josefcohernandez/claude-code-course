@@ -245,16 +245,32 @@ Las operaciones que escriben, modifican o ejecutan efectos secundarios siguen re
 
 ---
 
-## Reducir prompts repetitivos con `/less-permission-prompts`
+## Skill `/less-permission-prompts` (v2.1.111)
 
-Cuando el usuario aprueba los mismos comandos repetidamente en cada sesión, la skill `/less-permission-prompts` analiza los transcripts recientes y propone automáticamente qué añadir a la `allow` list de `.claude/settings.json`:
+Claude Code incluye por defecto el skill `/less-permission-prompts`. Su función es analizar las transcripts de sesiones anteriores para detectar los patrones de herramientas que el usuario ha aprobado repetidamente y proponer una allowlist priorizada lista para añadir a `settings.json`.
 
 ```bash
-# En sesión interactiva
+# Dentro de una sesión interactiva
 /less-permission-prompts
 ```
 
-Claude Code genera una propuesta de permisos basada en el historial de aprobaciones. El usuario la revisa y confirma antes de que se escriba en el fichero. Ver [05-auto-mode.md](05-auto-mode.md) para más detalles sobre esta skill.
+Claude Code examina el historial de confirmaciones y genera una lista ordenada por frecuencia. Las herramientas que has aprobado más veces aparecen primero:
+
+```json
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm test*)",
+      "Bash(npm run lint*)",
+      "Edit(src/**)",
+      "Bash(git diff*)",
+      "Bash(git status)"
+    ]
+  }
+}
+```
+
+Puedes copiar esta lista directamente a tu `.claude/settings.json` o a `~/.claude/settings.json` según si el permiso aplica al proyecto o a tu uso global. Esto reduce la fricción de configurar permisos desde cero y garantiza que la allowlist refleja tu uso real, no una lista genérica.
 
 ---
 
@@ -263,6 +279,7 @@ Claude Code genera una propuesta de permisos basada en el historial de aprobacio
 ```bash
 # En sesión interactiva
 /permissions              # Ver permisos actuales
+/less-permission-prompts  # Analizar historial y proponer allowlist
 
 # Desde CLI
 claude config list        # Ver toda la config
